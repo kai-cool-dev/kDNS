@@ -76,10 +76,7 @@ class DnsController extends ControllerBase
       } else {
         $this->flash->success('Domain created.');
         return $this->dispatcher->forward([
-            'action' => 'edit',
-            'params' => [
-              $domain->id
-            ]
+            'action' => 'index'
         ]);
       }
     }
@@ -113,10 +110,6 @@ class DnsController extends ControllerBase
       }
     }
     $this->view->records=Records::find('domain_id = '.$this->view->domain->id);
-    if(count($this->view->records) == 0)
-    {
-      $this->view->form=new CreateSOAForm();
-    }
     if($this->request->isPost())
     {
       $data=$this->request->getPost();
@@ -127,7 +120,14 @@ class DnsController extends ControllerBase
         break;
       }
     }
-    $this->view->form=new CreateRecordForm();
+    if(count($this->view->records) == 0)
+    {
+      $this->view->form=new CreateSOAForm();
+    }
+    else
+    {
+      $this->view->form=new CreateRecordForm();
+    }
   }
 
   private function createRecord($data)
@@ -166,6 +166,7 @@ class DnsController extends ControllerBase
           'action' => 'index'
       ]);
     }
+    $this->view->form=new CreateSOAForm();
     if($this->view->form->isValid($this->request->getPost()) == false)
     {
       $this->flash->error('Record could not be stored.');
