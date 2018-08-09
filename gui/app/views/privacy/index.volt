@@ -7,6 +7,6 @@
 <div class="row">
 	<div class="col-lg-12">
 		<p>Please add your privacy policy here!</p>
-		<pre>app/views/views/layouts/privacy/index.volt</pre>
+		<pre>app/views/views/privacy/index.volt</pre>
 	</div>
 </div>
