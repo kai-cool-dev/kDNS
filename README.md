@@ -15,7 +15,7 @@ It offers following functions:
   - Export for your TLDs (so that you can access your public TLDs faster over your PowerDNS Recursor)
 - Whois Management (API for whoisd)
   - Whois export for whoisd (export in JSON, bash script included for converting to raw text files)
-    - The given Data is the Owner-Username, Owner-E-Mail Address and free text from the DNS Management, this can be used for abuse management
+  - The given Data is the Owner-Username, Owner-E-Mail Address and free text from the DNS Management, this can be used for abuse management
   - It is a bit geeky but if you run your own whois server, then this is very useful
 
 The complete tool with PowerDNS authorative, PowerDNS recursor and this GUI is my personal DNS management tool and used in my internal network. It completes everything what I need and reduces the DNS Network Load from my Network. Through caching the DNS is ultra fast.
