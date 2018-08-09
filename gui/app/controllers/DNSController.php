@@ -44,8 +44,41 @@ class DnsController extends ControllerBase
     $this->view->form=new CreateDomainForm();
     if($this->request->isPost())
     {
-      var_dump($this->request->getPost());
+      $data=$this->request->getPost();
+      $domain_name=$data["name"].".".$data["tld"];
+      if($this->view->form->isValid($this->request->getPost()) == false)
+      {
+        $this->flash->error('Domain could not be stored.');
+        foreach ($this->view->form->getMessages() as $message) {
+            $this->flash->error($message);
+        }
+        return ;
+      }
+      if(!empty(Domains::find('name = "'.$domain_name.'"')[0]))
+      {
+        $this->flash->error('Domain already exists.');
+        return ;
+      }
       $domain = new Domains();
+      $domain->name=$domain_name;
+      $domain->type="NATIVE";
+      $domain->account=$this->view->identity["id"];
+      $domain->created=time();
+      if ($domain->create() === false) {
+        $this->flash->error('Domain could not be stored.');
+        $messages = $domain->getMessages();
+        foreach ($messages as $message) {
+          $this->flash->error($message);
+        }
+      } else {
+        $this->flash->success('Domain created.');
+        return $this->dispatcher->forward([
+            'action' => 'edit',
+            'params' => [
+              $domain->id
+            ]
+        ]);
+      }
     }
   }
 
