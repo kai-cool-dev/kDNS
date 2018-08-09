@@ -42,6 +42,11 @@ class DnsController extends ControllerBase
   public function createAction()
   {
     $this->view->form=new CreateDomainForm();
+    if($this->request->isPost())
+    {
+      var_dump($this->request->getPost());
+      $domain = new Domains();
+    }
   }
 
   /**
