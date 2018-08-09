@@ -1,5 +1,5 @@
 <?php
-namespace Vokuro\Models;
+namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
 

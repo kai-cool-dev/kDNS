@@ -10,21 +10,21 @@ use Phalcon\Session\Adapter\Files as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
-use Vokuro\Auth\Auth;
-use Vokuro\Acl\Acl;
-use Vokuro\Mail\Mail;
+use kDNS\Auth\Auth;
+use kDNS\Acl\Acl;
+use kDNS\Mail\Mail;
 
 /**
  * Register the global configuration as config
  */
 $di->setShared('config', function () {
     $config = include APP_PATH . '/config/config.php';
-    
+
     if (is_readable(APP_PATH . '/config/config.dev.php')) {
         $override = include APP_PATH . '/config/config.dev.php';
         $config->merge($override);
     }
-    
+
     return $config;
 });
 
@@ -115,7 +115,7 @@ $di->set('crypt', function () {
  */
 $di->set('dispatcher', function () {
     $dispatcher = new Dispatcher();
-    $dispatcher->setDefaultNamespace('Vokuro\Controllers');
+    $dispatcher->setDefaultNamespace('kDNS\Controllers');
     return $dispatcher;
 });
 
@@ -153,7 +153,7 @@ $di->set('mail', function () {
 });
 
 /**
- * Setup the private resources, if any, for performance optimization of the ACL.  
+ * Setup the private resources, if any, for performance optimization of the ACL.
  */
 $di->setShared('AclResources', function() {
     $pr = [];

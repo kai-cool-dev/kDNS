@@ -1,5 +1,5 @@
 <?php
-namespace Vokuro\Mail;
+namespace kDNS\Mail;
 
 class Exception extends \Exception
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Vokuro\Controllers;
+namespace kDNS\Controllers;
 
-use Vokuro\Forms\LoginForm;
-use Vokuro\Forms\SignUpForm;
-use Vokuro\Forms\ForgotPasswordForm;
-use Vokuro\Auth\Exception as AuthException;
-use Vokuro\Models\Users;
-use Vokuro\Models\ResetPasswords;
+use kDNS\Forms\LoginForm;
+use kDNS\Forms\SignUpForm;
+use kDNS\Forms\ForgotPasswordForm;
+use kDNS\Auth\Exception as AuthException;
+use kDNS\Models\Users;
+use kDNS\Models\ResetPasswords;
 
 /**
  * Controller used handle non-authenticated session actions like login/logout, user signup, and forgotten passwords

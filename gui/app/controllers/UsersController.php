@@ -1,16 +1,16 @@
 <?php
-namespace Vokuro\Controllers;
+namespace kDNS\Controllers;
 
 use Phalcon\Tag;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
-use Vokuro\Forms\ChangePasswordForm;
-use Vokuro\Forms\UsersForm;
-use Vokuro\Models\Users;
-use Vokuro\Models\PasswordChanges;
+use kDNS\Forms\ChangePasswordForm;
+use kDNS\Forms\UsersForm;
+use kDNS\Models\Users;
+use kDNS\Models\PasswordChanges;
 
 /**
- * Vokuro\Controllers\UsersController
+ * kDNS\Controllers\UsersController
  * CRUD to manage users
  */
 class UsersController extends ControllerBase
@@ -37,7 +37,7 @@ class UsersController extends ControllerBase
     {
         $numberPage = 1;
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Users', $this->request->getPost());
+            $query = Criteria::fromInput($this->di, 'kDNS\Models\Users', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
             $numberPage = $this->request->getQuery("page", "int");
@@ -75,11 +75,11 @@ class UsersController extends ControllerBase
         if ($this->request->isPost()) {
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
+
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
+
             } else {
 
                 $user = new Users([
@@ -108,7 +108,7 @@ class UsersController extends ControllerBase
     public function editAction($id)
     {
         $user = Users::findFirstById($id);
-        
+
         if (!$user) {
             $this->flash->error("User was not found");
             return $this->dispatcher->forward([
@@ -132,11 +132,11 @@ class UsersController extends ControllerBase
             ]);
 
             if ($form->isValid($this->request->getPost()) == false) {
-                
+
                 foreach ($form->getMessages() as $message) {
                     $this->flash->error($message);
                 }
-                
+
             } else {
 
                 if (!$user->save()) {

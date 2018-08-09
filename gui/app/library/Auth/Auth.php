@@ -1,15 +1,15 @@
 <?php
-namespace Vokuro\Auth;
+namespace kDNS\Auth;
 
 use Phalcon\Mvc\User\Component;
-use Vokuro\Models\Users;
-use Vokuro\Models\RememberTokens;
-use Vokuro\Models\SuccessLogins;
-use Vokuro\Models\FailedLogins;
+use kDNS\Models\Users;
+use kDNS\Models\RememberTokens;
+use kDNS\Models\SuccessLogins;
+use kDNS\Models\FailedLogins;
 
 /**
- * Vokuro\Auth\Auth
- * Manages Authentication/Identity Management in Vokuro
+ * kDNS\Auth\Auth
+ * Manages Authentication/Identity Management in kDNS
  */
 class Auth extends Component
 {
@@ -57,7 +57,7 @@ class Auth extends Component
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param \Vokuro\Models\Users $user
+     * @param \kDNS\Models\Users $user
      * @throws Exception
      */
     public function saveSuccessLogin($user)
@@ -112,7 +112,7 @@ class Auth extends Component
     /**
      * Creates the remember me environment settings the related cookies and generating tokens
      *
-     * @param \Vokuro\Models\Users $user
+     * @param \kDNS\Models\Users $user
      */
     public function createRememberEnvironment(Users $user)
     {
@@ -199,7 +199,7 @@ class Auth extends Component
     /**
      * Checks if the user is banned/inactive/suspended
      *
-     * @param \Vokuro\Models\Users $user
+     * @param \kDNS\Models\Users $user
      * @throws Exception
      */
     public function checkUserFlags(Users $user)
@@ -253,7 +253,7 @@ class Auth extends Component
             if ($userId) {
                 $this->deleteToken($userId);
             }
-            
+
             $this->cookies->get('RMT')->delete();
         }
 
@@ -285,7 +285,7 @@ class Auth extends Component
     /**
      * Get the entity related to user in the active identity
      *
-     * @return \Vokuro\Models\Users
+     * @return \kDNS\Models\Users
      * @throws Exception
      */
     public function getUser()
@@ -303,7 +303,7 @@ class Auth extends Component
 
         return false;
     }
-    
+
     /**
      * Returns the current token user
      *
@@ -318,15 +318,15 @@ class Auth extends Component
                 'token' => $token,
             ],
         ]);
-        
-        $user_id = ($userToken) ? $userToken->usersId : false; 
+
+        $user_id = ($userToken) ? $userToken->usersId : false;
         return $user_id;
     }
 
     /**
      * Delete the current user token in session
      */
-    public function deleteToken($userId) 
+    public function deleteToken($userId)
     {
         $user = RememberTokens::find([
             'conditions' => 'usersId = :userId:',

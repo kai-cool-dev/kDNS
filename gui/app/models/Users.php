@@ -1,12 +1,12 @@
 <?php
-namespace Vokuro\Models;
+namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 
 /**
- * Vokuro\Models\Users
+ * kDNS\Models\Users
  * All the users registered in the application
  */
 class Users extends Model
@@ -95,7 +95,7 @@ class Users extends Model
         } else {
             $this->active = 'Y';
         }
-        
+
         // The account is not suspended by default
         $this->suspended = 'N';
 

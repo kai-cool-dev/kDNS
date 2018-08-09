@@ -1,8 +1,8 @@
 <?php
-namespace Vokuro\Controllers;
+namespace kDNS\Controllers;
 
-use Vokuro\Models\EmailConfirmations;
-use Vokuro\Models\ResetPasswords;
+use kDNS\Models\EmailConfirmations;
+use kDNS\Models\ResetPasswords;
 
 /**
  * UserControlController

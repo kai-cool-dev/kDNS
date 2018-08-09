@@ -1,14 +1,14 @@
 <?php
-namespace Vokuro\Controllers;
+namespace kDNS\Controllers;
 
 use Phalcon\Tag;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Paginator\Adapter\Model as Paginator;
-use Vokuro\Forms\ProfilesForm;
-use Vokuro\Models\Profiles;
+use kDNS\Forms\ProfilesForm;
+use kDNS\Models\Profiles;
 
 /**
- * Vokuro\Controllers\ProfilesController
+ * kDNS\Controllers\ProfilesController
  * CRUD to manage profiles
  */
 class ProfilesController extends ControllerBase
@@ -38,7 +38,7 @@ class ProfilesController extends ControllerBase
     {
         $numberPage = 1;
         if ($this->request->isPost()) {
-            $query = Criteria::fromInput($this->di, 'Vokuro\Models\Profiles', $this->request->getPost());
+            $query = Criteria::fromInput($this->di, 'kDNS\Models\Profiles', $this->request->getPost());
             $this->persistent->searchParams = $query->getParams();
         } else {
             $numberPage = $this->request->getQuery("page", "int");

@@ -1,8 +1,8 @@
 <?php
-namespace Vokuro\Controllers;
+namespace kDNS\Controllers;
 
-use Vokuro\Models\Profiles;
-use Vokuro\Models\Permissions;
+use kDNS\Models\Profiles;
+use kDNS\Models\Permissions;
 
 /**
  * View and define permissions for the various profile levels.
