@@ -25,7 +25,8 @@
       {%- set menus = [
         'Permissions': 'permissions',
         'Profiles': 'profiles',
-        'User Administration': 'users'
+        'User': 'users',
+        'DNS': 'dns/administrate'
       ] -%}
 
       {%- for key, value in menus %}

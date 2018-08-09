@@ -26,7 +26,8 @@ return new Config([
       'search',
       'create',
       'edit',
-      'delete'
+      'delete',
+      'administrate'
     ]
   ]
 ]);

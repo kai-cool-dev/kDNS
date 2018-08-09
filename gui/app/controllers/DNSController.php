@@ -1,6 +1,9 @@
 <?php
 namespace kDNS\Controllers;
 
+use kDNS\Models\Domains;
+use kDNS\Forms\CreateDomainForm;
+
 /**
  * Display the default index page.
  */
@@ -20,7 +23,9 @@ class DnsController extends ControllerBase
   */
   public function indexAction()
   {
-
+    $this->view->domains = Domains::find([
+      "account = ".$this->view->identity["id"]
+    ]);
   }
 
   /**
@@ -36,7 +41,7 @@ class DnsController extends ControllerBase
   */
   public function createAction()
   {
-
+    $this->view->form=new CreateDomainForm();
   }
 
   /**
@@ -51,6 +56,14 @@ class DnsController extends ControllerBase
   * Delete Domain
   */
   public function deleteAction()
+  {
+
+  }
+
+  /**
+  * Administrate DNS
+  */
+  public function administrateAction()
   {
 
   }

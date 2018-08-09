@@ -19,7 +19,6 @@ class UsersController extends ControllerBase
     public function initialize()
     {
         $this->view->setTemplateBefore('private');
-        var_dump($this->view->identity);
     }
 
     /**
