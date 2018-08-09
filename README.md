@@ -13,6 +13,7 @@ It offers following functions:
   - Control Root Nameserver (support for AdGuard, OpenNIC, NewNations, FurNic, etc)
   - Export for your private TLDs (so that you can access your private authorative Domains with your private powerDNS Recursor)
   - Export for your TLDs (so that you can access your public TLDs faster over your PowerDNS Recursor)
+  - Support for Tor-DNS
 - Whois Management (API for whoisd)
   - Whois export for whoisd (export in JSON, bash script included for converting to raw text files)
   - The given Data is the Owner-Username, Owner-E-Mail Address and free text from the DNS Management, this can be used for abuse management
