@@ -1,14 +1,10 @@
-<div align="center">
-
-	<div align="left">
-		<h2>About this Demo</h2>
+<div class="row">
+	<div class="col-lg-12">
+		<h1>About</h1>
 	</div>
-
-	<div align="left">
-		This is a sample application for the <a href="http://phalconphp.com">Phalcon Framework</a>. We expect to implement as many features
-		as possible to show how the framework works and its potential. Please write us if you have any
-		feedback or comments. Feel free to clone the code of this application <a href="https://github.com/phalcon/kDNS">here</a>.
-		The purpose of this application is merely academic. Thanks!.
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<p><b>kDNS</b> is a hobby project for managing my own TLD and DNS Server. It was a lot of work, but i love it and learned a lot about DNS.<br><b>{{link_to("action" : "https://www.kai.cool", "text"   : "- Kai Pazdzewicz", "local"  : false, "target" : "_blank")}}</b></p>
 	</div>
-
 </div>

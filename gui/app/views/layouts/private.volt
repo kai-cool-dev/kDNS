@@ -1,47 +1,56 @@
-<div class="navbar navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container" style="width: auto;">
-      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
-      {{ link_to(null, 'class': 'brand', 'Vökuró')}}
-        <div class="nav-collapse">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  {{ link_to(null, 'class': 'navbar-brand', 'kDNS GUI')}}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-          <ul class="nav">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      {%- set menus = [
+        'Home': 'dns',
+        'List/Search Domains': 'dns/search',
+        'Create new Domain': 'dns/create'
+      ] -%}
 
-            {%- set menus = [
-              'Home': null,
-              'Users': 'users',
-              'Profiles': 'profiles',
-              'Permissions': 'permissions'
-            ] -%}
+      {%- for key, value in menus %}
+        {% if value == dispatcher.getControllerName() %}
+        <li class="nav-item active">{{ link_to(value, key, 'class':'nav-link') }}</li>
+        {% else %}
+        <li class="nav-item">{{ link_to(value, key, 'class':'nav-link') }}</li>
+        {% endif %}
+      {%- endfor -%}
+    </ul>
+    {% if identity["profile"] == "Administrators" %}
+    <ul class="navbar-nav mr-auto">
+      {%- set menus = [
+        'Permissions': 'permissions',
+        'Profiles': 'profiles',
+        'User Administration': 'users'
+      ] -%}
 
-            {%- for key, value in menus %}
-              {% if value == dispatcher.getControllerName() %}
-              <li class="active">{{ link_to(value, key) }}</li>
-              {% else %}
-              <li>{{ link_to(value, key) }}</li>
-              {% endif %}
-            {%- endfor -%}
-
-          </ul>
-
-        <ul class="nav pull-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ auth.getName() }} <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li>{{ link_to('users/changePassword', 'Change Password') }}</li>
-            </ul>
-          </li>
-          <li>{{ link_to('session/logout', 'Logout') }}</li>
-        </ul>
-      </div>
-    </div>
+      {%- for key, value in menus %}
+        {% if value == dispatcher.getControllerName() %}
+        <li class="nav-item active">{{ link_to(value, key, 'class':'nav-link') }}</li>
+        {% else %}
+        <li class="nav-item">{{ link_to(value, key, 'class':'nav-link') }}</li>
+        {% endif %}
+      {%- endfor -%}
+    </ul>
+    {% endif %}
+    <ul class="navbar-nav mr-r4">
+      <li class="nav-item">{{ link_to('users/changePassword', 'Change your password', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('session/logout', 'Logout', 'class':'nav-link') }}</li>
+    </ul>
   </div>
-</div>
+</nav>
 
-<div class="container">
+<div class="container main-container">
   {{ content() }}
 </div>
+
+<footer>
+Made with <3 in Germany
+{{ link_to("privacy", "Privacy Policy") }}
+{{ link_to("terms", "Terms") }}
+© {{ date("Y") }} Kai Pazdzewicz.
+</footer>

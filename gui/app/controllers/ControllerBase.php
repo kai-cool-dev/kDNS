@@ -28,6 +28,7 @@ class ControllerBase extends Controller
 
             // Get the current identity
             $identity = $this->auth->getIdentity();
+            $this->view->identity = $identity;
 
             // If there is no identity available the user is redirected to index/index
             if (!is_array($identity)) {
