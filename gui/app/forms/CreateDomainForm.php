@@ -5,6 +5,7 @@ use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Select;
 use kDNS\Models\TopDomains;
+use Phalcon\Validation\Validator\PresenceOf;
 
 class CreateDomainForm extends Form
 {
@@ -14,6 +15,11 @@ class CreateDomainForm extends Form
     $name = new Text('name',[
       'class' => 'form-control',
       'placeholder' => 'example'
+    ]);
+    $name->addValidators([
+      new PresenceOf([
+        'message' => 'Domain Name is required'
+      ]),
     ]);
     $this->add($name);
 

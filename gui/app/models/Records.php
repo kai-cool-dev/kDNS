@@ -4,10 +4,10 @@ namespace kDNS\Models;
 use Phalcon\Mvc\Model;
 
 /**
- * Permissions
- * Stores the permissions by profile
+ * Records
+ * Stores the records by domain
  */
-class Domains extends Model
+class Records extends Model
 {
 
     /**
@@ -15,6 +15,12 @@ class Domains extends Model
      * @var integer
      */
     public $id;
+
+    /**
+     *
+     * @var integer
+     */
+    public $domain_id;
 
     /**
      *
@@ -26,43 +32,49 @@ class Domains extends Model
      *
      * @var string
      */
-    public $master;
-
-    /**
-     *
-     * @var integer
-     */
-    public $last_check;
-
-    /**
-     *
-     * @var string
-     */
     public $type;
 
     /**
      *
+     * @var string
+     */
+    public $content;
+
+    /**
+     *
      * @var integer
      */
-    public $notified_serial;
+    public $ttl;
+
+    /**
+     *
+     * @var integer
+     */
+    public $prio;
+
+    /**
+     *
+     * @var integer
+     */
+    public $change_date;
+
+    /**
+     *
+     * @var integer
+     */
+    public $disabled;
 
     /**
      *
      * @var string
      */
-    public $account;
+    public $ordername;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $created;
-
-    /**
-     *
-     * @var string
-     */
-    public $description;
+    public $auth;
 
 
     public function initialize()
