@@ -78,11 +78,6 @@ class CreateRecordForm extends Form
     $action=new Hidden('action',[
       'value' => 'create'
     ]);
-    $action->addValidators([
-      new PresenceOf([
-        'message' => 'Action is required'
-      ]),
-    ]);
     $this->add($action);
   }
 }

@@ -165,11 +165,11 @@ class DnsController extends ControllerBase
         }
         $data[$record->id]=new CreateRecordForm($record);
       }
-      if($ns<=2)
+      if($ns<2)
       {
         $this->flash->notice('No NS Record found. Please create at least two!');
       }
-      if($mx<=1)
+      if($mx<1)
       {
         $this->flash->notice('No MX Record found. Please create one!');
       }
@@ -183,18 +183,17 @@ class DnsController extends ControllerBase
 
   private function createSOARecord($data)
   {
+    // Add Type
     $ndata["type"]=$data["type"];
+    // Add TTL
     $ndata["ttl"]=$data["ttl"];
+    // Prepare Email for insertion into content
     $data["email"]=str_replace("@",".",$data["email"]);
+    // Prepare Serial Number
     $serial=date("Ymd")."00";
+    // Insert everything in a valid SOA Record
     $ndata["content"]=$data["nameserver"]." ".$data["email"]." ".$serial." ".$data["refresh"]." ".$data["retry"]." ".$data["expire"]." ".$data["ttl"];
-    if(!empty(Records::find('name = "'.$record->name.'" AND type = "'.$record->type.'"')[0]))
-    {
-      $this->flash->error('Record already exists.');
-      return $this->dispatcher->forward([
-          'action' => 'index'
-      ]);
-    }
+    // Create SOA Record with valid data
     $this->createRecord($ndata);
   }
 
@@ -276,6 +275,15 @@ class DnsController extends ControllerBase
       }
       // And exists the function
       return false;
+    }
+    // If SOA Record, then check if one is already existing.
+    if($record->type=="SOA")
+    {
+      if(!empty(Records::find('name = "'.$record->name.'" AND type = "'.$record->type.'"')[0]))
+      {
+        $this->flash->error('Record already exists.');
+        return false;
+      }
     }
     // Okay, everything is fine. Now save the object in the database.
     if ($record->save() === false) {
