@@ -37,7 +37,12 @@
           <td><div class="input-group">{{ form[record.id].render('name',[ 'id' : 'ttl'+record.id]) }}</div></td>
           <td><div class="input-group">{{ form[record.id].render('type',[ 'id' : 'ttl'+record.id]) }}</div></td>
           <td><div class="input-group">{{ form[record.id].render('content',[ 'id' : 'ttl'+record.id]) }}</div></td>
-          <td><div class="input-group">{{ form[record.id].render('ttl',[ 'id' : 'ttl'+record.id]) }}</div></td>
+          {% if record.type == "MX" %}
+            <td><div class="input-group">{{ form[record.id].render('ttl',[ 'id' : 'ttl'+record.id]) }}</div></td>
+            <td><div class="input-group">{{ form[record.id].render('prio',[ 'id' : 'prio'+record.id]) }}</div></td>
+          {% else %}
+            <td colspan="2"><div class="input-group">{{ form[record.id].render('ttl',[ 'id' : 'ttl'+record.id]) }}</div></td>
+          {% endif %}
           <td><button type="submit" name="action" value="update" class="btn form-control btn-success">Save</button></td>
           <td>
             {% if record.type != "SOA" %}
@@ -65,6 +70,7 @@
           <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
           <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
           <td><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
+          <td><div class="input-group">{{ newform.render('prio',[ 'id' : 'newprio']) }}</div></td>
           <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create">Create</button></td>
         </form>
       </tr>

@@ -34,7 +34,7 @@
   </div>
 </nav>
 
-<div class="container main-container">
+<div class="container-fluid main-container">
   {{ content() }}
 </div>
 

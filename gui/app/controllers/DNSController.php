@@ -167,11 +167,11 @@ class DnsController extends ControllerBase
       }
       if($ns<2)
       {
-        $this->flash->notice('No NS Record found. Please create at least two!');
+        $this->flash->error('Please add at least two NS Records. These Records points to the nameservers. And required for reachability of the domain.');
       }
       if($mx<1)
       {
-        $this->flash->notice('No MX Record found. Please create one!');
+        $this->flash->notice('Atleast one MX Record pointing to your mailserver is required for recieving mails.');
       }
       $this->view->form=$data;
     }
@@ -230,10 +230,15 @@ class DnsController extends ControllerBase
     {
       $data["name"]=$this->view->domain->name;
     }
+    elseif($data["name"]==$this->view->domain->name)
+    {
+      $data["name"]=$this->view->domain->name;
+    }
     else
     {
       // Dirty Hack. Replaces the Domain Name with nothing in the name
       $data["name"]=str_replace(".".$this->view->domain->name,"",$data["name"]);
+
       // And now we adding it again. It is weird but working.
       $data["name"]=$data["name"].".".$this->view->domain->name;
     }

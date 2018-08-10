@@ -74,6 +74,17 @@ class CreateRecordForm extends Form
     ]);
     $this->add($ttl);
 
+    // Prio
+    $prio = new Numeric('prio',
+      [
+        'class' => 'form-control',
+        'min' => 10,
+        'max' => 100,
+        'value' => 10
+      ]
+    );
+    $this->add($prio);
+
     // Hidden Action switch
     $action=new Hidden('action',[
       'value' => 'create'
