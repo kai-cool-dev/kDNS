@@ -3,6 +3,7 @@ namespace kDNS\Forms;
 
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\TextArea;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\Numeric;
 use Phalcon\Forms\Element\Hidden;
@@ -24,6 +25,7 @@ class CreateRecordForm extends Form
         'message' => 'Name is required'
       ]),
     ]);
+    $name->setFilters('string');
     $this->add($name);
     // type
     $type = new Select('type',RecordTypes::find(),
@@ -41,6 +43,21 @@ class CreateRecordForm extends Form
       ]),
     ]);
     $this->add($type);
+    // Content
+    $content = new TextArea('content',
+      [
+        'class' => 'form-control',
+        'cols' => 50
+      ]
+    );
+    $content->setFilters('string');
+    $content->addValidators([
+      new PresenceOf([
+        'message' => 'Content is required'
+      ]),
+    ]);
+    $this->add($content);
+
     // TTL
     $ttl = new Numeric('ttl',
       [

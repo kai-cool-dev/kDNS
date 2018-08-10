@@ -6,6 +6,7 @@ use kDNS\Models\Records;
 use kDNS\Forms\CreateDomainForm;
 use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
+use kDNS\Forms\NameserverSelectForm;
 
 /**
  * Display the default index page.
@@ -118,47 +119,75 @@ class DnsController extends ControllerBase
         case 'create':
           $this->createRecord($data);
         break;
+
+        case 'createSOA':
+          $this->createSOARecord($data);
+        break;
+
+        case 'enable':
+          $this->enableRecord($data);
+        break;
+
+        case 'disable':
+          $this->disableRecord($data);
+        break;
+
+        case 'update':
+          $this->createRecord($data);
+        break;
+
+        case 'delete':
+          $this->deleteRecord($data);
+        break;
       }
     }
+
+    // Checks if a record exists, if no, then display a SOA creation wizard
     if(count($this->view->records) == 0)
     {
       $this->view->form=new CreateSOAForm();
     }
     else
     {
-      $this->view->form=new CreateRecordForm();
+      // Count Nameserver (at least 2 needed!)
+      $ns=0;
+      // Count Mailserver (at least 1 needed!)
+      $mx=0;
+      foreach($this->view->records as $record)
+      {
+        if($record->type=="NS")
+        {
+          $ns++;
+        }
+        if($record->type=="MX")
+        {
+          $mx++;
+        }
+        $data[$record->id]=new CreateRecordForm($record);
+      }
+      if($ns<=2)
+      {
+        $this->flash->notice('No NS Record found. Please create at least two!');
+      }
+      if($mx<=1)
+      {
+        $this->flash->notice('No MX Record found. Please create one!');
+      }
+      $this->view->form=$data;
     }
+    // Shows general new record creation form
+    $this->view->newform=new CreateRecordForm();
+    // Shows Nameserver Select for Modal
+    $this->view->nameserverform=new NameserverSelectForm();
   }
 
-  private function createRecord($data)
+  private function createSOARecord($data)
   {
-    $record = new Records();
-    $record->domain_id=$this->view->domain->id;
-    date_default_timezone_set("UTC");
-    $record->change_date=time();
-    $record->auth=1;
-    $record->type=$data["type"];
-    $record->ttl=$data["ttl"];
-    if(empty($data["name"]))
-    {
-      $record->name=$this->view->domain->name;
-    }
-    else
-    {
-      $record->name=$data["name"].".".$this->view->domain->name;
-    }
-    switch($data["type"]) {
-      case 'SOA':
-        $data["email"]=str_replace("@",".",$data["email"]);
-        $serial=date("Ymd")."00";
-        $record->content=$data["nameserver"]." ".$data["email"]." ".$serial." ".$data["refresh"]." ".$data["retry"]." ".$data["expire"]." ".$data["ttl"];
-        $record->disabled=0;
-        $record->prio=0;
-      break;
-      default:
-        $record->content=$data["content"];
-      break;
-    }
+    $ndata["type"]=$data["type"];
+    $ndata["ttl"]=$data["ttl"];
+    $data["email"]=str_replace("@",".",$data["email"]);
+    $serial=date("Ymd")."00";
+    $ndata["content"]=$data["nameserver"]." ".$data["email"]." ".$serial." ".$data["refresh"]." ".$data["retry"]." ".$data["expire"]." ".$data["ttl"];
     if(!empty(Records::find('name = "'.$record->name.'" AND type = "'.$record->type.'"')[0]))
     {
       $this->flash->error('Record already exists.');
@@ -166,31 +195,102 @@ class DnsController extends ControllerBase
           'action' => 'index'
       ]);
     }
-    $this->view->form=new CreateSOAForm();
-    if($this->view->form->isValid($this->request->getPost()) == false)
+    $this->createRecord($ndata);
+  }
+
+  private function enableRecord($data)
+  {
+    $data["disabled"]="0";
+    $this->createRecord($data);
+  }
+
+  private function disableRecord($data)
+  {
+    $data["disabled"]="1";
+    $this->createRecord($data);
+  }
+
+  private function deleteRecord($data)
+  {
+
+  }
+
+  private function createRecord($data)
+  {
+    // Init Record Model whith given data
+    $record = new Records($data);
+    // If Record ID Exists (it exists in the update of one record)
+    if(!empty($data["id"]))
     {
-      $this->flash->error('Record could not be stored.');
-      foreach ($this->view->form->getMessages() as $message) {
-          $this->flash->error($message);
-      }
-      return $this->dispatcher->forward([
-          'action' => 'index'
-      ]);
+      $record->id=$data["id"];
     }
+    // Adds the domain_id
+    $record->domain_id=$this->view->domain->id;
+    // Check if name is empty, if yes, then use the default domain name
+    if(empty($data["name"]))
+    {
+      $data["name"]=$this->view->domain->name;
+    }
+    else
+    {
+      // Dirty Hack. Replaces the Domain Name with nothing in the name
+      $data["name"]=str_replace(".".$this->view->domain->name,"",$data["name"]);
+      // And now we adding it again. It is weird but working.
+      $data["name"]=$data["name"].".".$this->view->domain->name;
+    }
+    // Uses the given name
+    $record->name=$data["name"];
+    // Adds the change_date as current UTC timestamp
+    date_default_timezone_set("UTC");
+    $record->change_date=time();
+    // Authentication: Yes please
+    $record->auth=1;
+    // Adds the Record Type
+    $record->type=$data["type"];
+    // Adds the TTL of a Record
+    $record->ttl=$data["ttl"];
+    // If a record is not disabled or enabled, enable the record
+    if(empty($data["disabled"]))
+    {
+      // This happens only on creation
+      $record->disabled=0;
+    }
+    else
+    {
+      // Otherwise just add the given data.
+      // This happens only on update
+      $record->disabled=$data["disabled"];
+    }
+    // Adds the given content
+    $record->content=$data["content"];
+    // Creates the Form for validation
+    $this->view->form=new CreateRecordForm($record);
+    // Check if form is valid, aka if everything is okay (filter and so on)
+    if($this->view->form->isValid($data) == false)
+    {
+      // Ups, something is not valid.
+      $this->flash->error('Record is not valid.');
+      foreach ($this->view->form->getMessages() as $message) {
+        // Displays all Warnings from the validation
+        $this->flash->warning($message);
+      }
+      // And exists the function
+      return false;
+    }
+    // Okay, everything is fine. Now save the object in the database.
     if ($record->save() === false) {
       $this->flash->error('Record could not be stored.');
       $messages = $record->getMessages();
       foreach ($messages as $message) {
-        $this->flash->error($message);
+        $this->flash->warning($message);
       }
-      return $this->dispatcher->forward([
-          'action' => 'index'
-      ]);
     } else {
-      $this->flash->success('Record created.');
+      // Record was added
+      $this->flash->success('Record created/updated.');
       // Update Records
       $this->view->records=Records::find('domain_id = '.$this->view->domain->id);
     }
+
   }
 
   /**
