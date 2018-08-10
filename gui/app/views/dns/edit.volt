@@ -62,7 +62,7 @@
               <span class="input-group-text" id="basic-addon2">.{{ domain.name }}</span>
             </div>
           </div></td>
-          <td><div class="input-group" id="newtype">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
+          <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
           <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
           <td><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
           <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create">Create</button></td>
