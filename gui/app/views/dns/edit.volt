@@ -11,6 +11,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-12">
+    {{ link_to('dns/delete/' ~ domain.id,'<i class="fas fa-trash"></i> Delete Domain','class':'btn btn-danger form-control') }}
+  </div>
+</div>
+
 {% for record in records %}
   {% if loop.first %}
   <table class="table table-striped">

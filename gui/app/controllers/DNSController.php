@@ -6,9 +6,6 @@
   - update soa serial
 - Domain Deletion
   - Automatically purge all records
-- Administrate
-  - Edit / Add / Delete recursor with zones
-  - Edit / Add / Delete Record Types
 
 */
 namespace kDNS\Controllers;
@@ -402,8 +399,25 @@ class DnsController extends ControllerBase
   /**
   * Delete Domain
   */
-  public function deleteAction()
+  public function deleteAction($id)
   {
+    $this->view->domain=Domains::findFirst($id);
+    if($this->request->isPost())
+    {
+      if ($this->view->domain->delete() === false) {
+        $this->flash->error('Domain could not be deleted.');
+        $messages = $nameserver->getMessages();
+        foreach ($messages as $message) {
+          $this->flash->warning($message);
+        }
+      } else {
+        // Record was added
+        $this->flash->success('Domain deleted.');
+        return $this->dispatcher->forward([
+          "action" => "index"
+        ]);
+      }
+    }
 
   }
 

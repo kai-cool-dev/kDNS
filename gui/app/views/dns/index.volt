@@ -30,7 +30,7 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col"></th>
+              <th scope="col" colspan="2"></th>
             </tr>
           </thead>
           <tbody>
@@ -39,10 +39,11 @@
             <th scope="row">#{{ domain.id }}</th>
             <td>{{ domain.name }}</td>
             <td>{{ link_to('dns/edit/' ~ domain.id,'<i class="fas fa-edit"></i> Edit','class':'btn btn-primary form-control') }}</td>
+            <td>{{ link_to('dns/delete/' ~ domain.id,'<i class="fas fa-trash"></i> Delete','class':'btn btn-danger form-control') }}</td>
           </tr>
         {% else %}
           <tr>
-            <td colspan="2">You don't have any domains.</td>
+            <td colspan="3">You don't have any domains.</td>
             <td>{{ link_to('dns/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-success form-control') }}</td>
           </tr>
         {% endfor %}
