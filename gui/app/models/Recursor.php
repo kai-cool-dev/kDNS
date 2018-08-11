@@ -4,10 +4,10 @@ namespace kDNS\Models;
 use Phalcon\Mvc\Model;
 
 /**
- * Nameserver
- * Stores the records by domain
+ * Recursor
+ * Stores the Recursor
  */
-class Nameserver extends Model
+class Recursor extends Model
 {
 
     /**
@@ -20,18 +20,6 @@ class Nameserver extends Model
      *
      * @var string
      */
-    public $name;
-
-    /**
-     *
-     * @var string
-     */
-    public $fqdn;
-
-    /**
-     *
-     * @var string
-     */
     public $ip4;
 
     /**
@@ -39,6 +27,13 @@ class Nameserver extends Model
      * @var string
      */
     public $ip6;
+
+    /**
+     *
+     * @var string
+     */
+    public $description;
+
 
     public function initialize()
     {

@@ -1,11 +1,16 @@
 <?php
 /* TODO:
 
-- Add search for own domains
-  - Add function for admin to show "admin-mode"-domains
-
 - DNS Edit Page:
   - Add domain_description (used in whois)
+  - update soa serial
+- Domain Deletion
+  - Automatically purge all records
+- Administrate
+  - Edit / Add / Delete authorative Nameserver
+  - Edit / Add / Delete recursor with zones
+  - Edit / Add / Delete TLDs
+  - Edit / Add / Delete Record Types
 
 */
 namespace kDNS\Controllers;
@@ -13,9 +18,13 @@ namespace kDNS\Controllers;
 // Models
 use kDNS\Models\Domains;
 use kDNS\Models\Records;
+use kDNS\Models\Recursor;
+use kDNS\Models\Nameserver;
+use kDNS\Models\TopDomains;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
+use kDNS\Forms\CreateNameserverForm;
 use kDNS\Forms\CreateDomainForm;
 use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
@@ -396,9 +405,85 @@ class DnsController extends ControllerBase
   }
 
   /**
-  * Administrate DNS
+  * Administrate Home
   */
   public function administrateAction()
+  {
+
+  }
+
+  /**
+  * Administrate Nameservers
+  */
+  public function administrateNSAction()
+  {
+    $this->view->form = new CreateNameserverForm();
+    if($this->request->isPost())
+    {
+      $data=$this->request->getPost();
+      switch($data["action"])
+      {
+        case 'create':
+          if($this->view->form->isValid($data) == false)
+          {
+            // Ups, something is not valid.
+            $this->flash->error('Nameserver is not valid.');
+            foreach ($this->view->form->getMessages() as $message) {
+              // Displays all Warnings from the validation
+              $this->flash->warning($message);
+            }
+          }
+          else
+          {
+            $nameserver = new Nameserver($data);
+            if ($nameserver->save() === false) {
+              $this->flash->error('Nameserver could not be stored.');
+              $messages = $nameserver->getMessages();
+              foreach ($messages as $message) {
+                $this->flash->warning($message);
+              }
+            } else {
+              // Record was added
+              $this->flash->success('Nameserver created.');
+            }
+          }
+        break;
+
+        case 'delete':
+          $nameserver = Nameserver::find($data["id"]);
+          if ($nameserver->delete() === false) {
+            $this->flash->error('Nameserver could not be beleted.');
+            $messages = $nameserver->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            // Record was added
+            $this->flash->success('Nameserver deleted.');
+          }
+        break;
+      }
+    }
+    $this->view->nameservers = Nameserver::find();
+  }
+  /**
+  * Administrate Top Level Domains
+  */
+  public function administrateTLDAction()
+  {
+
+  }
+  /**
+  * Administrate Type
+  */
+  public function administrateTypeAction()
+  {
+
+  }
+  /**
+  * Administrate Recursor
+  */
+  public function administrateRecursorAction()
   {
 
   }

@@ -27,7 +27,11 @@ return new Config([
       'create',
       'edit',
       'delete',
-      'administrate'
+      'administrate',
+      'administrateNS',
+      'administrateTLD',
+      'administrateType',
+      'administrateRecursor'
     ]
   ]
 ]);
