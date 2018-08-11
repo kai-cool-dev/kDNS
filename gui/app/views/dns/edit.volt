@@ -27,7 +27,7 @@
     <tbody>
   {% endif %}
     {% if record.disabled == 1 %}
-      <tr class="bg-warning">
+      <tr class="bg-primary">
     {% else %}
       <tr>
     {% endif %}

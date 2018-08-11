@@ -13,6 +13,7 @@ namespace kDNS\Controllers;
 // Models
 use kDNS\Models\Domains;
 use kDNS\Models\Records;
+use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
 use kDNS\Forms\CreateDomainForm;
@@ -40,9 +41,24 @@ class DnsController extends ControllerBase
   */
   public function indexAction()
   {
-    $this->view->domains = Domains::find([
+    if(empty($_GET["page"]))
+    {
+      $currentPage = 0;
+    }
+    else
+    {
+      $currentPage = (int) $_GET["page"];
+    }
+    $domains = Domains::find([
       "account = ".$this->view->identity["id"]
     ]);
+    $paginator = new PaginatorModel(
+      [
+        "data"  => $domains,
+        "limit" => 10,
+        "page"  => $currentPage,
+      ]
+    );
   }
 
   /**
@@ -50,7 +66,18 @@ class DnsController extends ControllerBase
   */
   public function searchAction()
   {
-
+    $currentPage = (int) $_GET["page"];
+    $domains = Domains::find([
+      "account = ".$this->view->identity["id"]
+    ]);
+    $paginator = new PaginatorModel(
+      [
+        "data"  => $domains,
+        "limit" => 10,
+        "page"  => $currentPage,
+      ]
+    );
+    $this->view->domains = $paginator->getPaginate();
   }
 
   /**
