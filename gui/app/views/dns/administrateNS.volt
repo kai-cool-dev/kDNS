@@ -1,19 +1,4 @@
 <div class="row">
-  <div class="col-lg-3">
-    {{ link_to('dns/administrateNS','<i class="fas fa-wrench"></i> Edit authorative Nameserver', 'class': 'btn btn-primary form-control') }}
-  </div>
-  <div class="col-lg-3">
-    {{ link_to('dns/administrateRecursor','<i class="fas fa-wrench"></i> Edit recursor Nameserver', 'class': 'btn btn-primary form-control') }}
-  </div>
-  <div class="col-lg-3">
-    {{ link_to('dns/administrateType','<i class="fas fa-wrench"></i> Edit Record Types', 'class': 'btn btn-primary form-control') }}
-  </div>
-  <div class="col-lg-3">
-    {{ link_to('dns/administrateTLD','<i class="fas fa-wrench"></i> Edit Top Level Domains', 'class': 'btn btn-primary form-control') }}
-  </div>
-</div>
-
-<div class="row">
   <div class="col-lg-12">
     <h1><i class="fas fa-server"></i> Manage authorative Nameserver</h1>
     <hr>
@@ -48,10 +33,10 @@
             <form method="post">
               <input type="hidden" name="id" value="{{ nameserver.id }}" />
               <th scope="row">#{{ nameserver.id }}</th>
-              <td>{{ nameserver.name }}</td>
-              <td>{{ nameserver.fqdn }}</td>
-              <td>{{ nameserver.ip4 }}</td>
-              <td>{{ nameserver.ip6 }}</td>
+              <td><p class="form-control">{{ nameserver.name }}</p></td>
+              <td><p class="form-control">{{ nameserver.fqdn }}</p></td>
+              <td><p class="form-control">{{ nameserver.ip4 }}</p></td>
+              <td><p class="form-control">{{ nameserver.ip6 }}</p></td>
               <td><button type="submit" class="btn form-control btn-danger" name="action" value="delete" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button></td>
             </form>
           </tr>

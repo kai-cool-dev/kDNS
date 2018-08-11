@@ -7,9 +7,7 @@
 - Domain Deletion
   - Automatically purge all records
 - Administrate
-  - Edit / Add / Delete authorative Nameserver
   - Edit / Add / Delete recursor with zones
-  - Edit / Add / Delete TLDs
   - Edit / Add / Delete Record Types
 
 */
@@ -21,6 +19,7 @@ use kDNS\Models\Records;
 use kDNS\Models\Recursor;
 use kDNS\Models\Nameserver;
 use kDNS\Models\TopDomains;
+use kDNS\Models\RecordTypes;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
@@ -33,6 +32,7 @@ use kDNS\Forms\CreateMXForm;
 use kDNS\Forms\SearchDomainForm;
 use kDNS\Forms\SearchTLDForm;
 use kDNS\Forms\CreateTLDForm;
+use kDNS\Forms\CreateRecordTypeForm;
 
 // Other Stuff
 use Phalcon\Filter;
@@ -527,7 +527,54 @@ class DnsController extends ControllerBase
   */
   public function administrateTypeAction()
   {
+    $this->view->form = new CreateRecordTypeForm();
+    if($this->request->isPost())
+    {
+      $data=$this->request->getPost();
+      switch($data["action"])
+      {
+        case 'create':
+          if($this->view->form->isValid($data) == false)
+          {
+            // Ups, something is not valid.
+            $this->flash->error('Record Type is not valid.');
+            foreach ($this->view->form->getMessages() as $message) {
+              // Displays all Warnings from the validation
+              $this->flash->warning($message);
+            }
+          }
+          else
+          {
+            $recordtype = new RecordTypes($data);
+            if ($recordtype->save() === false) {
+              $this->flash->error('Record Type could not be stored.');
+              $messages = $recordtype->getMessages();
+              foreach ($messages as $message) {
+                $this->flash->warning($message);
+              }
+            } else {
+              // Record was added
+              $this->flash->success('Record Type created.');
+            }
+          }
+        break;
 
+        case 'delete':
+          $recordtype = RecordTypes::find($data["id"]);
+          if ($recordtype->delete() === false) {
+            $this->flash->error('Record Type could not be beleted.');
+            $messages = $recordtype->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            // Record was added
+            $this->flash->success('Record Type deleted.');
+          }
+        break;
+      }
+    }
+    $this->view->types = RecordTypes::find();
   }
   /**
   * Administrate Recursor

@@ -22,12 +22,6 @@ class RecordTypes extends Model
      */
     public $value;
 
-    /**
-     *
-     * @var string
-     */
-    public $description;
-
 
     public function initialize()
     {

@@ -25,8 +25,7 @@
       {%- set menus = [
         '<i class="fas fa-user-shield"></i> Permissions': 'permissions',
         '<i class="fas fa-users-cog"></i> Profiles': 'profiles',
-        '<i class="fas fa-user-edit"></i> Users': 'users',
-        '<i class="fas fa-server"></i> DNS': 'dns/administrate'
+        '<i class="fas fa-user-edit"></i> Users': 'users'
       ] -%}
 
       {%- for key, value in menus %}
@@ -36,6 +35,17 @@
         <li class="nav-item">{{ link_to(value, key, 'class':'nav-link') }}</li>
         {% endif %}
       {%- endfor -%}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-server"></i> DNS
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {{ link_to('dns/administrateTLD','<i class="fas fa-wrench"></i> Manage Top Level Domains', 'class': 'dropdown-item') }}
+          {{ link_to('dns/administrateNS','<i class="fas fa-wrench"></i> Manage authorative Nameserver', 'class': 'dropdown-item') }}
+          {{ link_to('dns/administrateRecursor','<i class="fas fa-wrench"></i> Manage recursor Nameserver', 'class': 'dropdown-item') }}
+          {{ link_to('dns/administrateType','<i class="fas fa-wrench"></i> Manage Record Types', 'class': 'dropdown-item') }}
+        </div>
+      </li>
     </ul>
     {% endif %}
     <ul class="navbar-nav mr-r4">
