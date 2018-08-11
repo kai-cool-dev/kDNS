@@ -46,7 +46,7 @@ label {
 }
 
 .btn:hover{
-  border-color:#f5f6fa; 
+  border-color:#f5f6fa;
 }
 
 .bg-primary, .alert-primary, .btn-primary{
@@ -93,4 +93,8 @@ label {
   background-color:#f5f6fa !important;
   border-color:#dcdde1;
   color:#2f3640;
+}
+
+.form-control{
+  text-align: center;
 }

@@ -21,6 +21,10 @@ use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
 use kDNS\Forms\NameserverSelectForm;
 use kDNS\Forms\CreateMXForm;
+use kDNS\Forms\SearchDomainForm;
+
+// Other Stuff
+use Phalcon\Filter;
 
 /**
  * Display the default index page.
@@ -59,6 +63,7 @@ class DnsController extends ControllerBase
         "page"  => $currentPage,
       ]
     );
+    $this->view->domains = $paginator->getPaginate();
   }
 
   /**
@@ -66,10 +71,31 @@ class DnsController extends ControllerBase
   */
   public function searchAction()
   {
-    $currentPage = (int) $_GET["page"];
-    $domains = Domains::find([
-      "account = ".$this->view->identity["id"]
-    ]);
+    $filter = new Filter();
+    if(empty($_GET["page"]))
+    {
+      $currentPage = 0;
+    }
+    else
+    {
+      $currentPage = (int) $_GET["page"];
+    }
+    // SQL Building 101
+    if($this->view->identity["profile"] == "Administrators")
+    {
+      // Admin
+      $sql="account";
+    }
+    else
+    {
+      // Normal User
+      $sql="account = ".$this->view->identity["id"];
+    }
+    if(!empty($this->request->get("name")))
+    {
+      $sql=$sql.' AND name LIKE "%'.$filter->sanitize($this->request->get("name"),"string").'%"';
+    }
+    $domains = Domains::find([$sql]);
     $paginator = new PaginatorModel(
       [
         "data"  => $domains,
@@ -78,6 +104,8 @@ class DnsController extends ControllerBase
       ]
     );
     $this->view->domains = $paginator->getPaginate();
+    $this->view->form = new SearchDomainForm();
+    $this->view->name=$filter->sanitize($this->request->get("name"),"string");
   }
 
   /**
