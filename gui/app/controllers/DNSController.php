@@ -33,6 +33,7 @@ use kDNS\Forms\SearchDomainForm;
 use kDNS\Forms\SearchTLDForm;
 use kDNS\Forms\CreateTLDForm;
 use kDNS\Forms\CreateRecordTypeForm;
+use kDNS\Forms\CreateRecursorForm;
 
 // Other Stuff
 use Phalcon\Filter;
@@ -581,6 +582,53 @@ class DnsController extends ControllerBase
   */
   public function administrateRecursorAction()
   {
+    $this->view->form = new CreateRecursorForm();
+    if($this->request->isPost())
+    {
+      $data=$this->request->getPost();
+      switch($data["action"])
+      {
+        case 'create':
+          if($this->view->form->isValid($data) == false)
+          {
+            // Ups, something is not valid.
+            $this->flash->error('Recursor is not valid.');
+            foreach ($this->view->form->getMessages() as $message) {
+              // Displays all Warnings from the validation
+              $this->flash->warning($message);
+            }
+          }
+          else
+          {
+            $recursor = new Recursor($data);
+            if ($recursor->save() === false) {
+              $this->flash->error('Recursor could not be stored.');
+              $messages = $recursor->getMessages();
+              foreach ($messages as $message) {
+                $this->flash->warning($message);
+              }
+            } else {
+              // Record was added
+              $this->flash->success('Recursor created.');
+            }
+          }
+        break;
 
+        case 'delete':
+          $recursor = Recursor::find($data["id"]);
+          if ($recursor->delete() === false) {
+            $this->flash->error('Record Type could not be beleted.');
+            $messages = $recursor->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            // Record was added
+            $this->flash->success('Record Type deleted.');
+          }
+        break;
+      }
+    }
+    $this->view->recursors = Recursor::find();
   }
 }

@@ -20,13 +20,7 @@ class Recursor extends Model
      *
      * @var string
      */
-    public $ip4;
-
-    /**
-     *
-     * @var string
-     */
-    public $ip6;
+    public $ip;
 
     /**
      *
