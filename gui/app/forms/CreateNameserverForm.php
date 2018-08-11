@@ -3,7 +3,6 @@ namespace kDNS\Forms;
 
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
-use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\PresenceOf;
 
 class CreateNameserverForm extends Form

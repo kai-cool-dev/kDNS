@@ -31,6 +31,8 @@ use kDNS\Forms\CreateSOAForm;
 use kDNS\Forms\NameserverSelectForm;
 use kDNS\Forms\CreateMXForm;
 use kDNS\Forms\SearchDomainForm;
+use kDNS\Forms\SearchTLDForm;
+use kDNS\Forms\CreateTLDForm;
 
 // Other Stuff
 use Phalcon\Filter;
@@ -471,7 +473,54 @@ class DnsController extends ControllerBase
   */
   public function administrateTLDAction()
   {
+    $this->view->form = new CreateTLDForm();
+    if($this->request->isPost())
+    {
+      $data=$this->request->getPost();
+      switch($data["action"])
+      {
+        case 'create':
+          if($this->view->form->isValid($data) == false)
+          {
+            // Ups, something is not valid.
+            $this->flash->error('TLD is not valid.');
+            foreach ($this->view->form->getMessages() as $message) {
+              // Displays all Warnings from the validation
+              $this->flash->warning($message);
+            }
+          }
+          else
+          {
+            $topdomain = new TopDomains($data);
+            if ($topdomain->save() === false) {
+              $this->flash->error('TLD could not be stored.');
+              $messages = $topdomain->getMessages();
+              foreach ($messages as $message) {
+                $this->flash->warning($message);
+              }
+            } else {
+              // Record was added
+              $this->flash->success('TLD created.');
+            }
+          }
+        break;
 
+        case 'delete':
+          $nameserver = Nameserver::find($data["id"]);
+          if ($nameserver->delete() === false) {
+            $this->flash->error('Nameserver could not be beleted.');
+            $messages = $nameserver->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            // Record was added
+            $this->flash->success('Nameserver deleted.');
+          }
+        break;
+      }
+    }
+    $this->view->tlds = TopDomains::find();
   }
   /**
   * Administrate Type

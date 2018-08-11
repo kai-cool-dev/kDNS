@@ -71,6 +71,7 @@
       {% endif %}
     {% else %}
       <h2>Add your first Nameserver.</h2>
+      <p>Currently you don't have any nameservers. Just at least two.</p>
       <table class="table table-striped">
         <tr>
           <form method="post">
