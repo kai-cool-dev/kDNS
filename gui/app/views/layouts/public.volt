@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
   {{ link_to(null, 'class': 'navbar-brand', 'kDNS GUI')}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -21,8 +21,8 @@
     </ul>
     {%- if logged_in is defined and not(logged_in is empty) -%}
     <ul class="navbar-nav mr-r4">
-      <li class="nav-item">{{ link_to('dns', 'DNS Management', 'class':'nav-link') }}</li>
-      <li class="nav-item">{{ link_to('session/logout', 'Logout', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('dns', '<i class="fas fa-server"></i> DNS Management', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('session/logout', '<i class="fas fa-sign-out-alt"></i> Logout', 'class':'nav-link') }}</li>
     </ul>
     {% else %}
     <ul class="navbar-nav mr-r2">

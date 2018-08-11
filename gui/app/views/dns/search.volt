@@ -48,12 +48,12 @@
           <tr>
             <th scope="row">#{{ domain.id }}</th>
             <td>{{ domain.name }}</td>
-            <td>{{ link_to('dns/edit/' ~ domain.id,'Edit','class':'btn btn-primary form-control') }}</td>
+            <td>{{ link_to('dns/edit/' ~ domain.id,'<i class="fas fa-edit"></i> Edit','class':'btn btn-primary form-control') }}</td>
           </tr>
         {% else %}
           <tr>
             <td colspan="2">You don't have any domains.</td>
-            <td>{{ link_to('dns/create','Create one!','class':'btn btn-primary form-control') }}</td>
+            <td>{{ link_to('dns/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-success form-control') }}</td>
           </tr>
         {% endfor %}
       </tbody>

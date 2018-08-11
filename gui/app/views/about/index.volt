@@ -1,6 +1,8 @@
 <div class="row">
 	<div class="col-lg-12">
 		<h1>About</h1>
+		<hr>
+		<p>This is the about page</p>
 	</div>
 </div>
 <div class="row">

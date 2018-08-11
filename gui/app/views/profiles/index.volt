@@ -1,29 +1,43 @@
-{{ content() }}
+<div class="row">
+	<div class="col-lg-12">
+		<h1><i class="fas fa-search"></i> Search Profile</h1>
+		<hr>
+		<p>Search Profile.<br>
+	</div>
+</div>
 
-<div align="right">
-    {{ link_to("profiles/create", "<i class='icon-plus-sign'></i> Create Profiles", "class": "btn btn-primary") }}
+<div class="row">
+	<div class="col-lg-12">
+		{{ content() }}
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+    {{ link_to("profiles/create", '<i class="fas fa-plus"></i> Create Profiles', "class": "btn btn-success form-control") }}
+	</div>
 </div>
 
 <form method="post" action="{{ url("profiles/search") }}" autocomplete="off">
-
-    <div class="center scaffold">
-
-        <h2>Search profiles</h2>
-
-        <div class="clearfix">
-            <label for="id">Id</label>
-            {{ form.render("id") }}
+  <div class="row">
+  	<div class="col-lg-5">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">ID</span>
         </div>
-
-        <div class="clearfix">
-            <label for="name">Name</label>
-            {{ form.render("name") }}
+        {{ form.render("id") }}
+      </div>
+  	</div>
+    <div class="col-lg-5">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Name</span>
         </div>
-
-        <div class="clearfix">
-            {{ submit_button("Search", "class": "btn btn-primary") }}
-        </div>
-
-    </div>
-
+        {{ form.render("name") }}
+      </div>
+  	</div>
+    <div class="col-lg-2">
+      <button type="submit" class="btn btn-primary form-control"><i class="fas fa-search"></i> Search</button>
+  	</div>
+  </div>
 </form>

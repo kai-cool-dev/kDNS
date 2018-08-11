@@ -1,49 +1,61 @@
-
-{{ content() }}
-
-<form method="post">
-
-<h2>Manage Permissions</h2>
-
-<div class="well" align="center">
-
-	<table class="perms">
-		<tr>
-			<td><label for="profileId">Profile</label></td>
-			<td>{{ select('profileId', profiles, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': '...', 'emptyValue': '') }}</td>
-			<td>{{ submit_button('Search', 'class': 'btn btn-primary', 'name' : 'search') }}</td>
-		</tr>
-	</table>
-
+<div class="row">
+	<div class="col-lg-12">
+		<h1><i class="fas fa-user-shield"></i> Manage Permissions</h1>
+		<hr>
+		<p>Select the Profile and manage the access level.<br>
+		<b>Notice:</b> Full Administrator Access is only possible with the original Administrators Profile.</p>
+	</div>
 </div>
 
+<div class="row">
+	<div class="col-lg-12">
+		{{ content() }}
+	</div>
+</div>
+
+<form method="post">
+	<div class="row">
+		<div class="col-lg-8">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<span class="input-group-text" id="basic-addon1">Profile</span>
+				</div>
+				{{ select('profileId', profiles, 'using': ['id', 'name'], 'useEmpty': true, 'emptyText': '...', 'emptyValue': '', 'class' : 'form-control') }}
+			</div>
+		</div>
+		<div class="col-lg-4">
+			{{ submit_button('Select', 'class': 'btn btn-primary form-control', 'name' : 'search') }}
+		</div>
+	</div>
+
 {% if request.isPost() and profile %}
-
-{% for resource, actions in acl.getResources() %}
-
-	<h3>{{ resource }}</h3>
-
-	<table class="table table-bordered table-striped" align="center">
-		<thead>
-			<tr>
-				<th width="5%"></th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for action in actions %}
-			<tr>
-				<td align="center"><input type="checkbox" name="permissions[]" value="{{ resource ~ '.' ~ action }}"  {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked" {% endif %}></td>
-				<td>{{ acl.getActionDescription(action) ~ ' ' ~ resource }}</td>
-			</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-			
-{% endfor %}
-
-{{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}   
-
+	{% for resource, actions in acl.getResources() %}
+	<div class="row">
+		<div class="col-lg-12">
+			<h3>{{ resource }}</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<table class="table table-bordered table-striped" align="center">
+				<thead>
+					<tr>
+						<th width="5%"></th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for action in actions %}
+					<tr>
+						<td align="center"><input type="checkbox" name="permissions[]" value="{{ resource ~ '.' ~ action }}"  {% if permissions[resource ~ '.' ~ action] is defined %} checked="checked" {% endif %}></td>
+						<td>{{ acl.getActionDescription(action) ~ ' ' ~ resource }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	{% endfor %}
+	{{ submit_button('Submit', 'class': 'btn btn-primary', 'name':'submit') }}
 {% endif %}
-
 </form>

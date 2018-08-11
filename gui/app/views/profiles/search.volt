@@ -1,50 +1,71 @@
-{{ content() }}
+<div class="row">
+	<div class="col-lg-12">
+		<h1><i class="fas fa-search"></i> Search Profile</h1>
+		<hr>
+		<p>Search Profile.<br>
+	</div>
+</div>
 
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("profiles/index", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ link_to("profiles/create", "Create profiles", "class": "btn btn-primary") }}
-    </li>
-</ul>
+<div class="row">
+	<div class="col-lg-12">
+		{{ content() }}
+	</div>
+</div>
 
-{% for profile in page.items %}
-{% if loop.first %}
-<table class="table table-bordered table-striped" align="center">
-    <thead>
+<div class="row">
+  <div class="col-lg-6">
+    {{ link_to("profiles", '<i class="fas fa-angle-left"></i>Go Back', 'class' : 'form-control btn btn-primary') }}
+  </div>
+  <div class="col-lg-6">
+    {{ link_to("profiles/create", '<i class="fas fa-plus"></i> Create profiles', "class": "btn btn-success form-control") }}
+  </div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+    {% for profile in page.items %}
+    {% if loop.first %}
+    <table class="table table-bordered table-striped" align="center">
+      <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Active?</th>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Active?</th>
         </tr>
-    </thead>
-    <tbody>
-{% endif %}
-        <tr>
-            <td>{{ profile.id }}</td>
-            <td>{{ profile.name }}</td>
-            <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td width="12%">{{ link_to("profiles/edit/" ~ profile.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
-            <td width="12%">{{ link_to("profiles/delete/" ~ profile.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
-        </tr>
-{% if loop.last %}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="10" align="right">
-                <div class="btn-group">
-                    {{ link_to("profiles/search", '<i class="icon-fast-backward"></i> First', "class": "btn") }}
-                    {{ link_to("profiles/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn ") }}
-                    {{ link_to("profiles/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn") }}
-                    {{ link_to("profiles/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn") }}
-                    <span class="help-inline">{{ page.current }}/{{ page.total_pages }}</span>
-                </div>
-            </td>
-        </tr>
-    </tfoot>
-</table>
-{% endif %}
-{% else %}
-    No profiles are recorded
-{% endfor %}
+      </thead>
+      <tbody>
+    {% endif %}
+      <tr>
+        <td>{{ profile.id }}</td>
+        <td>{{ profile.name }}</td>
+        <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
+        <td width="12%">{{ link_to("profiles/edit/" ~ profile.id, '<i class="fas fa-edit"></i> Edit', "class": "btn btn-primary form-control") }}</td>
+        <td width="12%">{{ link_to("profiles/delete/" ~ profile.id, '<i class="fas fa-trash"></i> Delete', "class": "btn btn-danger form-control") }}</td>
+      </tr>
+    {% if loop.last %}
+      </tbody>
+    </table>
+    {% endif %}
+    {% else %}
+        No profiles are recorded
+    {% endfor %}
+	</div>
+</div>
+
+<div class="row">
+  <div class="col-lg-2">
+    {{ link_to("profiles/search", '<i class="fas fa-angle-double-left"></i> First', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.before, '<i class="fas fa-angle-left"></i> Previous', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-4">
+    <p class="form-control">{{ page.current }}/{{ page.total_pages }}</p>
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.next, 'Next <i class="fas fa-angle-right"></i>', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("profiles/search?page=" ~ page.last, 'Last <i class="fas fa-angle-double-right"></i>', "class": "btn btn-primary form-control") }}
+  </div>
+</div>

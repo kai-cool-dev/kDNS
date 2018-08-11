@@ -1,7 +1,8 @@
-{{ content() }}
 <div class="row">
 	<div class="col-lg-12">
 		<h1>Terms of Service</h1>
+		<hr>
+		<p>This is the ToS Page</p>
 	</div>
 </div>
 <div class="row">
