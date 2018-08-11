@@ -14,7 +14,7 @@
 
 <div class="row">
   <div class="col-lg-6">
-    {{ link_to("profiles", '<i class="fas fa-angle-left"></i>Go Back', 'class' : 'form-control btn btn-primary') }}
+    {{ link_to("profiles", '<i class="fas fa-angle-left"></i> Go Back', 'class' : 'form-control btn btn-primary') }}
   </div>
   <div class="col-lg-6">
     {{ link_to("profiles/create", '<i class="fas fa-plus"></i> Create profiles', "class": "btn btn-success form-control") }}

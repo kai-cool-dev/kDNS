@@ -1,77 +1,76 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1>Welcome to kDNS</h1>
+    <hr>
+    <p>Here are your domains listed. If you don't have any. Just create one!</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
+    {{ content() }}
+  </div>
+</div>
 
 <form method="post" autocomplete="off">
+  {{ form.render("id") }}
 
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("profiles", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ submit_button("Save", "class": "btn btn-success") }}
-    </li>
-</ul>
-
-{{ content() }}
-
-<div class="center scaffold">
-
-    <h2>Edit profile</h2>
-
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#A" data-toggle="tab">Basic</a></li>
-        <li><a href="#B" data-toggle="tab">Users</a></li>
-    </ul>
-
-    <div class="tabbable">
-        <div class="tab-content">
-            <div class="tab-pane active" id="A">
-
-                {{ form.render("id") }}
-
-                <div class="clearfix">
-                    <label for="name">Name</label>
-                    {{ form.render("name") }}
-                </div>
-
-                <div class="clearfix">
-                    <label for="active">Active?</label>
-                    {{ form.render("active") }}
-                </div>
-
-            </div>
-
-            <div class="tab-pane" id="B">
-                <p>
-                    <table class="table table-bordered table-striped" align="center">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Banned?</th>
-                                <th>Suspended?</th>
-                                <th>Active?</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in profile.users %}
-                            <tr>
-                                <td>{{ user.id }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
-                                <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
-                                <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
-                                <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
-                                <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
-                            </tr>
-                        {% else %}
-                            <tr><td colspan="3" align="center">There are no users assigned to this profile</td></tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </p>
-            </div>
-
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Name</span>
         </div>
+        {{ form.render("name") }}
+      </div>
     </div>
+    <div class="col-lg-6">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Active</span>
+        </div>
+        {{ form.render("active") }}
+      </div>
+    </div>
+  </div>
 
-    </form>
+  <div class="row">
+    <div class="col-lg-6">
+      {{ link_to("profiles/search", '<i class="fas fa-angle-left"></i> Go Back', 'class' : 'form-control btn btn-primary') }}
+    </div>
+    <div class="col-lg-6">
+      <button type="submit" class="btn btn-success form-control"><i class="fas fa-save"></i> Save</button>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <div class="col-lg-12">
+    <table class="table table-bordered table-striped" align="center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Banned</th>
+          <th>Suspended</th>
+          <th>Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in profile.users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
+          <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
+          <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
+          <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="fas fa-edit"></i> Edit', "class": "btn btn-primary form-control") }}</td>
+          <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="fas fa-trash"></i> Delete', "class": "btn btn-danger form-control") }}</td>
+        </tr>
+        {% else %}
+          <tr><td colspan="3" align="center">There are no users assigned to this profile</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
 </div>

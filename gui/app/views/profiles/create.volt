@@ -34,10 +34,10 @@
 
   <div class="row">
     <div class="col-lg-6">
-      {{ link_to("profiles", '<i class="fas fa-angle-left"></i>Go Back', 'class' : 'form-control btn btn-primary') }}
+      {{ link_to("profiles", '<i class="fas fa-angle-left"></i> Go Back', 'class' : 'form-control btn btn-primary') }}
     </div>
     <div class="col-lg-6">
-      {{ submit_button("Save", "class": "btn btn-success form-control") }}
+      <button type="submit" class="btn btn-success form-control"><i class="fas fa-save"></i> Save</button>
     </div>
   </div>
 </form>
