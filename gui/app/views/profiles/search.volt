@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1><i class="fas fa-search"></i> Search Profile</h1>
+		<h1><i class="fas fa-users-cog"></i> Search Profile</h1>
 		<hr>
-		<p>Search Profile.<br>
+		<p>Search Profile.</p>
 	</div>
 </div>
 
@@ -39,8 +39,8 @@
         <td>{{ profile.id }}</td>
         <td>{{ profile.name }}</td>
         <td>{{ profile.active == 'Y' ? 'Yes' : 'No' }}</td>
-        <td width="12%">{{ link_to("profiles/edit/" ~ profile.id, '<i class="fas fa-edit"></i> Edit', "class": "btn btn-primary form-control") }}</td>
-        <td width="12%">{{ link_to("profiles/delete/" ~ profile.id, '<i class="fas fa-trash"></i> Delete', "class": "btn btn-danger form-control") }}</td>
+        <td>{{ link_to("profiles/edit/" ~ profile.id, '<i class="fas fa-edit"></i> Edit', "class": "btn btn-primary form-control") }}</td>
+        <td>{{ link_to("profiles/delete/" ~ profile.id, '<i class="fas fa-trash"></i> Delete', "class": "btn btn-danger form-control") }}</td>
       </tr>
     {% if loop.last %}
       </tbody>

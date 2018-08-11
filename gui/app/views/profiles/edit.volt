@@ -1,11 +1,10 @@
 <div class="row">
-  <div class="col-lg-12">
-    <h1>Welcome to kDNS</h1>
-    <hr>
-    <p>Here are your domains listed. If you don't have any. Just create one!</p>
-  </div>
+	<div class="col-lg-12">
+		<h1><i class="fas fa-users-cog"></i> Edit Profile</h1>
+		<hr>
+		<p>You can change the Name of the Profile (please don't do it with the Administrators Group, otherwise you will break stuff). And activate/deactivate it.</p>
+	</div>
 </div>
-
 <div class="row">
   <div class="col-lg-12">
     {{ content() }}

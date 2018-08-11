@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<h1><i class="fas fa-search"></i> Search Profile</h1>
+		<h1><i class="fas fa-users-cog"></i> Manage Profiles</h1>
 		<hr>
 		<p>Search Profile.<br>
 	</div>
@@ -12,15 +12,9 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-lg-12">
-    {{ link_to("profiles/create", '<i class="fas fa-plus"></i> Create Profiles', "class": "btn btn-success form-control") }}
-	</div>
-</div>
-
 <form method="post" action="{{ url("profiles/search") }}" autocomplete="off">
   <div class="row">
-  	<div class="col-lg-5">
+  	<div class="col-lg-6">
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">ID</span>
@@ -28,7 +22,7 @@
         {{ form.render("id") }}
       </div>
   	</div>
-    <div class="col-lg-5">
+    <div class="col-lg-6">
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text">Name</span>
@@ -36,8 +30,13 @@
         {{ form.render("name") }}
       </div>
   	</div>
-    <div class="col-lg-2">
-      <button type="submit" class="btn btn-primary form-control"><i class="fas fa-search"></i> Search</button>
-  	</div>
   </div>
+	<div class="row">
+		<div class="col-lg-6">
+			{{ link_to("profiles/create", '<i class="fas fa-plus"></i> Create Profiles', "class": "btn btn-success form-control") }}
+		</div>
+		<div class="col-lg-6">
+			<button type="submit" class="btn btn-primary form-control"><i class="fas fa-search"></i> Search</button>
+		</div>
+	</div>
 </form>

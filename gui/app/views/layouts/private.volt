@@ -25,7 +25,7 @@
       {%- set menus = [
         '<i class="fas fa-user-shield"></i> Permissions': 'permissions',
         '<i class="fas fa-users-cog"></i> Profiles': 'profiles',
-        '<i class="fas fa-user-edit"></i> User': 'users',
+        '<i class="fas fa-user-edit"></i> Users': 'users',
         '<i class="fas fa-server"></i> DNS': 'dns/administrate'
       ] -%}
 

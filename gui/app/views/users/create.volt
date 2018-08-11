@@ -1,35 +1,51 @@
-
-<form method="post" autocomplete="off">
-
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("users", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ submit_button("Save", "class": "btn btn-success") }}
-    </li>
-</ul>
-
-{{ content() }}
-
-<div class="center scaffold">
-    <h2>Create a User</h2>
-
-    <div class="clearfix">
-        <label for="name">Name</label>
-        {{ form.render("name") }}
-    </div>
-
-    <div class="clearfix">
-        <label for="email">E-Mail</label>
-        {{ form.render("email") }}
-    </div>
-
-    <div class="clearfix">
-        <label for="profilesId">Profile</label>
-        {{ form.render("profilesId") }}
-    </div>
-
+<div class="row">
+	<div class="col-lg-12">
+		<h1><i class="fas fa-user-edit"></i> Search User</h1>
+		<hr>
+		<p>Search Profile.</p>
+	</div>
 </div>
 
+<div class="row">
+	<div class="col-lg-12">
+		{{ content() }}
+	</div>
+</div>
+
+
+<form method="post" autocomplete="off">
+  <div class="row">
+  	<div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Name</span>
+        </div>
+        {{ form.render("name") }}
+      </div>
+  	</div>
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">E-Mail</span>
+        </div>
+        {{ form.render("email") }}
+      </div>
+  	</div>
+    <div class="col-lg-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Profile</span>
+        </div>
+        {{ form.render("profilesId") }}
+      </div>
+  	</div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      {{ link_to("users", '<i class="fas fa-angle-left"></i> Go Back', 'class' : 'form-control btn btn-primary') }}
+    </div>
+    <div class="col-lg-6">
+      <button type="submit" class="btn btn-success form-control"><i class="fas fa-plus"></i> Create</button>
+    </div>
+  </div>
 </form>

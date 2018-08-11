@@ -2,6 +2,7 @@
   <div class="col-lg-12">
     <h1><i class="fas fa-user-edit"></i> Change your own Password</h1>
     <hr>
+    <p>Here you can change your own password.</p>
   </div>
 </div>
 

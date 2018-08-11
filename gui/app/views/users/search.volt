@@ -1,19 +1,33 @@
-{{ content() }}
+<div class="row">
+	<div class="col-lg-12">
+		<h1><i class="fas fa-user-edit"></i> Search User</h1>
+		<hr>
+		<p>Search Profile.</p>
+	</div>
+</div>
 
-<ul class="pager">
-    <li class="previous pull-left">
-        {{ link_to("users/index", "&larr; Go Back") }}
-    </li>
-    <li class="pull-right">
-        {{ link_to("users/create", "Create users", "class": "btn btn-primary") }}
-    </li>
-</ul>
+<div class="row">
+	<div class="col-lg-12">
+		{{ content() }}
+	</div>
+</div>
 
-{% for user in page.items %}
-{% if loop.first %}
-<table class="table table-bordered table-striped" align="center">
-    <thead>
-        <tr>
+<div class="row">
+  <div class="col-lg-6">
+    {{ link_to("users", '<i class="fas fa-angle-left"></i> Go Back', 'class' : 'form-control btn btn-primary') }}
+  </div>
+  <div class="col-lg-6">
+    {{ link_to("users/create", '<i class="fas fa-plus"></i> Create User', "class": "btn btn-success form-control") }}
+  </div>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+    {% for user in page.items %}
+      {% if loop.first %}
+      <table class="table table-bordered table-striped" align="center">
+        <thead>
+          <tr>
             <th>Id</th>
             <th>Name</th>
             <th>Email</th>
@@ -21,38 +35,44 @@
             <th>Banned?</th>
             <th>Suspended?</th>
             <th>Confirmed?</th>
-        </tr>
-    </thead>
-    <tbody>
-{% endif %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.profile.name }}</td>
-            <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
-            <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
-            <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
-            <td width="12%">{{ link_to("users/edit/" ~ user.id, '<i class="icon-pencil"></i> Edit', "class": "btn") }}</td>
-            <td width="12%">{{ link_to("users/delete/" ~ user.id, '<i class="icon-remove"></i> Delete', "class": "btn") }}</td>
-        </tr>
-{% if loop.last %}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="10" align="right">
-                <div class="btn-group">
-                    {{ link_to("users/search", '<i class="icon-fast-backward"></i> First', "class": "btn") }}
-                    {{ link_to("users/search?page=" ~ page.before, '<i class="icon-step-backward"></i> Previous', "class": "btn ") }}
-                    {{ link_to("users/search?page=" ~ page.next, '<i class="icon-step-forward"></i> Next', "class": "btn") }}
-                    {{ link_to("users/search?page=" ~ page.last, '<i class="icon-fast-forward"></i> Last', "class": "btn") }}
-                    <span class="help-inline">{{ page.current }}/{{ page.total_pages }}</span>
-                </div>
-            </td>
-        </tr>
-    </tfoot>
-</table>
-{% endif %}
-{% else %}
-    No users are recorded
-{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+      {% endif %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.profile.name }}</td>
+        <td>{{ user.banned == 'Y' ? 'Yes' : 'No' }}</td>
+        <td>{{ user.suspended == 'Y' ? 'Yes' : 'No' }}</td>
+        <td>{{ user.active == 'Y' ? 'Yes' : 'No' }}</td>
+        <td>{{ link_to("users/edit/" ~ user.id, '<i class="fas fa-edit"></i> Edit', "class": "btn btn-primary form-control") }}</td>
+        <td>{{ link_to("users/delete/" ~ user.id, '<i class="fas fa-trash"></i> Delete', "class": "btn btn-danger form-control") }}</td>
+      </tr>
+      {% if loop.last %}
+      </tbody>
+    </table>
+    {% endif %}
+    {% else %}
+        No users are recorded
+    {% endfor %}
+	</div>
+</div>
+<div class="row">
+  <div class="col-lg-2">
+    {{ link_to("users/search", '<i class="fas fa-angle-double-left"></i> First', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("users/search?page=" ~ page.before, '<i class="fas fa-angle-left"></i> Previous', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-4">
+    <p class="form-control">{{ page.current }}/{{ page.total_pages }}</p>
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("users/search?page=" ~ page.next, 'Next <i class="fas fa-angle-right"></i>', "class": "btn btn-primary form-control") }}
+  </div>
+  <div class="col-lg-2">
+    {{ link_to("users/search?page=" ~ page.last, 'Last <i class="fas fa-angle-double-right"></i>', "class": "btn btn-primary form-control") }}
+  </div>
+</div>
