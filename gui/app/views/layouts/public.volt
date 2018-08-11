@@ -7,8 +7,8 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
-        'Home': 'index',
-        'About': 'about'
+        '<i class="fas fa-home"></i> Home': 'index',
+        '<i class="fas fa-users"></i> About': 'about'
       ] -%}
 
       {%- for key, value in menus %}
@@ -27,7 +27,7 @@
     {% else %}
     <ul class="navbar-nav mr-r2">
       <li class="nav-item">
-        {{ link_to('session/login', 'Login', 'class':'nav-link') }}
+        {{ link_to('session/login', '<i class="fas fa-sign-in-alt"></i> Login', 'class':'nav-link') }}
       </li>
     </ul>
     {% endif %}

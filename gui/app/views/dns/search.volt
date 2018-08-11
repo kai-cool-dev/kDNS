@@ -63,18 +63,18 @@
 
 <div class="row">
   <div class="col-lg-2">
-    {{ link_to("dns/search" ~ "&name=" ~ name, 'First', "class": "btn btn-primary form-control") }}
+    {{ link_to("dns/search" ~ "&name=" ~ name, '<i class="fas fa-angle-double-left"></i> First', "class": "btn btn-primary form-control") }}
   </div>
   <div class="col-lg-2">
-    {{ link_to("dns/search?page=" ~ domains.before ~ "&name=" ~ name, 'Previous', "class": "btn btn-primary form-control") }}
+    {{ link_to("dns/search?page=" ~ domains.before ~ "&name=" ~ name, '<i class="fas fa-angle-left"></i> Previous', "class": "btn btn-primary form-control") }}
   </div>
   <div class="col-lg-4">
     <p class="form-control">{{ domains.current }}/{{ domains.total_pages }}</p>
   </div>
   <div class="col-lg-2">
-    {{ link_to("dns/search?page=" ~ domains.next ~ "&name=" ~ name, 'Next', "class": "btn btn-primary form-control") }}
+    {{ link_to("dns/search?page=" ~ domains.next ~ "&name=" ~ name, 'Next <i class="fas fa-angle-right"></i>', "class": "btn btn-primary form-control") }}
   </div>
   <div class="col-lg-2">
-    {{ link_to("dns/search?page=" ~ domains.last ~ "&name=" ~ name, 'Last', "class": "btn btn-primary form-control") }}
+    {{ link_to("dns/search?page=" ~ domains.last ~ "&name=" ~ name, 'Last <i class="fas fa-angle-double-right"></i>', "class": "btn btn-primary form-control") }}
   </div>
 </div>

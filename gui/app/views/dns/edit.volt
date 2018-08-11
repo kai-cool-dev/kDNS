@@ -27,7 +27,7 @@
     <tbody>
   {% endif %}
     {% if record.disabled == 1 %}
-      <tr class="bg-primary">
+      <tr class="bg-disabled">
     {% else %}
       <tr>
     {% endif %}
@@ -43,17 +43,17 @@
           {% else %}
             <td colspan="2"><div class="input-group">{{ form[record.id].render('ttl',[ 'id' : 'ttl'+record.id]) }}</div></td>
           {% endif %}
-          <td><button type="submit" name="action" value="update" class="btn form-control btn-success">Save</button></td>
+          <td><button type="submit" name="action" value="update" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fas fa-save"></i></button></td>
           <td>
             {% if record.type != "SOA" %}
               {% if record.disabled == 0 %}
-              <button type="submit" class="btn form-control btn-secondary" name="action" value="disable">Disable</button>
+              <button type="submit" class="btn form-control btn-secondary" name="action" value="disable" data-toggle="tooltip" data-placement="bottom" title="Disable"><i class="fas fa-ban"></i></button>
               {% else %}
-              <button type="submit" class="btn form-control btn-primary" name="action" value="enable">Enable</button>
+              <button type="submit" class="btn form-control btn-primary" name="action" value="enable" data-toggle="tooltip" data-placement="bottom" title="Enable"><i class="fas fa-play"></i></button>
               {% endif %}
             {% endif %}
           </td>
-          <td><button type="submit" class="btn form-control btn-danger" name="action" value="delete">Delete</button></td>
+          <td><button type="submit" class="btn form-control btn-danger" name="action" value="delete" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button></td>
         </form>
       </tr>
   {% if loop.last %}
@@ -71,7 +71,7 @@
           <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
           <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
           <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
-          <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create">Create</button></td>
+          <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create"><i class="fas fa-plus"></i> Create</button></td>
         </form>
       </tr>
     </tbody>

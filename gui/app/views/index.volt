@@ -3,6 +3,7 @@
 <head>
 	<title>kDNS Managment GUI</title>
 	{{ stylesheet_link('css/bootstrap.min.css') }}
+	{{ stylesheet_link('css/all.css') }}
 	{{ stylesheet_link('css/style.css') }}
 </head>
 <body>

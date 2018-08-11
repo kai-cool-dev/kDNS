@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
   {{ link_to(null, 'class': 'navbar-brand', 'kDNS GUI')}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,9 +7,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
-        'Home': 'dns',
-        'List/Search Domains': 'dns/search',
-        'Create new Domain': 'dns/create'
+        '<i class="fas fa-home"></i> Home': 'dns',
+        '<i class="fas fa-search"></i> List/Search Domains': 'dns/search',
+        '<i class="fas fa-plus"></i> Create new Domain': 'dns/create'
       ] -%}
 
       {%- for key, value in menus %}
@@ -39,8 +39,8 @@
     </ul>
     {% endif %}
     <ul class="navbar-nav mr-r4">
-      <li class="nav-item">{{ link_to('users/changePassword', 'Change your password', 'class':'nav-link') }}</li>
-      <li class="nav-item">{{ link_to('session/logout', 'Logout', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('users/changePassword', '<i class="fas fa-user-edit"></i> Change your password', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('session/logout', '<i class="fas fa-sign-out-alt"></i> Logout', 'class':'nav-link') }}</li>
     </ul>
   </div>
 </nav>

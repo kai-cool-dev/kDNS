@@ -95,6 +95,12 @@ label {
   color:#2f3640;
 }
 
+.bg-disabled{
+  background-color:#7f8fa6 !important;
+  border-color:#718093;
+  color:#2f3640;
+}
+
 .form-control{
   text-align: center;
 }
