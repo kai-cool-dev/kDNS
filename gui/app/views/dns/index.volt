@@ -43,7 +43,7 @@
         {% else %}
           <tr>
             <td colspan="2">You don't have any domains.</td>
-            <td>{{ link_to('dns/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-primary form-control') }}</td>
+            <td>{{ link_to('dns/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-success form-control') }}</td>
           </tr>
         {% endfor %}
       </tbody>

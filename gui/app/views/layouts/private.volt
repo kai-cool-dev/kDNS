@@ -23,10 +23,10 @@
     {% if identity["profile"] == "Administrators" %}
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
-        'Permissions': 'permissions',
-        'Profiles': 'profiles',
-        'User': 'users',
-        'DNS': 'dns/administrate'
+        '<i class="fas fa-user-shield"></i> Permissions': 'permissions',
+        '<i class="fas fa-users-cog"></i> Profiles': 'profiles',
+        '<i class="fas fa-user-edit"></i> User': 'users',
+        '<i class="fas fa-server"></i> DNS': 'dns/administrate'
       ] -%}
 
       {%- for key, value in menus %}
