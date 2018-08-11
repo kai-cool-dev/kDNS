@@ -406,11 +406,23 @@ class DnsController extends ControllerBase
     {
       if ($this->view->domain->delete() === false) {
         $this->flash->error('Domain could not be deleted.');
-        $messages = $nameserver->getMessages();
+        $messages = $this->view->domain->getMessages();
         foreach ($messages as $message) {
           $this->flash->warning($message);
         }
       } else {
+        foreach(Records::find('domain_id = '.$this->view->domain->id) as $record)
+        {
+          if ($record->delete() === false) {
+            $this->flash->error('Domain could not be deleted.');
+            $messages = $record->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            $this->flash->success('Record purged deleted.');
+          }
+        }
         // Record was added
         $this->flash->success('Domain deleted.');
         return $this->dispatcher->forward([
