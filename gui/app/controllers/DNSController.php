@@ -1,12 +1,25 @@
 <?php
+/* TODO:
+
+- Add search for own domains
+  - Add function for admin to show "admin-mode"-domains
+
+- DNS Edit Page:
+  - Add domain_description (used in whois)
+
+*/
 namespace kDNS\Controllers;
 
+// Models
 use kDNS\Models\Domains;
 use kDNS\Models\Records;
+
+// GUI Forms
 use kDNS\Forms\CreateDomainForm;
 use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
 use kDNS\Forms\NameserverSelectForm;
+use kDNS\Forms\CreateMXForm;
 
 /**
  * Display the default index page.
@@ -176,9 +189,10 @@ class DnsController extends ControllerBase
       $this->view->form=$data;
     }
     // Shows general new record creation form
-    $this->view->newform=new CreateRecordForm();
+    $this->view->newform=new CreateRecordForm(null,true);
     // Shows Nameserver Select for Modal
     $this->view->nameserverform=new NameserverSelectForm();
+    $this->view->mxserverform=new CreateMXForm();
   }
 
   private function createSOARecord($data)
@@ -211,7 +225,19 @@ class DnsController extends ControllerBase
 
   private function deleteRecord($data)
   {
-
+    $record = new Records($data);
+    if ($record->delete() === false) {
+      $this->flash->error('Record could not be deleted.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      // Record was added
+      $this->flash->success('Record deleted.');
+      // Update Records
+      $this->view->records=Records::find('domain_id = '.$this->view->domain->id);
+    }
   }
 
   private function createRecord($data)

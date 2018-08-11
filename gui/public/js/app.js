@@ -12,13 +12,24 @@ function functionmodal()
   {
     $('#nameserverModal').modal('toggle');
   }
+  if($('#newtype').val() == "MX")
+  {
+    $('#mxserverModal').modal('toggle');
+  }
 }
 
-function savemodal()
+function nameserversave()
 {
   var nameserver = $("#nameserver").val() || [];
   $('#newcontent').val(nameserver);
   $('#nameserverModal').modal('toggle');
+}
+
+function mxserversave()
+{
+  $('#newcontent').val($("#mailserver").val());
+  $('#newprio').val($("#mxprio").val());
+  $('#mxserverModal').modal('toggle');
 }
 
 $('#newtype').change(function(){
@@ -28,3 +39,7 @@ $('#newtype').change(function(){
 $('#newcontent').click(function(){
   functionmodal();
 });
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

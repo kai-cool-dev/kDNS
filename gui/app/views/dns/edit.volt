@@ -49,7 +49,7 @@
               {% if record.disabled == 0 %}
               <button type="submit" class="btn form-control btn-secondary" name="action" value="disable">Disable</button>
               {% else %}
-              <button type="submit" class="btn form-control btn-success" name="action" value="enable">Enable</button>
+              <button type="submit" class="btn form-control btn-primary" name="action" value="enable">Enable</button>
               {% endif %}
             {% endif %}
           </td>
@@ -60,6 +60,7 @@
       <tr>
         <form method="post">
           {{ newform.render('action') }}
+          {{ newform.render('prio',[ 'id' : 'newprio']) }}
           <th scope="row">NEW</th>
           <td><div class="input-group">
             {{ newform.render('name') }}
@@ -69,8 +70,7 @@
           </div></td>
           <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
           <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
-          <td><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
-          <td><div class="input-group">{{ newform.render('prio',[ 'id' : 'newprio']) }}</div></td>
+          <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
           <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create">Create</button></td>
         </form>
       </tr>
@@ -160,7 +160,7 @@
 
 
 <!-- Modal for Nameserver selection -->
-<div class="modal" tabindex="-1" role="dialog" id="nameserverModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="nameserverModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -175,7 +175,32 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="savemodal()">Select</button>
+        <button type="button" class="btn btn-success" onclick="nameserversave()">Select</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for MX Record -->
+<div class="modal fade" tabindex="-1" role="dialog" id="mxserverModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Please type in your mailserver</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please type in your remote mailserver</p>
+        {{ mxserverform.render('mailserver') }}
+        <p>Please type in the priority (you can leave that as standard)</p>
+        {{ mxserverform.render('prio',[ 'id' : 'mxprio']) }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" onclick="mxserversave()">Save</button>
       </div>
     </div>
   </div>
