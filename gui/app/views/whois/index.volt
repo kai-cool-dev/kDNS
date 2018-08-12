@@ -24,6 +24,7 @@
 	</div>
 </div>
 
+{% if display %}
 <div class="row">
 	<div class="col-lg-12">
     <pre>
@@ -39,3 +40,4 @@
     </pre>
 	</div>
 </div>
+{% endif %}

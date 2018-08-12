@@ -1,3 +1,4 @@
+<script>var nserror=false;</script>
 <div class="row">
   <div class="col-lg-12">
     <h1>Edit {{ domain.name }}</h1>
@@ -26,34 +27,41 @@
   </div>
 
 <div class="row">
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <button type="submit" name="action" value="updateDescription" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fas fa-save"></i> Save Description</button>
   </div>
 </form>
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     {{ link_to('dns/delete/' ~ domain.id,'<i class="fas fa-trash"></i> Delete Domain','class':'btn btn-danger form-control') }}
+  </div>
+  <div class="col-lg-4">
+    <form method="post" action="{{ url('whois/index/') }}">
+      <button type="submit" name="name" value="{{ domain.name }}" class="btn form-control btn-primary" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fas fa-question"></i> Whois</button>
+    </form>
   </div>
 </div>
 
 {% for record in records %}
   {% if loop.first %}
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Type</th>
-        <th scope="col">Content</th>
-        <th scope="col" colspan="2">TTL / Prio</th>
-        <th scope="col" colspan="3"></th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="row">
+    <div class="col-lg-12">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Content</th>
+          <th scope="col" colspan="2">TTL / Prio</th>
+          <th scope="col" colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
   {% endif %}
     {% if record.disabled == 1 %}
-      <tr class="bg-disabled">
+        <tr class="bg-disabled">
     {% else %}
-      <tr>
+        <tr>
     {% endif %}
         <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
           <input type="hidden" name="id" value="{{ record.id }}" />
@@ -81,25 +89,27 @@
         </form>
       </tr>
   {% if loop.last %}
-      <tr>
-        <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
-          {{ newform.render('action') }}
-          {{ newform.render('prio',[ 'id' : 'newprio']) }}
-          <th scope="row">NEW</th>
-          <td><div class="input-group">
-            {{ newform.render('name') }}
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2">.{{ domain.name }}</span>
-            </div>
-          </div></td>
-          <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
-          <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
-          <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
-          <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create"><i class="fas fa-plus"></i> Create</button></td>
-        </form>
-      </tr>
-    </tbody>
-  </table>
+          <tr>
+            <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
+              {{ newform.render('action') }}
+              {{ newform.render('prio',[ 'id' : 'newprio']) }}
+              <th scope="row">NEW</th>
+              <td><div class="input-group">
+                {{ newform.render('name') }}
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">.{{ domain.name }}</span>
+                </div>
+              </div></td>
+              <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
+              <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
+              <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
+              <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create"><i class="fas fa-plus"></i> Create</button></td>
+            </form>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   {% endif %}
 {% else %}
   <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">

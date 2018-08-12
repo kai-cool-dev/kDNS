@@ -254,11 +254,12 @@ class DnsController extends ControllerBase
       if($ns<2)
       {
         $this->flash->error('Please add at least two NS Records. These Records points to the nameservers. And required for reachability of the domain.');
-        echo "<script>var nserror = true;</script>";
+        echo '<script>var nserror=true;</script>';
       }
       if($mx<1)
       {
         $this->flash->notice('Atleast one MX Record pointing to your mailserver is required for recieving mails.');
+        echo '<button type="button" class="form-control btn btn-primary" data-toggle="modal" data-target="#mxserverModal"><i class="fas fa-plus"></i> Create MX Record Now</button>';
       }
       $this->view->form=$data;
     }
@@ -427,6 +428,27 @@ class DnsController extends ControllerBase
   public function deleteAction($id)
   {
     $this->view->domain=Domains::findFirst($id);
+    if($this->view->identity["profile"] == "Administrators")
+    {
+      $this->flash->notice('You are in admin modus.');
+    }
+    else
+    {
+      if($this->view->domain->account == "0")
+      {
+        $this->flash->notice('This is a public domain');
+      }
+      else
+      {
+        if($this->view->domain->account != $this->view->identity["id"])
+        {
+          $this->flash->notice('You don\'t have access to this module: private');
+          return $this->dispatcher->forward([
+              'action' => 'index'
+          ]);
+        }
+      }
+    }
     if($this->request->isPost())
     {
       if ($this->view->domain->delete() === false) {

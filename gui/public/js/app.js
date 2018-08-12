@@ -6,11 +6,6 @@ function myLog(data)
   console.log("======");
 }
 
-if(nserror === true)
-{
-  $('#nameserverModal').modal('toggle');
-}
-
 function functionmodal()
 {
   if($('#newtype').val() == "NS")
@@ -21,6 +16,12 @@ function functionmodal()
   {
     $('#mxserverModal').modal('toggle');
   }
+}
+
+if(nserror == true)
+{
+  // Test
+  $('#nameserverModal').modal('toggle');
 }
 
 function nameserversave()
