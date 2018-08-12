@@ -45,7 +45,7 @@
   {% if loop.first %}
   <div class="row">
     <div class="col-lg-12">
-    <table class="table table-striped">
+    <table class="table table-striped table-borderless">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -57,6 +57,23 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
+            {{ newform.render('action') }}
+            {{ newform.render('prio',[ 'id' : 'newprio']) }}
+            <th scope="row">NEW</th>
+            <td><div class="input-group">
+              {{ newform.render('name') }}
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">.{{ domain.name }}</span>
+              </div>
+            </div></td>
+            <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
+            <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
+            <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
+            <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create"><i class="fas fa-plus"></i> Create</button></td>
+          </form>
+        </tr>
   {% endif %}
     {% if record.disabled == 1 %}
         <tr class="bg-disabled">
@@ -89,23 +106,7 @@
         </form>
       </tr>
   {% if loop.last %}
-          <tr>
-            <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
-              {{ newform.render('action') }}
-              {{ newform.render('prio',[ 'id' : 'newprio']) }}
-              <th scope="row">NEW</th>
-              <td><div class="input-group">
-                {{ newform.render('name') }}
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">.{{ domain.name }}</span>
-                </div>
-              </div></td>
-              <td><div class="input-group">{{ newform.render('type',[ 'id' : 'newtype']) }}</div></td>
-              <td><div class="input-group">{{ newform.render('content',[ 'id' : 'newcontent']) }}</div></td>
-              <td colspan="2"><div class="input-group">{{ newform.render('ttl',[ 'id' : 'newttl']) }}</div></td>
-              <td colspan="3"><button type="submit" class="btn form-control btn-success" name="action" value="create"><i class="fas fa-plus"></i> Create</button></td>
-            </form>
-          </tr>
+
         </tbody>
       </table>
     </div>

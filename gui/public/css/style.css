@@ -7,7 +7,7 @@ footer {
 }
 
 body{
-  color:#2f3640;
+  color:#353741;
 }
 
 footer a {
@@ -57,14 +57,18 @@ a:hover {
   color:#66A584;
 }
 
+b, th {
+  color:#66A584;
+}
+
 .bg-primary, .alert-primary, .btn-primary{
   background-color:#66A584 !important;
   border-color:#66A584;
   color:#f5f6fa;
 }
 .bg-secondary, .alert-secondary, .btn-secondary{
-  background-color:#64C873 !important;
-  border-color:#64C873;
+  background-color:#DAE1A6 !important;
+  border-color:#DAE1A6;
   color:#f5f6fa;
 }
 .bg-success, .alert-success, .btn-success{
