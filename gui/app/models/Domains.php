@@ -4,8 +4,8 @@ namespace kDNS\Models;
 use Phalcon\Mvc\Model;
 
 /**
- * Permissions
- * Stores the permissions by profile
+ * Domains
+ * Stores the domains
  */
 class Domains extends Model
 {

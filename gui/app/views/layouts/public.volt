@@ -8,6 +8,7 @@
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
         '<i class="fas fa-home"></i> Home': 'index',
+        '<i class="fas fa-question"></i> Whois': 'whois',
         '<i class="fas fa-users"></i> About': 'about'
       ] -%}
 

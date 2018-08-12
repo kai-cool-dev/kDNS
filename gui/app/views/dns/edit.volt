@@ -7,6 +7,12 @@
 
 <div class="row">
   <div class="col-lg-12">
+    <p>Created at {{ domain.created }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-12">
     {{ content() }}
   </div>
 </div>
