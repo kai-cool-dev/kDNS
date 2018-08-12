@@ -162,7 +162,8 @@ class DnsController extends ControllerBase
       } else {
         $this->flash->success('Domain created.');
         return $this->dispatcher->forward([
-            'action' => 'index'
+            'action' => 'edit',
+            'params' => [$domain->id]
         ]);
       }
     }

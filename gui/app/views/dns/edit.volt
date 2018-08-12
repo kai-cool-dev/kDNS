@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<form method="post">
+<form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
   <input type="hidden" name="id" value="{{ domain.id }}">
   <div class="row">
     <div class="col-lg-12">
@@ -49,7 +49,7 @@
     {% else %}
       <tr>
     {% endif %}
-        <form method="post">
+        <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
           <input type="hidden" name="id" value="{{ record.id }}" />
           <th scope="row">#{{ record.id }}</th>
           <td><div class="input-group">{{ form[record.id].render('name',[ 'id' : 'ttl'+record.id]) }}</div></td>
@@ -76,7 +76,7 @@
       </tr>
   {% if loop.last %}
       <tr>
-        <form method="post">
+        <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
           {{ newform.render('action') }}
           {{ newform.render('prio',[ 'id' : 'newprio']) }}
           <th scope="row">NEW</th>
@@ -96,7 +96,7 @@
   </table>
   {% endif %}
 {% else %}
-  <form method="post">
+  <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
     {{ form.render('type') }}
     <div class="row">
       <div class="col-lg-12">
