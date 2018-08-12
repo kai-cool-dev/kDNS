@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 footer {
     background: url("../img/feature-gradient.png") no-repeat scroll center 100% white;
     color: #B7B7B7;
@@ -8,6 +10,7 @@ footer {
 
 body{
   color:#353741;
+  font-family: 'Roboto', sans-serif;
 }
 
 footer a {
