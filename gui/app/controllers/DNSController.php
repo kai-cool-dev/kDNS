@@ -22,6 +22,7 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 // GUI Forms
 use kDNS\Forms\CreateNameserverForm;
 use kDNS\Forms\CreateDomainForm;
+use kDNS\Forms\EditDomainDescriptionForm;
 use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
 use kDNS\Forms\NameserverSelectForm;
@@ -144,8 +145,15 @@ class DnsController extends ControllerBase
       $domain->name=$domain_name;
       $domain->type="NATIVE";
       $domain->account=$this->view->identity["id"];
-      $domain->created=time();
-      if ($domain->create() === false) {
+      if($data["description"])
+      {
+        $domain->description=$data["description"];
+      }
+      if($data["id"])
+      {
+        $domain->id=$data["id"];
+      }
+      if ($domain->save() === false) {
         $this->flash->error('Domain could not be stored.');
         $messages = $domain->getMessages();
         foreach ($messages as $message) {
@@ -209,8 +217,8 @@ class DnsController extends ControllerBase
           $this->disableRecord($data);
         break;
 
-        case 'update':
-          $this->createRecord($data);
+        case 'updateDescription':
+          $this->updateDescription($data);
         break;
 
         case 'delete':
@@ -245,6 +253,7 @@ class DnsController extends ControllerBase
       if($ns<2)
       {
         $this->flash->error('Please add at least two NS Records. These Records points to the nameservers. And required for reachability of the domain.');
+        echo "<script>var nserror = true;</script>";
       }
       if($mx<1)
       {
@@ -257,6 +266,21 @@ class DnsController extends ControllerBase
     // Shows Nameserver Select for Modal
     $this->view->nameserverform=new NameserverSelectForm();
     $this->view->mxserverform=new CreateMXForm();
+    $this->view->descriptionform=new EditDomainDescriptionForm($this->view->domain);
+  }
+
+  private function updateDescription($data)
+  {
+    $this->view->domain->description=$data["description"];
+    if ($this->view->domain->save() === false) {
+      $this->flash->error('Domain updated.');
+      $messages = $this->view->domain->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->error($message);
+      }
+    } else {
+      $this->flash->success('Domain updated.');
+    }
   }
 
   private function createSOARecord($data)
@@ -420,7 +444,7 @@ class DnsController extends ControllerBase
               $this->flash->warning($message);
             }
           } else {
-            $this->flash->success('Record purged deleted.');
+            $this->flash->success('Record "'.$record->name.'" --'.$record->type.'-> "'.$record->content.'" purged.');
           }
         }
         // Record was added

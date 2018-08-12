@@ -6,6 +6,11 @@ function myLog(data)
   console.log("======");
 }
 
+if(nserror === true)
+{
+  $('#nameserverModal').modal('toggle');
+}
+
 function functionmodal()
 {
   if($('#newtype').val() == "NS")
@@ -21,6 +26,7 @@ function functionmodal()
 function nameserversave()
 {
   var nameserver = $("#nameserver").val() || [];
+  $('#newtype').val("NS");
   $('#newcontent').val(nameserver);
   $('#nameserverModal').modal('toggle');
 }
@@ -29,6 +35,7 @@ function mxserversave()
 {
   $('#newcontent').val($("#mailserver").val());
   $('#newprio').val($("#mxprio").val());
+  $('#newtype').val("MX");
   $('#mxserverModal').modal('toggle');
 }
 

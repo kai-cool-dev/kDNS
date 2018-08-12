@@ -111,23 +111,14 @@ CREATE TABLE `domains` (
   `master` varchar(128) DEFAULT NULL,
   `last_check` int(11) DEFAULT NULL,
   `type` varchar(6) NOT NULL,
-  `notified_serial` int(10) unsigned DEFAULT NULL,
-  `account` varchar(40) CHARACTER SET utf8 DEFAULT NULL,
+  `notified_serial` int(11) DEFAULT NULL,
+  `account` varchar(40) DEFAULT NULL,
+  `created` varchar(64) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_index` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=262 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `domains`
---
-
-LOCK TABLES `domains` WRITE;
-/*!40000 ALTER TABLE `domains` DISABLE KEYS */;
-INSERT INTO `domains` VALUES (26,'test.pep',NULL,NULL,'NATIVE',NULL,'5',NULL);
-/*!40000 ALTER TABLE `domains` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `email_confirmations`
@@ -192,13 +183,14 @@ DROP TABLE IF EXISTS `nameserver`;
 CREATE TABLE `nameserver` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `country` varchar(45) DEFAULT NULL,
   `fqdn` varchar(45) DEFAULT NULL,
+  `ip4` varchar(45) DEFAULT NULL,
+  `ip6` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `name_UNIQUE` (`name`),
   UNIQUE KEY `fqdn_UNIQUE` (`fqdn`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +199,7 @@ CREATE TABLE `nameserver` (
 
 LOCK TABLES `nameserver` WRITE;
 /*!40000 ALTER TABLE `nameserver` DISABLE KEYS */;
-INSERT INTO `nameserver` VALUES (2,'Nuernberg','DE','ns1.fastnameserver.eu'),(4,'Offenbach','DE','ns2.fastnameserver.eu');
+INSERT INTO `nameserver` VALUES (14,'Offenbach','ns2.fastnameserver.eu','95.179.138.32',''),(16,'NÃ¼rnberg','ns1.fastnameserver.eu','85.10.244.164','2a01:4f8:a0:90c5::164');
 /*!40000 ALTER TABLE `nameserver` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,10 +241,10 @@ CREATE TABLE `permissions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `profilesId` int(10) unsigned NOT NULL,
   `resource` varchar(16) NOT NULL,
-  `action` varchar(16) NOT NULL,
+  `action` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `profilesId` (`profilesId`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +253,7 @@ CREATE TABLE `permissions` (
 
 LOCK TABLES `permissions` WRITE;
 /*!40000 ALTER TABLE `permissions` DISABLE KEYS */;
-INSERT INTO `permissions` VALUES (24,1,'users','index'),(26,1,'users','search'),(28,1,'users','edit'),(30,1,'users','create'),(32,1,'users','delete'),(34,1,'users','changePassword'),(36,1,'profiles','index'),(38,1,'profiles','search'),(40,1,'profiles','edit'),(42,1,'profiles','create'),(44,1,'profiles','delete'),(46,1,'permissions','index'),(48,1,'dns','index'),(50,1,'dns','search'),(52,1,'dns','create'),(54,1,'dns','edit'),(56,1,'dns','delete'),(58,1,'dns','administrate'),(60,2,'dns','index'),(62,2,'dns','search'),(64,2,'dns','create'),(66,2,'dns','edit'),(68,2,'dns','delete'),(70,3,'dns','index'),(72,3,'dns','search');
+INSERT INTO `permissions` VALUES (84,3,'users','changePassword'),(86,3,'dns','index'),(88,3,'dns','search'),(90,2,'users','changePassword'),(92,2,'dns','index'),(94,2,'dns','search'),(96,2,'dns','create'),(98,2,'dns','edit'),(100,2,'dns','delete'),(272,1,'users','index'),(274,1,'users','search'),(276,1,'users','edit'),(278,1,'users','create'),(280,1,'users','delete'),(282,1,'users','changePassword'),(284,1,'profiles','index'),(286,1,'profiles','search'),(288,1,'profiles','edit'),(290,1,'profiles','create'),(292,1,'profiles','delete'),(294,1,'permissions','index'),(296,1,'dns','index'),(298,1,'dns','search'),(300,1,'dns','create'),(302,1,'dns','edit'),(304,1,'dns','delete'),(306,1,'dns','administrate'),(308,1,'dns','administrateNS'),(310,1,'dns','administrateTLD'),(312,1,'dns','administrateType'),(314,1,'dns','administrateRecursor');
 /*!40000 ALTER TABLE `permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -301,7 +293,6 @@ DROP TABLE IF EXISTS `record_types`;
 CREATE TABLE `record_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `value` varchar(45) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`,`value`),
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
@@ -313,7 +304,7 @@ CREATE TABLE `record_types` (
 
 LOCK TABLES `record_types` WRITE;
 /*!40000 ALTER TABLE `record_types` DISABLE KEYS */;
-INSERT INTO `record_types` VALUES (38,'A',NULL),(40,'AAAA',NULL),(42,'AFSDB',NULL),(44,'ALIAS',NULL),(46,'CAA',NULL),(48,'CERT',NULL),(50,'CDNSKEY',NULL),(52,'CDS',NULL),(54,'CNAME',NULL),(56,'DNSKEY',NULL),(58,'DNAME',NULL),(60,'DS',NULL),(62,'HINFO',NULL),(64,'KEY',NULL),(66,'LOC',NULL),(68,'MX',NULL),(70,'NAPTR',NULL),(72,'NS',NULL),(74,'NSEC',NULL),(76,'NSEC3',NULL),(78,'NSEC3PARAM',NULL),(80,'OPENPGPKEY',NULL),(82,'PTR',NULL),(84,'RP',NULL),(86,'RRSIG',NULL),(88,'SOA',NULL),(90,'SPF',NULL),(92,'SSHFP',NULL),(94,'SRV',NULL),(96,'TKEY',NULL),(98,'TSIG',NULL),(100,'TLSA',NULL),(102,'SMIMEA',NULL),(104,'TXT',NULL),(106,'URI',NULL);
+INSERT INTO `record_types` VALUES (38,'A'),(40,'AAAA'),(42,'AFSDB'),(44,'ALIAS'),(46,'CAA'),(48,'CERT'),(50,'CDNSKEY'),(52,'CDS'),(54,'CNAME'),(56,'DNSKEY'),(58,'DNAME'),(60,'DS'),(62,'HINFO'),(64,'KEY'),(66,'LOC'),(68,'MX'),(70,'NAPTR'),(72,'NS'),(74,'NSEC'),(76,'NSEC3'),(78,'NSEC3PARAM'),(80,'OPENPGPKEY'),(82,'PTR'),(84,'RP'),(86,'RRSIG'),(88,'SOA'),(90,'SPF'),(92,'SSHFP'),(94,'SRV'),(96,'TKEY'),(98,'TSIG'),(100,'TLSA'),(102,'SMIMEA'),(104,'TXT'),(106,'URI');
 /*!40000 ALTER TABLE `record_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -325,7 +316,7 @@ DROP TABLE IF EXISTS `records`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `records` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `domain_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `type` varchar(10) DEFAULT NULL,
@@ -339,17 +330,35 @@ CREATE TABLE `records` (
   PRIMARY KEY (`id`),
   KEY `nametype_index` (`name`,`type`),
   KEY `domain_id` (`domain_id`),
-  KEY `ordername` (`ordername`)
-) ENGINE=InnoDB AUTO_INCREMENT=1548 DEFAULT CHARSET=latin1;
+  KEY `recordorder` (`domain_id`,`ordername`)
+) ENGINE=InnoDB AUTO_INCREMENT=2532 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `records`
+-- Table structure for table `recursor`
 --
 
-LOCK TABLES `records` WRITE;
-/*!40000 ALTER TABLE `records` DISABLE KEYS */;
-/*!40000 ALTER TABLE `records` ENABLE KEYS */;
+DROP TABLE IF EXISTS `recursor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `recursor` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `zone` varchar(512) DEFAULT NULL,
+  `ip` varchar(45) DEFAULT NULL,
+  `description` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `recursor`
+--
+
+LOCK TABLES `recursor` WRITE;
+/*!40000 ALTER TABLE `recursor` DISABLE KEYS */;
+INSERT INTO `recursor` VALUES (2,'.','176.103.130.130','AdGuard'),(4,'.','176.103.130.131','AdGuard'),(6,'.','2a00:5a60::ad1:0ff','AdGuard'),(8,'.','2a00:5a60::ad2:0ff','AdGuard');
+/*!40000 ALTER TABLE `recursor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -421,18 +430,8 @@ CREATE TABLE `success_logins` (
   `userAgent` varchar(120) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `usersId` (`usersId`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `success_logins`
---
-
-LOCK TABLES `success_logins` WRITE;
-/*!40000 ALTER TABLE `success_logins` DISABLE KEYS */;
-INSERT INTO `success_logins` VALUES (2,5,'192.168.2.102','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'),(4,5,'192.168.2.102','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'),(6,5,'192.168.2.102','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'),(8,5,'192.168.2.102','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0'),(10,5,'192.168.2.102','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0');
-/*!40000 ALTER TABLE `success_logins` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `supermasters`
@@ -536,7 +535,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (5,'Kai Pazdzewicz','ich@kai.cool','$2y$08$aDV6RE8zNVZTUForS3owd.8g9.YAEKDiZqcvQGgEai5es3gNKdEVW','N',2,'N','N','Y'),(8,'Administrator','admin@admin.pep','$2y$08$YldwaHowZmhWWUlFWW13Su1eciTPLWcbdPdj5dVRAkTZY6TPfSZhi','N',1,'N','N','Y');
+INSERT INTO `users` VALUES (5,'Kai Pazdzewicz','ich@kai.cool','$2y$08$aDV6RE8zNVZTUForS3owd.8g9.YAEKDiZqcvQGgEai5es3gNKdEVW','N',2,'N','N','Y');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -549,4 +548,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-09 23:23:47
+-- Dump completed on 2018-08-12 10:54:45

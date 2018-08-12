@@ -11,8 +11,20 @@
   </div>
 </div>
 
+<form method="post">
+  <input type="hidden" name="id" value="{{ domain.id }}">
+  <div class="row">
+    <div class="col-lg-12">
+      {{ descriptionform.render('description') }}
+    </div>
+  </div>
+
 <div class="row">
-  <div class="col-lg-12">
+  <div class="col-lg-6">
+    <button type="submit" name="action" value="updateDescription" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fas fa-save"></i> Save Description</button>
+  </div>
+</form>
+  <div class="col-lg-6">
     {{ link_to('dns/delete/' ~ domain.id,'<i class="fas fa-trash"></i> Delete Domain','class':'btn btn-danger form-control') }}
   </div>
 </div>
@@ -178,6 +190,7 @@
       <div class="modal-body">
         <p>Please select the nameserver for which you want to insert the nameserver record.</p>
         {{ nameserverform.render('nameserver') }}
+        <p>Please don't forget to Create the Record after selecting the nameserver.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

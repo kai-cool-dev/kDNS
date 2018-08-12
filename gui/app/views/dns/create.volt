@@ -1,13 +1,13 @@
 <div class="row">
   <div class="col-lg-12">
-    {{ content() }}
+    <h1>Create new Domain</h1>
+    <hr>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-12">
-    <h1>Create new Domain</h1>
-    <hr>
+    {{ content() }}
   </div>
 </div>
 
@@ -17,10 +17,15 @@
       {{ form.render('name') }}
     </div>
     <div class="col-lg-1">
-      <h1>.</h1>
+      <p class="form-control">.</p>
     </div>
     <div class="col-lg-2">
       {{ form.render('tld') }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      {{ form.render('description') }}
     </div>
   </div>
   <div class="row">
