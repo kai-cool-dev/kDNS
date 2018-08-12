@@ -6,7 +6,7 @@ BASEURL="https://dns.fastnameserver.eu"
 
 #### Please don't edit behind this line
 DATA=""
-WHOISFOLDER="/var/www/vhost/dns.fastnameserver.eu/htdocs/kDNS/whoisd/db"
+WHOISFOLDER="/etc/whoisd/db"
 
 # Needed Programs
 CURL="$(which curl)"
@@ -25,10 +25,10 @@ function builddb()
     _jq() {
       echo ${row} | base64 --decode | jq -r ${1}
     }
-    if [ $NAME ]
+    NAME="$(_jq '.name')"
+    if [ ! -z "$NAME" ]
     then
       FILE="$WHOISFOLDER/$NAME"
-      NAME="$(_jq '.name')"
       CREATED="$(_jq '.created')"
       USER="$(_jq '.user')"
       EMAIL="$(_jq '.email')"
