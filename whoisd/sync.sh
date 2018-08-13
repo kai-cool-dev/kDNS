@@ -14,7 +14,7 @@ CURL="$(which curl)"
 # Functions
 function downloadjson()
 {
-  URL="$BASEURL/whois/raw"
+  URL="$BASEURL/api/whois"
   DATA="$($CURL -s $URL | grep "content" | cut -d '>' -f2 | rev | cut -d'<' -f2 | rev)"
 }
 

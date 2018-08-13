@@ -690,14 +690,14 @@ class DnsController extends ControllerBase
         case 'delete':
           $recursor = Recursor::find($data["id"]);
           if ($recursor->delete() === false) {
-            $this->flash->error('Record Type could not be beleted.');
+            $this->flash->error('Recursor could not be beleted.');
             $messages = $recursor->getMessages();
             foreach ($messages as $message) {
               $this->flash->warning($message);
             }
           } else {
             // Record was added
-            $this->flash->success('Record Type deleted.');
+            $this->flash->success('Recursor deleted.');
           }
         break;
       }

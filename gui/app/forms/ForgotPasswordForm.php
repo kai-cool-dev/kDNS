@@ -9,26 +9,23 @@ use Phalcon\Validation\Validator\Email;
 
 class ForgotPasswordForm extends Form
 {
-
-    public function initialize()
-    {
-        $email = new Text('email', [
-            'placeholder' => 'Email'
-        ]);
-
-        $email->addValidators([
-            new PresenceOf([
-                'message' => 'The e-mail is required'
-            ]),
-            new Email([
-                'message' => 'The e-mail is not valid'
-            ])
-        ]);
-
-        $this->add($email);
-
-        $this->add(new Submit('Send', [
-            'class' => 'btn btn-primary'
-        ]));
-    }
+  public function initialize()
+  {
+    $email = new Text('email', [
+      'placeholder' => 'Email',
+      'class' => 'form-control'
+    ]);
+    $email->addValidators([
+      new PresenceOf([
+        'message' => 'The e-mail is required'
+      ]),
+      new Email([
+        'message' => 'The e-mail is not valid'
+      ])
+    ]);
+    $this->add($email);
+    $this->add(new Submit('Send', [
+      'class' => 'btn btn-success form-control'
+    ]));
+  }
 }

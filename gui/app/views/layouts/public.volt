@@ -30,6 +30,9 @@
       <li class="nav-item">
         {{ link_to('session/login', '<i class="fas fa-sign-in-alt"></i> Login', 'class':'nav-link') }}
       </li>
+      <li class="nav-item">
+        {{ link_to('session/signup', '<i class="fas fa-user-plus"></i> Signup', 'class':'nav-link') }}
+      </li>
     </ul>
     {% endif %}
   </div>

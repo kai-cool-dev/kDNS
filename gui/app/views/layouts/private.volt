@@ -49,8 +49,8 @@
     </ul>
     {% endif %}
     <ul class="navbar-nav mr-r4">
-      <li class="nav-item">{{ link_to('users/changePassword', '<i class="fas fa-user-edit"></i>', 'class':'nav-link') }}</li>
-      <li class="nav-item">{{ link_to('session/logout', '<i class="fas fa-sign-out-alt"></i>', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('users/changePassword', '<i class="fas fa-user-edit"></i> Change your Password', 'class':'nav-link') }}</li>
+      <li class="nav-item">{{ link_to('session/logout', '<i class="fas fa-sign-out-alt"></i> Logout', 'class':'nav-link') }}</li>
     </ul>
   </div>
 </nav>
