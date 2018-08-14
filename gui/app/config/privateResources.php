@@ -31,7 +31,8 @@ return new Config([
       'administrateNS',
       'administrateTLD',
       'administrateType',
-      'administrateRecursor'
+      'administrateRecursor',
+      'administrateChangelog'
     ]
   ]
 ]);

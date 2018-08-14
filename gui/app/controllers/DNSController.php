@@ -17,6 +17,7 @@ use kDNS\Models\Recursor;
 use kDNS\Models\Nameserver;
 use kDNS\Models\TopDomains;
 use kDNS\Models\RecordTypes;
+use kDNS\Models\Changelog;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
@@ -161,6 +162,11 @@ class DnsController extends ControllerBase
         }
       } else {
         $this->flash->success('Domain created.');
+        $changelog = new Changelog();
+        $changelog->type="CREATE";
+        $changelog->data=json_encode($domain);
+        $changelog->uid=$this->view->identity["id"];
+        $changelog->save();
         return $this->dispatcher->forward([
             'action' => 'edit',
             'params' => [$domain->id]
@@ -281,6 +287,11 @@ class DnsController extends ControllerBase
         $this->flash->error($message);
       }
     } else {
+      $changelog = new Changelog();
+      $changelog->type="UPDATED";
+      $changelog->data=json_encode($this->view->domain);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
       $this->flash->success('Domain updated.');
     }
   }
@@ -323,6 +334,11 @@ class DnsController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      $changelog = new Changelog();
+      $changelog->type="PURGED";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
       // Record was added
       $this->flash->success('Record deleted.');
       // Update Records
@@ -414,6 +430,11 @@ class DnsController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      $changelog = new Changelog();
+      $changelog->type="EDITED";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
       // Record was added
       $this->flash->success('Record created/updated.');
       // Update Records
@@ -458,6 +479,11 @@ class DnsController extends ControllerBase
           $this->flash->warning($message);
         }
       } else {
+        $changelog = new Changelog();
+        $changelog->type="DELETE";
+        $changelog->data=json_encode($this->view->domain);
+        $changelog->uid=$this->view->identity["id"];
+        $changelog->save();
         foreach(Records::find('domain_id = '.$this->view->domain->id) as $record)
         {
           if ($record->delete() === false) {
@@ -468,6 +494,11 @@ class DnsController extends ControllerBase
             }
           } else {
             $this->flash->success('Record "'.$record->name.'" --'.$record->type.'-> "'.$record->content.'" purged.');
+            $changelog = new Changelog();
+            $changelog->type="PURGED";
+            $changelog->data=json_encode($record);
+            $changelog->uid=$this->view->identity["id"];
+            $changelog->save();
           }
         }
         // Record was added
@@ -703,5 +734,12 @@ class DnsController extends ControllerBase
       }
     }
     $this->view->recursors = Recursor::find();
+  }
+  /**
+  * Administrate ChangeLog
+  */
+  public function administrateChangelogAction()
+  {
+    $this->view->changelog=Changelog::find();
   }
 }

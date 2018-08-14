@@ -44,6 +44,7 @@
           {{ link_to('dns/administrateNS','<i class="fas fa-wrench"></i> Manage authorative Nameserver', 'class': 'dropdown-item') }}
           {{ link_to('dns/administrateRecursor','<i class="fas fa-wrench"></i> Manage recursor Nameserver', 'class': 'dropdown-item') }}
           {{ link_to('dns/administrateType','<i class="fas fa-wrench"></i> Manage Record Types', 'class': 'dropdown-item') }}
+          {{ link_to('dns/administrateChangelog','<i class="far fa-file-alt"></i> Changelog', 'class': 'dropdown-item') }}
         </div>
       </li>
     </ul>
