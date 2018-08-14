@@ -28,7 +28,7 @@
               {% endfor %}
             </tbody>
           </table>
-          <p>Done by <a href="/users/edit/{{ changelog.uid.id }}">{{ changelog.uid.name }}</a></p>
+          <p>Done by <a href="users/edit/{{ changelog.uid.id }}">{{ changelog.uid.name }}</a></p>
         </div>
       </div>
     </div>

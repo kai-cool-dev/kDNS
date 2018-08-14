@@ -83,9 +83,9 @@
         <form method="post" action="{{ url('dns/edit/' ~ domain.id) }}">
           <input type="hidden" name="id" value="{{ record.id }}" />
           <th scope="row">#{{ record.id }}</th>
-          <td><div class="input-group">{{ form[record.id].render('name',[ 'id' : 'ttl'+record.id]) }}</div></td>
-          <td><div class="input-group">{{ form[record.id].render('type',[ 'id' : 'ttl'+record.id]) }}</div></td>
-          <td><div class="input-group">{{ form[record.id].render('content',[ 'id' : 'ttl'+record.id]) }}</div></td>
+          <td><div class="input-group">{{ form[record.id].render('name',[ 'id' : 'name'+record.id]) }}</div></td>
+          <td><div class="input-group">{{ form[record.id].render('type',[ 'id' : 'type'+record.id]) }}</div></td>
+          <td><div class="input-group">{{ form[record.id].render('content',[ 'id' : 'content'+record.id]) }}</div></td>
           {% if record.type == "MX" %}
             <td><div class="input-group">{{ form[record.id].render('ttl',[ 'id' : 'ttl'+record.id]) }}</div></td>
             <td><div class="input-group">{{ form[record.id].render('prio',[ 'id' : 'prio'+record.id]) }}</div></td>
@@ -102,7 +102,11 @@
               {% endif %}
             {% endif %}
           </td>
-          <td><button type="submit" class="btn form-control btn-danger" name="action" value="delete" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button></td>
+          <td>
+            {% if record.type != "SOA" %}
+              <button type="submit" class="btn form-control btn-danger" name="action" value="delete" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fas fa-trash"></i></button>
+            {% endif %}
+          </td>
         </form>
       </tr>
   {% if loop.last %}
@@ -192,6 +196,7 @@
     </div>
   </form>
 {% endfor %}
+
 
 
 <!-- Modal for Nameserver selection -->

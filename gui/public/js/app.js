@@ -16,11 +16,14 @@ function functionmodal()
   {
     $('#mxserverModal').modal('toggle');
   }
+  if($('#newtype').val() == "SOA")
+  {
+    $('#soaModal').modal('toggle');
+  }
 }
 
 if(nserror == true)
 {
-  // Test
   $('#nameserverModal').modal('toggle');
 }
 
@@ -49,5 +52,5 @@ $('#newcontent').click(function(){
 });
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
+  $('[data-toggle="tooltip"]').tooltip();
 })

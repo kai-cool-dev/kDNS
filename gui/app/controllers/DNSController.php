@@ -270,6 +270,7 @@ class DnsController extends ControllerBase
       $this->view->form=$data;
     }
     // Shows general new record creation form
+    $this->view->soaform=new CreateSOAForm();
     $this->view->newform=new CreateRecordForm(null,true);
     // Shows Nameserver Select for Modal
     $this->view->nameserverform=new NameserverSelectForm();
