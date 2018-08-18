@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-lg-12">
-    <h1>Welcome to kDNS</h1>
+    <h1>Welcome to Peppermint.Cloud DNS</h1>
     <hr>
-    <p>Here are your domains listed. If you don't have any. Just create one!</p>
+    <p>This is your DNS Home-Page. Here you can search for Domains or just Create a new one.</p>
   </div>
 </div>
 
