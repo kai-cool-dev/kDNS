@@ -14,54 +14,56 @@ use kDNS\Models\ResetPasswords;
  */
 class SessionController extends ControllerBase
 {
+  /**
+  * Default action. Set the public layout (layouts/public.volt)
+  */
+  public function initialize()
+  {
+    $this->view->setTemplateBefore('public');
+  }
 
-    /**
-     * Default action. Set the public layout (layouts/public.volt)
-     */
-    public function initialize()
-    {
-        $this->view->setTemplateBefore('public');
-    }
-
-    public function indexAction()
-    {
-    }
-
-    /**
-     * Allow a user to signup to the system
-     */
-    public function signupAction()
-    {
-        $form = new SignUpForm();
-
-        if ($this->request->isPost()) {
-
-            if ($form->isValid($this->request->getPost()) != false) {
-
-                $user = new Users([
-                    'name' => $this->request->getPost('name', 'striptags'),
-                    'email' => $this->request->getPost('email'),
-                    'password' => $this->security->hash($this->request->getPost('password')),
-                    'profilesId' => 2
-                ]);
-
-                if ($user->save()) {
-                    return $this->dispatcher->forward([
-                        'controller' => 'index',
-                        'action' => 'index'
-                    ]);
-                }
-
-                $this->flash->error($user->getMessages());
-            }
+  public function indexAction()
+  {
+  }
+  /**
+  * Allow a user to signup to the system
+  */
+  public function signupAction()
+  {
+    $form = new SignUpForm();
+    if ($this->request->isPost()) {
+      if ($form->isValid($this->request->getPost()) != false)
+      {
+        $user = new Users([
+          'name' => $this->request->getPost('name', 'striptags'),
+          'email' => $this->request->getPost('email'),
+          'password' => $this->security->hash($this->request->getPost('password')),
+          'profilesId' => 2
+        ]);
+        if ($user->save())
+        {
+          return $this->dispatcher->forward([
+            'controller' => 'index',
+            'action' => 'index'
+          ]);
         }
-
-        $this->view->form = $form;
+        $this->flash->error($user->getMessages());
+      }
+      else
+      {
+        $this->flash->error("Submitted Data not valid");
+        foreach ($form->getMessages() as $message) {
+          // Displays all Warnings from the validation
+          $this->flash->warning($message);
+        }
+      }
     }
+    $this->view->form = $form;
+  }
 
-    /**
-     * Starts a session in the admin backend
-     */
+  /**
+   * Starts a session in the admin backend
+   */
     public function loginAction()
     {
         $form = new LoginForm();

@@ -81,14 +81,6 @@ class SignUpForm extends Form
       'message' => 'Terms and conditions must be accepted'
     ]));
     $this->add($terms);
-    // CSRF
-    $csrf = new Hidden('csrf');
-    $csrf->addValidator(new Identical([
-      'value' => $this->security->getSessionToken(),
-      'message' => 'CSRF validation failed'
-    ]));
-    $csrf->clear();
-    $this->add($csrf);
     // Sign Up
     $this->add(new Submit('Sign Up', [
       'class' => 'btn btn-success form-control'
