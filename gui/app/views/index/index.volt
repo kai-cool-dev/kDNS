@@ -31,3 +31,25 @@
 		<p>We operate on non-profit base and therefore we need donations to keep our services live. {{ link_to('donate','Maybe you want to donate some bucks?') }}</p>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h2>Features</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-6">
+		<ul>
+			<li>Unlimited DNS Zones.</li>
+			<li>All DNS Servers are possible. {{ link_to('about/server','View our Servers') }}.</li>
+			<li>High-Availability Anycast DNS included.</li>
+		</ul>
+	</div>
+	<div class="col-lg-6">
+		<ul>
+			<li>No Query Limit.</li>
+			<li>Easy to use GUI with all common functions.</li>
+			<li>100% DDoS Protected</li>
+		</ul>
+	</div>
+</div>
