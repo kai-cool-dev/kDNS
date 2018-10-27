@@ -18,17 +18,14 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">#{{ changelog.id }} - {{ changelog.type }} - {{ changelog.date }}</h5>
-          <table class="table stable-striped">
-            <tbody>
-              {% for name, value in changelog.data %}
-                <tr>
-                  <td>{{ name }}</td>
-                  <td>{{ value }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-          <p>Done by <a href="users/edit/{{ changelog.uid.id }}">{{ changelog.uid.name }}</a></p>
+          <div class="row">
+            {% for name, value in changelog.data %}
+              <div class="col-lg-3">
+                <p>{{ name }}: {{ value }}</p>
+              </div>
+            {% endfor %}
+          </div>
+          <p>Done by {{ link_to('users/edit/' ~ changelog.uid.id, changelog.uid.name) }}</p>
         </div>
       </div>
     </div>
