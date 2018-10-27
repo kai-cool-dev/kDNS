@@ -1,22 +1,45 @@
-# kDNS
+# kDNS GUI
 
-This is a DNS GUI for PowerDNS.
+The GUI for PowerDNS Server with User Management. Please read the Get Started Guide.
 
-It offers following functions:
+## Get Started
 
-- User and Permission Management
-- Authorative DNS Management with Ownership Control
-  - Support of new gTLDs
-  - Support of new DNS Records
-  - PTR / Reverse DNS support
-- Recursive DNS Management (API for PowerDNS recursive server)
-  - Control Root Nameserver (support for AdGuard, OpenNIC, NewNations, FurNic, etc)
-  - Export for your private TLDs (so that you can access your private authorative Domains with your private powerDNS Recursor)
-  - Export for your TLDs (so that you can access your public TLDs faster over your PowerDNS Recursor)
-  - Support for Tor-DNS
-- Whois Management (API for whoisd)
-  - Whois export for whoisd (export in JSON, bash script included for converting to raw text files)
-  - The given Data is the Owner-Username, Owner-E-Mail Address and free text from the DNS Management, this can be used for abuse management
-  - It is a bit geeky but if you run your own whois server, then this is very useful
+### Requirements
 
-The complete tool with PowerDNS authorative, PowerDNS recursor and this GUI is my personal DNS management tool and used in my internal network. It completes everything what I need and reduces the DNS Network Load from my Network. Through caching the DNS is ultra fast.
+To run this application on your machine, you need at least:
+
+* >= PHP 5.5
+* >= Phalcon 3.0
+* Apache Web Server with `mod_rewrite enabled`, and `AllowOverride Options` (or `All`) in your `httpd.conf` or Nginx Web Server
+* Latest [Phalcon Framework](https://github.com/phalcon/cphalcon) extension installed/enabled
+* MySQL >= 5.1.5
+
+Then you'll need to create the database and initialize schema:
+
+```bash
+echo 'CREATE DATABASE powerdns' | mysql -u root
+cat schemas/powerdns.sql | mysql -u root powerdns
+```
+
+Also you can override application config by creating `app/config/config.dev.php` (already gitignored).
+
+### Installing Dependencies via Composer
+
+kDNS dependencies must be installed using Composer. Install composer in a common location or in your project:
+
+```bash
+curl -s http://getcomposer.org/installer | php
+```
+
+Run the composer installer:
+
+```bash
+php composer.phar install
+```
+
+**NOTE** After the installation, please ensure that the following folders have write permissions set:
+- `cache`
+
+## License
+
+kDNS is open-sourced software licensed under the New BSD License.
