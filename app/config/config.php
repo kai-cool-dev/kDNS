@@ -6,7 +6,7 @@ return new Config([
     'adapter' => 'Mysql',
     'host' => '10.0.1.68',
     'username' => 'kdns',
-    'password' => '',
+    'password' => 'V3pidKiyz2c7cr08FsZv',
     'dbname' => 'kdns'
   ],
   'application' => [
@@ -18,7 +18,7 @@ return new Config([
     'pluginsDir'     => APP_PATH . '/plugins/',
     'cacheDir'       => BASE_PATH . '/cache/',
     'baseUri'        => '/',
-    'publicUrl'      => 'dns.example.com',
+    'publicUrl'      => 'dns.fastnameserver.eu',
     'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
   ],
   'mail' => [
