@@ -4,10 +4,10 @@ use Phalcon\Logger;
 return new Config([
   'database' => [
     'adapter' => 'Mysql',
-    'host' => 'mysql',
-    'username' => 'kDNS',
-    'password' => 'EAGXTLU2pFcxtzwqjn6P',
-    'dbname' => 'dnsadmin'
+    'host' => 'MYSQL_HOST',
+    'username' => 'MYSQL_USER',
+    'password' => 'MYSQL_PASS',
+    'dbname' => 'MYSQL_DB'
   ],
   'application' => [
     'controllersDir' => APP_PATH . '/controllers/',
