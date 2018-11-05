@@ -33,7 +33,7 @@ return new Config([
     ]
   ],
   'amazon' => [
-    'AWSAccessKeyId' => '***********',
+    'AWSAccessKeyId' => '',
     'AWSSecretKey' => ''
   ],
   'logger' => [
