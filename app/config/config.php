@@ -4,10 +4,10 @@ use Phalcon\Logger;
 return new Config([
   'database' => [
     'adapter' => 'Mysql',
-    'host' => '10.0.1.68',
-    'username' => 'kdns',
-    'password' => '',
-    'dbname' => 'kdns'
+    'host' => 'MYSQL_HOST',
+    'username' => 'MYSQL_USER',
+    'password' => 'MYSQL_PASS',
+    'dbname' => 'MYSQL_DB'
   ],
   'application' => [
     'controllersDir' => APP_PATH . '/controllers/',
@@ -18,18 +18,18 @@ return new Config([
     'pluginsDir'     => APP_PATH . '/plugins/',
     'cacheDir'       => BASE_PATH . '/cache/',
     'baseUri'        => '/',
-    'publicUrl'      => 'dns.example.com',
+    'publicUrl'      => 'PUBLIC_URL',
     'cryptSalt'      => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
   ],
   'mail' => [
     'fromName' => 'kDNS',
-    'fromEmail' => 'dns@example.com',
+    'fromEmail' => 'MAIL_FROM',
     'smtp' => [
-      'server' => 'smtp.example.com',
-      'port' => 587,
+      'server' => 'MAIL_SERVER',
+      'port' => MAIL_PORT,
       'security' => 'tls',
-      'username' => '',
-      'password' => ''
+      'username' => 'MAIL_USER',
+      'password' => 'MAIL_PASSWORD'
     ]
   ],
   'amazon' => [
