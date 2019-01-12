@@ -1,7 +1,7 @@
 {
   "name": "kDNS/html",
   "description": "kDNS GUI for PowerDNS authorative and recursor",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "keywords": [
     "phalcon",
     "framework",
