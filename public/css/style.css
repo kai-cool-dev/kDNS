@@ -119,3 +119,7 @@ b, th {
 .form-control{
   text-align: center;
 }
+
+.container-fluid {
+  padding-top:15px;
+}

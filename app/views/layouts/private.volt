@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-  {{ link_to(null, 'class': 'navbar-brand', 'Peppermint.Cloud DNS')}}
+  {{ link_to(null, 'class': 'navbar-brand', 'kDNS')}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -67,8 +67,6 @@
 </div>
 
 <footer>
-Made with <3 in Germany
-{{ link_to("privacy", "Privacy Policy") }}
-{{ link_to("terms", "Terms") }}
-© {{ date("Y") }} Kai Pazdzewicz.
+  Made with <i class="far fa-heart"></i> in Germany from 2018 to {{ date("Y") }} <i class="far fa-copyright"></i> Kai Pazdzewicz.<br>
+  kDNS Version 2
 </footer>

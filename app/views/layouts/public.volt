@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-  {{ link_to(null, 'class': 'navbar-brand', 'Peppermint.Cloud DNS')}}
+  {{ link_to(null, 'class': 'navbar-brand', 'kDNS')}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -8,8 +8,7 @@
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
         '<i class="fas fa-home"></i> Home': 'index',
-        '<i class="fas fa-question"></i> Whois': 'whois',
-        '<i class="fas fa-users"></i> About': 'about'
+        '<i class="fas fa-question"></i> Whois': 'whois'
       ] -%}
 
       {%- for key, value in menus %}
@@ -30,9 +29,6 @@
       <li class="nav-item">
         {{ link_to('session/login', '<i class="fas fa-sign-in-alt"></i> Login', 'class':'nav-link') }}
       </li>
-      <li class="nav-item">
-        {{ link_to('session/signup', '<i class="fas fa-user-plus"></i> Signup', 'class':'nav-link') }}
-      </li>
     </ul>
     {% endif %}
   </div>
@@ -43,8 +39,6 @@
 </div>
 
 <footer>
-Made with <3 in Germany
-{{ link_to("privacy", "Privacy Policy") }}
-{{ link_to("terms", "Terms") }}
-© {{ date("Y") }} Kai Pazdzewicz.
+  Made with <i class="far fa-heart"></i> in Germany from 2018 to {{ date("Y") }} <i class="far fa-copyright"></i> Kai Pazdzewicz.<br>
+  kDNS Version 2
 </footer>

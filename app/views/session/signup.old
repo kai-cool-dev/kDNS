@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-{{ form('class': 'form-search') }}
+<!-- {{ form('class': 'form-search') }}
 	<div class="row">
 		<div class="col-lg-6">
 			<div class="input-group">
@@ -63,3 +63,4 @@
 		</div>
 	</div>
 </form>
+-->

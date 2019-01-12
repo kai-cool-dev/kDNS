@@ -58,6 +58,7 @@ class SessionController extends ControllerBase
         }
       }
     }
+    $this->flash->error("Signup currently not supported.");
     $this->view->form = $form;
   }
 
