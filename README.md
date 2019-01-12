@@ -20,11 +20,21 @@ This features are implemented and working:
 Planned Features
 ----------------
 
--	Register Domains directly over API (Freenom)
+-	Register free or paid Domains directly over API (Freenom).
 -	DynDNS API
 -	Advanced AdBlock and Parental Control with own block lists
--	Nicer UI
--	Mobile-Friendly UI
+-	Nicer and mobile friendly UI
+-	Removing of the most common bugs `BUGS.md`
+-	Nicer Display of the Changelog
+-	Combine Changelog for DNS with Users
+-	Credit System for DNS Zones
+-	Credit System with combined billing and paypal gateway
+-	Credit System for Freenom API
+-	User Signup should be changeable
+-	Recursor Metrics via PowerDNS API --> Cronjob with input in MySQL
+-	Authorative Metrics via PowerDNS API --> Cronjob with input in MySQL
+-	Dashboard with Statistics (Admin and User)
+-	DNSSEC
 
 License
 -------
