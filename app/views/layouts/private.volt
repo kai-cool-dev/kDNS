@@ -27,14 +27,20 @@
         '<i class="fas fa-users-cog"></i> Profiles': 'profiles',
         '<i class="fas fa-user-edit"></i> Users': 'users'
       ] -%}
-
-      {%- for key, value in menus %}
-        {% if value == dispatcher.getControllerName() %}
-        <li class="nav-item active">{{ link_to(value, key, 'class':'nav-link') }}</li>
-        {% else %}
-        <li class="nav-item">{{ link_to(value, key, 'class':'nav-link') }}</li>
-        {% endif %}
-      {%- endfor -%}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-user"></i> User
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          {%- for key, value in menus %}
+            {% if value == dispatcher.getControllerName() %}
+              {{ link_to(value, key, 'class':'dropdown-item active') }}
+            {% else %}
+              {{ link_to(value, key, 'class':'dropdown-item') }}
+            {% endif %}
+          {%- endfor -%}
+        </div>
+      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-server"></i> DNS

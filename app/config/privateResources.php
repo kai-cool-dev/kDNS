@@ -33,6 +33,13 @@ return new Config([
       'administrateType',
       'administrateRecursor',
       'administrateChangelog'
+    ],
+    'domains' => [
+      'index',
+      'edit',
+      'updateDescription',
+      'create',
+      'delete'
     ]
   ]
 ]);

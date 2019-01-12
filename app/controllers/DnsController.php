@@ -22,15 +22,11 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
 use kDNS\Forms\CreateNameserverForm;
-use kDNS\Forms\CreateDomainForm;
-use kDNS\Forms\EditDomainDescriptionForm;
 use kDNS\Forms\CreateRecordForm;
 use kDNS\Forms\CreateSOAForm;
 use kDNS\Forms\NameserverSelectForm;
 use kDNS\Forms\CreateMXForm;
 use kDNS\Forms\SearchDomainForm;
-use kDNS\Forms\SearchTLDForm;
-use kDNS\Forms\CreateTLDForm;
 use kDNS\Forms\CreateRecordTypeForm;
 use kDNS\Forms\CreateRecursorForm;
 
