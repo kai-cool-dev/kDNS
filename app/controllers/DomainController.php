@@ -31,7 +31,7 @@ class DomainController extends ControllerBase
   {
 
   }
-  
+
   /**
   * Edit Domain Page
   */
