@@ -23,13 +23,13 @@ return new Config([
   ],
   'mail' => [
     'fromName' => 'kDNS',
-    'fromEmail' => 'MAIL_FROM',
+    'fromEmail' => '',
     'smtp' => [
-      'server' => 'MAIL_SERVER',
-      'port' => MAIL_PORT,
+      'server' => '',
+      'port' => 25,
       'security' => 'tls',
-      'username' => 'MAIL_USER',
-      'password' => 'MAIL_PASSWORD'
+      'username' => '',
+      'password' => ''
     ]
   ],
   'amazon' => [

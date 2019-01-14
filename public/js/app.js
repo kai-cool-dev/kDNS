@@ -22,9 +22,9 @@ function functionmodal()
   }
 }
 
-if(nserror == true)
+function display_search()
 {
-  $('#nameserverModal').modal('toggle');
+  $('#searchform').toggle();
 }
 
 function nameserversave()
@@ -51,6 +51,16 @@ $('#newcontent').click(function(){
   functionmodal();
 });
 
+$('.alert').click(function(){
+  $('.alert').toggle();
+});
+
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
+
+if(nserror == true)
+{
+  $('#nameserverModal').modal('toggle');
+}

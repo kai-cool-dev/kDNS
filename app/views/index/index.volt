@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="jumbotron">
-			<h1 class="display-4">Welcome to kDNS!</h1>
+			<h1 class="display-4">Welcome to <i class="fas fa-globe"></i> kDNS!</h1>
 			<p class="lead">This is the control panel for your domain management. Please login to your account to manage your domains.</p>
 			<hr class="my-4">
 			<div class="row">

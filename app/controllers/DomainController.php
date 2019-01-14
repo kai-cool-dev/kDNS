@@ -12,6 +12,7 @@ use kDNS\Forms\CreateDomainForm;
 use kDNS\Forms\EditDomainDescriptionForm;
 use kDNS\Forms\SearchTLDForm;
 use kDNS\Forms\CreateTLDForm;
+use kDNS\Forms\SearchDomainForm;
 
 // Other Stuff
 use Phalcon\Filter;
@@ -29,7 +30,41 @@ class DomainController extends ControllerBase
   */
   public function indexAction()
   {
-
+    $filter = new Filter();
+    if(empty($_GET["page"]))
+    {
+      $currentPage = 0;
+    }
+    else
+    {
+      $currentPage = (int) $_GET["page"];
+    }
+    // SQL Building 101
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      // Admin
+      $sql="account";
+    }
+    else
+    {
+      // Normal User
+      $sql="account = ".$this->auth->getIdentity()["id"];
+    }
+    if(!empty($this->request->get("name")))
+    {
+      $sql=$sql.' AND name LIKE "%'.$filter->sanitize($this->request->get("name"),"string").'%"';
+    }
+    $domains = Domains::find([$sql]);
+    $paginator=new PaginatorModel(
+      [
+        "data"  => $domains,
+        "limit" => 10,
+        "page"  => $currentPage,
+      ]
+    );
+    $this->view->domains=$paginator->getPaginate();
+    $this->view->form = new SearchDomainForm();
+    $this->view->name=$filter->sanitize($this->request->get("name"),"string");
   }
 
   /**

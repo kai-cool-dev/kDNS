@@ -123,3 +123,7 @@ b, th {
 .container-fluid {
   padding-top:15px;
 }
+
+#searchform {
+  display: none;
+}

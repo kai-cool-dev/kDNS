@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-  {{ link_to(null, 'class': 'navbar-brand', 'kDNS')}}
+  {{ link_to(null, 'class': 'navbar-brand', '<i class="fas fa-globe"></i> kDNS')}}
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,9 +7,9 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
-        '<i class="fas fa-home"></i> Home': 'dns',
-        '<i class="fas fa-search"></i> List/Search Domains': 'dns/search',
-        '<i class="fas fa-plus"></i> Create new Domain': 'dns/create'
+        '<i class="fas fa-home"></i> Home': 'domain/index',
+        '<i class="fas fa-search"></i> List/Search Domains': 'domain/index',
+        '<i class="fas fa-plus"></i> Create new Domain': 'domain/create'
       ] -%}
 
       {%- for key, value in menus %}
