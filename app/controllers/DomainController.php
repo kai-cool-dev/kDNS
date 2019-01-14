@@ -5,6 +5,7 @@ namespace kDNS\Controllers;
 // Models
 use kDNS\Models\Domains;
 use kDNS\Models\Changelog;
+use kDNS\Models\Records;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
@@ -13,6 +14,10 @@ use kDNS\Forms\EditDomainDescriptionForm;
 use kDNS\Forms\SearchTLDForm;
 use kDNS\Forms\CreateTLDForm;
 use kDNS\Forms\SearchDomainForm;
+use kDNS\Forms\CreateRecordForm;
+use kDNS\Forms\CreateSOAForm;
+use kDNS\Forms\NameserverSelectForm;
+use kDNS\Forms\CreateMXForm;
 
 // Other Stuff
 use Phalcon\Filter;
@@ -24,6 +29,7 @@ class DomainController extends ControllerBase
   {
     $this->view->setVar('logged_in', is_array($this->auth->getIdentity()));
     $this->view->setTemplateBefore('private');
+    $this->view->setVar('identity', $this->auth->getIdentity());
   }
   /**
   * List Domains
@@ -40,7 +46,7 @@ class DomainController extends ControllerBase
       $currentPage = (int) $_GET["page"];
     }
     // SQL Building 101
-    if($this->auth->getIdentity()["profile"] != "Administrators")
+    if($this->auth->getIdentity()["profile"] == "Administrators")
     {
       // Admin
       $sql="account";
@@ -73,7 +79,7 @@ class DomainController extends ControllerBase
   public function editAction($id)
   {
     $this->view->domain=Domains::findFirst($id);
-    if($this->view->identity["profile"] == "Administrators")
+    if($this->auth->getIdentity()["profile"] == "Administrators")
     {
       $this->flash->notice('You are in admin modus.');
     }
@@ -85,7 +91,7 @@ class DomainController extends ControllerBase
       }
       else
       {
-        if($this->view->domain->account != $this->view->identity["id"])
+        if($this->view->domain->account != $this->auth->getIdentity()["id"])
         {
           $this->flash->notice('You don\'t have access to this module: private');
           return $this->dispatcher->forward([
@@ -101,7 +107,7 @@ class DomainController extends ControllerBase
   /**
   * Updates Description for Domain
   */
-  private function updateDescriptionAction($id)
+  public function updateDescriptionAction($id)
   {
     $this->view->domain=Domains::findFirst($id);
     $data=$this->request->getPost();
@@ -152,7 +158,7 @@ class DomainController extends ControllerBase
       $domain = new Domains();
       $domain->name=$domain_name;
       $domain->type="NATIVE";
-      $domain->account=$this->view->identity["id"];
+      $domain->account=$this->auth->getIdentity()["id"];
       if($data["description"])
       {
         $domain->description=$data["description"];
@@ -172,7 +178,7 @@ class DomainController extends ControllerBase
         $changelog = new Changelog();
         $changelog->type="CREATE";
         $changelog->data=json_encode($domain);
-        $changelog->uid=$this->view->identity["id"];
+        $changelog->uid=$this->auth->getIdentity()["id"];
         $changelog->save();
         return $this->dispatcher->forward([
             'action' => 'edit',
@@ -185,8 +191,67 @@ class DomainController extends ControllerBase
   /**
   * Delete Domain
   */
-  public function deleteAction()
+  public function deleteAction($id)
   {
-
+    $this->view->domain=Domains::findFirst($id);
+    if($this->auth->getIdentity()["profile"] == "Administrators")
+    {
+      $this->flash->notice('You are in admin modus.');
+    }
+    else
+    {
+      if($this->view->domain->account == "0")
+      {
+        $this->flash->notice('This is a public domain');
+      }
+      else
+      {
+        if($this->view->domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->notice('You don\'t have access to this module: private');
+          return $this->dispatcher->forward([
+              'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if($this->request->isPost())
+    {
+      if ($this->view->domain->delete() === false) {
+        $this->flash->error('Domain could not be deleted.');
+        $messages = $this->view->domain->getMessages();
+        foreach ($messages as $message) {
+          $this->flash->warning($message);
+        }
+      } else {
+        $changelog = new Changelog();
+        $changelog->type="DELETE";
+        $changelog->data=json_encode($this->view->domain);
+        $changelog->uid=$this->view->identity["id"];
+        $changelog->save();
+        foreach(Records::find('domain_id = '.$this->view->domain->id) as $record)
+        {
+          if ($record->delete() === false) {
+            $this->flash->error('Domain could not be deleted.');
+            $messages = $record->getMessages();
+            foreach ($messages as $message) {
+              $this->flash->warning($message);
+            }
+          } else {
+            $this->flash->success('Record "'.$record->name.'" --'.$record->type.'-> "'.$record->content.'" purged.');
+            $changelog = new Changelog();
+            $changelog->type="PURGED";
+            $changelog->data=json_encode($record);
+            $changelog->uid=$this->view->identity["id"];
+            $changelog->save();
+          }
+        }
+        // Record was added
+        $this->flash->success('Domain deleted.');
+        return $this->dispatcher->forward([
+          "action" => "index"
+        ]);
+      }
+    }
   }
 }

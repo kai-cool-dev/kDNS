@@ -9,6 +9,10 @@ return new Config([
     'password' => 'MYSQL_PASS',
     'dbname' => 'MYSQL_DB'
   ],
+  'redis' => [
+    'server' => 'REDIS_SERVER',
+    'port' => 'REDIS_PORT',
+  ],
   'application' => [
     'controllersDir' => APP_PATH . '/controllers/',
     'modelsDir'      => APP_PATH . '/models/',

@@ -46,12 +46,11 @@
                 {% endif %}
                   <tr>
                     <th scope="row">{{ domain.name }}</th>
-                    <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-edit"></i> Edit','class':'btn btn-primary form-control') }}</td>
-                    <td>{{ link_to('domain/delete/' ~ domain.id,'<i class="fas fa-trash"></i> Delete','class':'btn btn-danger form-control') }}</td>
+                    <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-info-circle"></i> Details','class':'btn btn-primary form-control') }}</td>
                   </tr>
                 {% else %}
                   <tr>
-                    <td colspan="3">You don't have any domains.</td>
+                    <td colspan="2">You don't have any domains.</td>
                     <td>{{ link_to('domain/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-success form-control') }}</td>
                   </tr>
                 {% endfor %}

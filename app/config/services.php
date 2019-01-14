@@ -5,8 +5,8 @@ use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\Url as UrlResolver;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
-use Phalcon\Mvc\Model\Metadata\Files as MetaDataAdapter;
-use Phalcon\Session\Adapter\Files as SessionAdapter;
+use Phalcon\Mvc\Model\Metadata\Redis as MetaDataAdapter;
+use Phalcon\Session\Adapter\Redis as SessionAdapter;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
@@ -83,21 +83,34 @@ $di->set('db', function () {
 /**
  * If the configuration specify the use of metadata adapter use it or use memory otherwise
  */
-$di->set('modelsMetadata', function () {
-    $config = $this->getConfig();
-    return new MetaDataAdapter([
-        'metaDataDir' => $config->application->cacheDir . 'metaData/'
-    ]);
-});
+ $di->set('modelsMetadata', function () {
+   $config = $this->getConfig();
+   return new MetaDataAdapter([
+     "host"       => $config->redis->server,
+     "port"       => $config->redis->port,
+     "persistent" => 0,
+     "statsKey"   => "_PHCM_MM",
+     "lifetime"   => 172800,
+     "index"      => 2
+   ]);
+ });
 
 /**
  * Start the session the first time some component request the session service
  */
-$di->set('session', function () {
-    $session = new SessionAdapter();
-    $session->start();
-    return $session;
-});
+ $di->set('session', function () {
+   $config = $this->getConfig();
+   $session = new SessionAdapter([
+     "uniqueId"   => "dns",
+     "prefix"     => "my",
+     "host"       => $config->redis->server,
+     "port"       => $config->redis->port,
+     "persistent" => 0,
+     "index"      => 2
+   ]);
+   $session->start();
+   return $session;
+ });
 
 /**
  * Crypt service

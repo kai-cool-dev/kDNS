@@ -346,67 +346,7 @@ class DnsController extends ControllerBase
   */
   public function deleteAction($id)
   {
-    $this->view->domain=Domains::findFirst($id);
-    if($this->view->identity["profile"] == "Administrators")
-    {
-      $this->flash->notice('You are in admin modus.');
-    }
-    else
-    {
-      if($this->view->domain->account == "0")
-      {
-        $this->flash->notice('This is a public domain');
-      }
-      else
-      {
-        if($this->view->domain->account != $this->view->identity["id"])
-        {
-          $this->flash->notice('You don\'t have access to this module: private');
-          return $this->dispatcher->forward([
-              'action' => 'index'
-          ]);
-        }
-      }
-    }
-    if($this->request->isPost())
-    {
-      if ($this->view->domain->delete() === false) {
-        $this->flash->error('Domain could not be deleted.');
-        $messages = $this->view->domain->getMessages();
-        foreach ($messages as $message) {
-          $this->flash->warning($message);
-        }
-      } else {
-        $changelog = new Changelog();
-        $changelog->type="DELETE";
-        $changelog->data=json_encode($this->view->domain);
-        $changelog->uid=$this->view->identity["id"];
-        $changelog->save();
-        foreach(Records::find('domain_id = '.$this->view->domain->id) as $record)
-        {
-          if ($record->delete() === false) {
-            $this->flash->error('Domain could not be deleted.');
-            $messages = $record->getMessages();
-            foreach ($messages as $message) {
-              $this->flash->warning($message);
-            }
-          } else {
-            $this->flash->success('Record "'.$record->name.'" --'.$record->type.'-> "'.$record->content.'" purged.');
-            $changelog = new Changelog();
-            $changelog->type="PURGED";
-            $changelog->data=json_encode($record);
-            $changelog->uid=$this->view->identity["id"];
-            $changelog->save();
-          }
-        }
-        // Record was added
-        $this->flash->success('Domain deleted.');
-        return $this->dispatcher->forward([
-          "action" => "index"
-        ]);
-      }
-    }
-
+    
   }
 
   /**
