@@ -16,6 +16,7 @@ This features are implemented and working:
 -	Recursor: Parental Control
 -	Internal Whois Management over WebUI, whois cli for linux systems and API
 -	Changelog (Log Everything what your Users are doing! Useful for auditing.)
+-	Redis for Cluster or HA Support, also faster caching!
 
 Planned Features
 ----------------
