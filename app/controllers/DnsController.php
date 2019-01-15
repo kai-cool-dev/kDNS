@@ -44,38 +44,13 @@ class DnsController extends ControllerBase
   {
     $this->view->setVar('logged_in', is_array($this->auth->getIdentity()));
     $this->view->setTemplateBefore('private');
+    $this->view->identity=$this->auth->getIdentity();
   }
 
   /**
   * Displays Index Page
   */
-  public function indexAction()
-  {
-    if(empty($_GET["page"]))
-    {
-      $currentPage = 0;
-    }
-    else
-    {
-      $currentPage = (int) $_GET["page"];
-    }
-    $domains = Domains::find([
-      "account = ".$this->view->identity["id"]
-    ]);
-    $paginator = new PaginatorModel(
-      [
-        "data"  => $domains,
-        "limit" => 10,
-        "page"  => $currentPage,
-      ]
-    );
-    $this->view->domains = $paginator->getPaginate();
-  }
-
-  /**
-  * Edit Domain Name Entries
-  */
-  public function editAction($id)
+  public function indexAction($id)
   {
     $this->view->domain=Domains::findFirst($id);
     if($this->view->identity["profile"] == "Administrators")
@@ -172,7 +147,14 @@ class DnsController extends ControllerBase
     // Shows Nameserver Select for Modal
     $this->view->nameserverform=new NameserverSelectForm();
     $this->view->mxserverform=new CreateMXForm();
-    $this->view->descriptionform=new EditDomainDescriptionForm($this->view->domain);
+  }
+
+  /**
+  * Edit Domain Name Entries
+  */
+  public function editAction()
+  {
+
   }
 
   private function updateDescription($data)
@@ -346,7 +328,7 @@ class DnsController extends ControllerBase
   */
   public function deleteAction($id)
   {
-    
+
   }
 
   /**

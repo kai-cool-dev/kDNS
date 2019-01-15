@@ -58,7 +58,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12">
-            {{ link_to('dns/index/' ~ domain.id,'<i class="fas fa-edit"></i> Edit DNS Records','class':'btn btn-primary form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Edit your DNS Records') }}
+            {{ link_to('record/index/' ~ domain.id,'<i class="fas fa-edit"></i> Edit DNS Records','class':'btn btn-primary form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Edit your DNS Records') }}
           </div>
         </div>
         <div class="row">

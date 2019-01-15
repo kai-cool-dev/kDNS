@@ -21,18 +21,13 @@ return new Config([
     'permissions' => [
       'index'
     ],
-    'dns' => [
+    'record' => [
       'index',
-      'search',
       'create',
-      'edit',
       'delete',
-      'administrate',
-      'administrateNS',
-      'administrateTLD',
-      'administrateType',
-      'administrateRecursor',
-      'administrateChangelog'
+      'update',
+      'disable',
+      'enable'
     ],
     'domains' => [
       'index',
