@@ -7,7 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       {%- set menus = [
-        '<i class="fas fa-home"></i> Home': 'domain/index',
+        '<i class="fas fa-home"></i> Home': 'index',
         '<i class="fas fa-search"></i> List/Search Domains': 'domain/index',
         '<i class="fas fa-plus"></i> Create new Domain': 'domain/create'
       ] -%}

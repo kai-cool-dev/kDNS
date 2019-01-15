@@ -50,7 +50,7 @@ class DnsController extends ControllerBase
   /**
   * Displays Index Page
   */
-  public function indexAction($id)
+  public function indexAction($id==null)
   {
     $this->view->domain=Domains::findFirst($id);
     if($this->view->identity["profile"] == "Administrators")

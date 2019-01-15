@@ -50,8 +50,13 @@
                   </tr>
                 {% else %}
                   <tr>
-                    <td colspan="2">You don't have any domains.</td>
-                    <td>{{ link_to('domain/create','<i class="fas fa-plus"></i> Create one!','class':'btn btn-success form-control') }}</td>
+                    <td colspan="3">
+                      {% if name %}
+                      Search result didn't returned any results.
+                      {% else %}
+                      You don't have any domains.
+                      {% endif %}
+                    </td>
                   </tr>
                 {% endfor %}
               </tbody>

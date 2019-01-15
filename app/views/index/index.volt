@@ -7,7 +7,7 @@
 			<div class="row">
 				{%- if logged_in is defined and not(logged_in is empty) -%}
 				<div class="col-lg-12">
-					{{ link_to('dns', '<i class="fas fa-server"></i> DNS Management', 'class': 'btn btn-primary btn-large form-control') }}
+					{{ link_to('domain/', '<i class="fas fa-server"></i> Management', 'class': 'btn btn-primary btn-large form-control') }}
 				</div>
 		    {% else %}
 				<div class="col-lg-12">
