@@ -101,14 +101,13 @@ class DomainController extends ControllerBase
       {
         if($this->view->domain->account != $this->auth->getIdentity()["id"])
         {
-          $this->flash->notice('You don\'t have access to this module: private');
+          $this->flash->error('Sorry you are not allowed to access this domain.');
           return $this->dispatcher->forward([
               'action' => 'index'
           ]);
         }
       }
     }
-    $this->view->records=Records::find('domain_id = '.$this->view->domain->id);
     $this->view->descriptionform=new EditDomainDescriptionForm($this->view->domain);
   }
 

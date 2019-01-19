@@ -37,64 +37,62 @@
         </form>
         <div class="row">
           <div class="col-lg-12">
-            <table class="table table-striped table-borderless">
-              {% for domain in domains.items %}
-                {% if loop.first %}
-                  <thead>
-                  </thead>
-                  <tbody>
-                {% endif %}
-                  <tr>
-                    <th scope="row">{{ domain.name }}</th>
-                    <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-info-circle"></i> Details','class':'btn btn-primary form-control') }}</td>
-                  </tr>
+            {% for domain in domains.items %}
+              {% if loop.first %}
+              <table class="table table-striped table-borderless">
+                <tbody>
+              {% endif %}
+              <tr>
+                <th scope="row">{{ domain.name }}</th>
+                <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-info-circle"></i> Details','class':'btn btn-primary form-control') }}</td>
+              </tr>
+              {% if loop.last %}
+                </tbody>
+                  </table>
+              {% endif %}
+              {% else %}
+                {% if name %}
+                  <p>Search result didn't returned any results.</p>
                 {% else %}
-                  <tr>
-                    <td colspan="3">
-                      {% if name %}
-                      Search result didn't returned any results.
-                      {% else %}
-                      You don't have any domains.
-                      {% endif %}
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+                  <p>You don't have any domains.</p>
+                {% endif %}
+            {% endfor %}
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-2">
-            {{ form('domain/') }}
-              <input type="hidden" name="name" value="{{ name }}">
-              <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-double-left"></i> First</button>
-            </form>
+        {% if domains.next  > 1 %}
+          <div class="row">
+            <div class="col-lg-2">
+              {{ form('domain/') }}
+                <input type="hidden" name="name" value="{{ name }}">
+                <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-double-left"></i> First</button>
+              </form>
+            </div>
+            <div class="col-lg-2">
+              {{ form('domain/') }}
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="page" value="{{ domains.before }}">
+                <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-left"></i> Previous</button>
+              </form>
+            </div>
+            <div class="col-lg-4">
+              <p class="form-control">{{ domains.current }}/{{ domains.total_pages }}</p>
+            </div>
+            <div class="col-lg-2">
+              {{ form('domain/') }}
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="page" value="{{ domains.next }}">
+                <button type="submit" class="btn btn-primary form-control">Next <i class="fas fa-angle-right"></i></button>
+              </form>
+            </div>
+            <div class="col-lg-2">
+              {{ form('domain/') }}
+                <input type="hidden" name="name" value="{{ name }}">
+                <input type="hidden" name="page" value="{{ domains.last }}">
+                <button type="submit" class="btn btn-primary form-control">Last <i class="fas fa-angle-double-right"></i></button>
+              </form>
+            </div>
           </div>
-          <div class="col-lg-2">
-            {{ form('domain/') }}
-              <input type="hidden" name="name" value="{{ name }}">
-              <input type="hidden" name="page" value="{{ domains.before }}">
-              <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-left"></i> Previous</button>
-            </form>
-          </div>
-          <div class="col-lg-4">
-            <p class="form-control">{{ domains.current }}/{{ domains.total_pages }}</p>
-          </div>
-          <div class="col-lg-2">
-            {{ form('domain/') }}
-              <input type="hidden" name="name" value="{{ name }}">
-              <input type="hidden" name="page" value="{{ domains.next }}">
-              <button type="submit" class="btn btn-primary form-control">Next <i class="fas fa-angle-right"></i></button>
-            </form>
-          </div>
-          <div class="col-lg-2">
-            {{ form('domain/') }}
-              <input type="hidden" name="name" value="{{ name }}">
-              <input type="hidden" name="page" value="{{ domains.last }}">
-              <button type="submit" class="btn btn-primary form-control">Last <i class="fas fa-angle-double-right"></i></button>
-            </form>
-          </div>
-        </div>
+        {% endif %}
       </div>
     </div>
   </div>
