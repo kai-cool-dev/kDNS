@@ -65,19 +65,34 @@
         </div>
         <div class="row">
           <div class="col-lg-2">
-            {{ link_to("domain/index", '<i class="fas fa-angle-double-left"></i> First', "class": "btn btn-primary form-control") }}
+            {{ form('domain/') }}
+              <input type="hidden" name="name" value="{{ name }}">
+              <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-double-left"></i> First</button>
+            </form>
           </div>
           <div class="col-lg-2">
-            {{ link_to("domain/index?page=" ~ domains.before, '<i class="fas fa-angle-left"></i> Previous', "class": "btn btn-primary form-control") }}
+            {{ form('domain/') }}
+              <input type="hidden" name="name" value="{{ name }}">
+              <input type="hidden" name="page" value="{{ domains.before }}">
+              <button type="submit" class="btn btn-primary form-control"><i class="fas fa-angle-left"></i> Previous</button>
+            </form>
           </div>
           <div class="col-lg-4">
             <p class="form-control">{{ domains.current }}/{{ domains.total_pages }}</p>
           </div>
           <div class="col-lg-2">
-            {{ link_to("domain/index?page=" ~ domains.next, 'Next <i class="fas fa-angle-right"></i>', "class": "btn btn-primary form-control") }}
+            {{ form('domain/') }}
+              <input type="hidden" name="name" value="{{ name }}">
+              <input type="hidden" name="page" value="{{ domains.next }}">
+              <button type="submit" class="btn btn-primary form-control">Next <i class="fas fa-angle-right"></i></button>
+            </form>
           </div>
           <div class="col-lg-2">
-            {{ link_to("domain/index?page=" ~ domains.last, 'Last <i class="fas fa-angle-double-right"></i>', "class": "btn btn-primary form-control") }}
+            {{ form('domain/') }}
+              <input type="hidden" name="name" value="{{ name }}">
+              <input type="hidden" name="page" value="{{ domains.last }}">
+              <button type="submit" class="btn btn-primary form-control">Last <i class="fas fa-angle-double-right"></i></button>
+            </form>
           </div>
         </div>
       </div>

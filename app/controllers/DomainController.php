@@ -37,13 +37,13 @@ class DomainController extends ControllerBase
   public function indexAction()
   {
     $filter = new Filter();
-    if(empty($_GET["page"]))
+    if(empty($this->request->get("page")))
     {
       $currentPage = 0;
     }
     else
     {
-      $currentPage = (int) $_GET["page"];
+      $currentPage = (int) $this->request->get("page");
     }
     // SQL Building 101
     if($this->auth->getIdentity()["profile"] == "Administrators")
