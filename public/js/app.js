@@ -1,66 +1,34 @@
-function myLog(data)
-{
-  console.log("======");
-  console.log("kDNS:");
-  console.log(data);
-  console.log("======");
-}
-
-function functionmodal()
-{
-  if($('#newtype').val() == "NS")
-  {
-    $('#nameserverModal').modal('toggle');
-  }
-  if($('#newtype').val() == "MX")
-  {
-    $('#mxserverModal').modal('toggle');
-  }
-  if($('#newtype').val() == "SOA")
-  {
-    $('#soaModal').modal('toggle');
-  }
-}
-
 function display_search()
 {
   $('#searchform').toggle();
 }
 
-function nameserversave()
+function edit_modal(record_id)
 {
-  var nameserver = $("#nameserver").val() || [];
-  $('#newtype').val("NS");
-  $('#newcontent').val(nameserver);
-  $('#nameserverModal').modal('toggle');
+  console.log(record_id);
 }
 
-function mxserversave()
+function ttl_modal(record_id)
 {
-  $('#newcontent').val($("#mailserver").val());
-  $('#newprio').val($("#mxprio").val());
-  $('#newtype').val("MX");
-  $('#mxserverModal').modal('toggle');
+  console.log("Collect Information");
+  var name = $('#name_'+record_id).val();
+  var type = $('#type_'+record_id).val();
+  var content = $('#content_'+record_id).val();
+  var prio = $('#prio_'+record_id).val();
+  var ttl = $('#ttl_'+record_id).val();
+  console.log("Information collected. Name: "+name+", Type: "+type+", Content: "+content+", TTL: "+ttl+", Prio: "+prio);
+  console.log("Write information into modal.")
+  $('#ttl_modal_record_id').val(record_id);
+  $('#ttl_modal_ttl').val(ttl);
+  $('#ttl_modal_prio').val(prio);
+  console.log("Display Modal.")
+  $('#ttl_modal').modal('toggle');
 }
-
-$('#newtype').change(function(){
-  functionmodal();
-});
-
-$('#newcontent').click(function(){
-  functionmodal();
-});
 
 $('.alert').click(function(){
   $('.alert').toggle();
 });
 
-
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
-
-if(nserror == true)
-{
-  $('#nameserverModal').modal('toggle');
-}

@@ -52,12 +52,14 @@
                 </tr>
         {% endif %}
                 <tr>
-                  <th scope="row"><div class="input-group"><input type="text" class="form-control" value="{{ record.name }}" disabled></div></th>
-                  <td><div class="input-group"><input type="text" class="form-control" value="{{ record.type }}" disabled></div></td>
-                  <th scope="row"><div class="input-group"><input type="text" class="form-control" value='{{ record.content }}' disabled></div></th>
+                  <input type="hidden" id="ttl_{{ record.id }}" value="{{ record.ttl }}">
+                  <input type="hidden" id="prio_{{ record.id }}" value="{{ record.prio }}">
+                  <th scope="row"><div class="input-group"><input type="text" id="name_{{ record.id }}" class="form-control" value="{{ record.name }}" disabled></div></th>
+                  <td><div class="input-group"><input type="text" id="type_{{ record.id }}" class="form-control" value="{{ record.type }}" disabled></div></td>
+                  <th scope="row"><div class="input-group"><input type="text" id="content_{{ record.id }}" class="form-control" value='{{ record.content }}' disabled></div></th>
                 {% if record.type is not "SOA" and record.type is not "NS" %}
-                  <td><button class="btn form-control btn-primary" id="edit_button" data-toggle="tooltip" data-placement="bottom" title="Edit this Record"><i class="fas fa-edit"></i></button></td>
-                  <td><button class="btn form-control btn-secondary" id="ttl_button" data-toggle="tooltip" data-placement="bottom" title="Change TTL or Priority of the Record"><i class="far fa-calendar-check"></i></button></td>
+                  <td><button class="btn form-control btn-primary" onclick="edit_modal({{ record.id }})" data-toggle="tooltip" data-placement="bottom" title="Edit this Record"><i class="fas fa-edit"></i></button></td>
+                  <td><button class="btn form-control btn-secondary" onclick="ttl_modal({{ record.id }})" data-toggle="tooltip" data-placement="bottom" title="Change TTL or Priority of the Record"><i class="far fa-calendar-check"></i></button></td>
                   {% if record.disabled == 0 %}
                     <td>{{ link_to('record/disable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-ban"></i>','class':'btn btn-warning form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Disable Record') }}</td>
                   {% else %}
@@ -109,3 +111,74 @@
     </div>
   </div>
 </div>
+
+<!-- START TTL MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" id="ttl_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="far fa-calendar-check"></i> Edit TTL and Priority of Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <form method="post" action="{{ url('record/update/' ~ domain.id) }}">
+        <input type="hidden" name="record_id" value="" id="ttl_modal_record_id">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <p>The <b>T</b>ime <b>t</b>o <b>L</b>ive describes how long the record should stay in the cache. This affects the update time of the domain.</p>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">TTL (sec)</span>
+                </div>
+                <input type="number" name="ttl" class="form-control" placeholder="3600" id="ttl_modal_ttl">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <p>The priority of the target host, lower value means more preferred.</p>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Priority</span>
+                </div>
+                <input type="number" name="prio" class="form-control" placeholder="0" id="ttl_modal_prio">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary form-control"><i class="fas fa-save"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END TTL MODAL -->
+<!-- START EDIT MODAL -->
+<div class="modal" tabindex="-1" role="dialog" id="edit_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END EDIT MODAL -->

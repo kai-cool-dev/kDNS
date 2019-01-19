@@ -44,6 +44,7 @@
               {% endif %}
               <tr>
                 <th scope="row">{{ domain.name }}</th>
+                <td>{{ domain.description }}</td>
                 <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-info-circle"></i> Details','class':'btn btn-primary form-control') }}</td>
               </tr>
               {% if loop.last %}

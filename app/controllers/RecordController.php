@@ -259,6 +259,108 @@ class RecordController extends ControllerBase
     ]);
   }
 
+  public function updateAction($domain_id=null,$record_id=null)
+  {
+    $filter = new Filter();
+    if($domain_id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $domain=Domains::findFirst($domain_id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      if($domain->account != "0")
+      {
+        if($domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->error('Sorry you are not allowed to access this domain.');
+          return $this->dispatcher->forward([
+            'controller' => 'domain',
+            'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if(!empty($filter->sanitize($this->request->get("record_id"),"int")))
+    {
+      $record_id=$filter->sanitize($this->request->get("record_id"),"int");
+    }
+    if($record_id==null)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record=Records::findFirst($record_id);
+    if($record===false)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    if(!empty($filter->sanitize($this->request->get("name"),"string")))
+    {
+      $record->name=$filter->sanitize($this->request->get("name"),"string").".".$domain->name;
+    }
+    if(!empty($filter->sanitize($this->request->get("type"),"string")))
+    {
+      $record->type=$filter->sanitize($this->request->get("type"),"string");
+    }
+    if(!empty($filter->sanitize($this->request->get("content"),"string")))
+    {
+      $record->content=$filter->sanitize($this->request->get("content"),"string");
+    }
+    if(!empty($filter->sanitize($this->request->get("prio"),"int")))
+    {
+      $record->prio=$filter->sanitize($this->request->get("prio"),"int");
+    }
+    if($filter->sanitize($this->request->get("prio"),"int")==0)
+    {
+      $record->prio=0;
+    }
+    if(!empty($filter->sanitize($this->request->get("ttl"),"int")))
+    {
+      $record->ttl=$filter->sanitize($this->request->get("ttl"),"int");
+    }
+    if ($record->save() === false) {
+      $this->flash->error('Record could not be updated.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      $changelog = new Changelog();
+      $changelog->type="UPDATED";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
+      // Record was added
+      $this->flash->success('Record updated.');
+    }
+    return $this->dispatcher->forward([
+      'action' => 'index',
+      'params' => [$domain_id]
+    ]);
+  }
+
   public function deleteAction($domain_id=null,$record_id=null)
   {
     if($domain_id==null)
