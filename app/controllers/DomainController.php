@@ -76,8 +76,16 @@ class DomainController extends ControllerBase
   /**
   * Edit Domain Page
   */
-  public function editAction($id)
+  public function editAction($id=null)
   {
+    if($id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
     $this->view->domain=Domains::findFirst($id);
     if($this->auth->getIdentity()["profile"] == "Administrators")
     {
