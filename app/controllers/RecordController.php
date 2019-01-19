@@ -3,17 +3,14 @@ namespace kDNS\Controllers;
 
 // Models
 use kDNS\Models\Domains;
-use kDNS\Models\Recursor;
+use kDNS\Models\Records;
 use kDNS\Models\Nameserver;
 use kDNS\Models\TopDomains;
-use kDNS\Models\RecordTypes;
 use kDNS\Models\Changelog;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
 use kDNS\Forms\CreateRecordForm;
-use kDNS\Forms\CreateSOAForm;
-use kDNS\Forms\NameserverSelectForm;
 use kDNS\Forms\CreateMXForm;
 
 // Other Stuff
@@ -39,6 +36,7 @@ class RecordController extends ControllerBase
   */
   public function indexAction($id=null)
   {
+    $filter = new Filter();
     if($id==null)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -47,7 +45,6 @@ class RecordController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $filter = new Filter();
     if(empty($this->request->get("page")))
     {
       $currentPage = 0;
@@ -57,6 +54,14 @@ class RecordController extends ControllerBase
       $currentPage = (int) $this->request->get("page");
     }
     $this->view->domain=Domains::findFirst($id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
     if($this->auth->getIdentity()["profile"] == "Administrators")
     {
       $this->flash->notice('You are in admin modus.');
@@ -87,21 +92,312 @@ class RecordController extends ControllerBase
       ]
     );
     $this->view->records=$paginator->getPaginate();
+    $this->view->new_record=new CreateRecordForm(null,true);
   }
 
-  private function enableAction($data)
+  public function enableAction($domain_id=null,$record_id=null)
   {
+    if($domain_id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $domain=Domains::findFirst($domain_id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      if($domain->account != "0")
+      {
+        if($domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->error('Sorry you are not allowed to access this domain.');
+          return $this->dispatcher->forward([
+            'controller' => 'domain',
+            'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if($record_id==null)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record=Records::findFirst($record_id);
+    if($record===false)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record->disabled=0;
+    if ($record->save() === false) {
+      $this->flash->error('Record could not be enabled.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      $changelog = new Changelog();
+      $changelog->type="ENABLE";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
+      // Record was added
+      $this->flash->success('Record enabled.');
+    }
+    return $this->dispatcher->forward([
+      'controller' => 'record',
+      'action' => 'index',
+      'params' => [$domain_id]
+    ]);
   }
 
-  public function disableAction($data)
+  public function disableAction($domain_id=null,$record_id=null)
   {
+    if($domain_id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $domain=Domains::findFirst($domain_id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      if($domain->account != "0")
+      {
+        if($domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->error('Sorry you are not allowed to access this domain.');
+          return $this->dispatcher->forward([
+            'controller' => 'domain',
+            'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if($record_id==null)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record=Records::findFirst($record_id);
+    if($record===false)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record->disabled=1;
+    if ($record->save() === false) {
+      $this->flash->error('Record could not be disabled.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      $changelog = new Changelog();
+      $changelog->type="DISABLE";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
+      // Record was added
+      $this->flash->success('Record disabled.');
+    }
+    return $this->dispatcher->forward([
+      'controller' => 'record',
+      'action' => 'index',
+      'params' => [$domain_id]
+    ]);
   }
 
-  public function createAction($data)
+  public function createAction($id=null)
   {
+    $filter = new Filter();
+    if($id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $domain=Domains::findFirst($id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      if($domain->account != "0")
+      {
+        if($domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->error('Sorry you are not allowed to access this domain.');
+          return $this->dispatcher->forward([
+            'controller' => 'domain',
+            'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if(!$this->request->isPost())
+    {
+      return $this->dispatcher->forward([
+        'action' => 'index',
+        'params' => [$id]
+      ]);
+    }
+    $record_data=array(
+      "domain_id" => $domain->id,
+      "name" => $filter->sanitize($this->request->get("name"),"string").".".$domain->name,
+      "type" => $filter->sanitize($this->request->get("type"),"string"),
+      "content" => $filter->sanitize($this->request->get("content"),"string"),
+      "ttl" => 3600,
+      "prio" => 0,
+      "change_date" => time(),
+      "disabled" => 0,
+      "auth" => 1
+    );
+    if(!empty($filter->sanitize($this->request->get("ttl"),"int")))
+    {
+      $record_data["ttl"]=$filter->sanitize($this->request->get("ttl"),"int");
+    }
+    if(!empty($filter->sanitize($this->request->get("prio"),"int")))
+    {
+      $record_data["prio"]=$filter->sanitize($this->request->get("prio"),"int");
+    }
+    $record=new Records($record_data);
+    if ($record->save() === false) {
+      $this->flash->error('Record could not be stored.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      $changelog = new Changelog();
+      $changelog->type="EDITED";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
+      // Record was added
+      $this->flash->success('Record created.');
+    }
+    return $this->dispatcher->forward([
+      'action' => 'index',
+      'params' => [$id]
+    ]);
   }
 
-  public function deleteAction($data)
+  public function deleteAction($domain_id=null,$record_id=null)
   {
+    if($domain_id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $domain=Domains::findFirst($domain_id);
+    if($domain===false)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    if($this->auth->getIdentity()["profile"] != "Administrators")
+    {
+      if($domain->account != "0")
+      {
+        if($domain->account != $this->auth->getIdentity()["id"])
+        {
+          $this->flash->error('Sorry you are not allowed to access this domain.');
+          return $this->dispatcher->forward([
+            'controller' => 'domain',
+            'action' => 'index'
+          ]);
+        }
+      }
+    }
+    if($record_id==null)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    $record=Records::findFirst($record_id);
+    if($record===false)
+    {
+      $this->flash->error('Couln\'t find record.');
+      return $this->dispatcher->forward([
+        'controller' => 'record',
+        'action' => 'index',
+        'params' => [$domain_id]
+      ]);
+    }
+    if ($record->delete() === false) {
+      $this->flash->error('Record could not be deleted.');
+      $messages = $record->getMessages();
+      foreach ($messages as $message) {
+        $this->flash->warning($message);
+      }
+    } else {
+      $changelog = new Changelog();
+      $changelog->type="PURGED";
+      $changelog->data=json_encode($record);
+      $changelog->uid=$this->view->identity["id"];
+      $changelog->save();
+      // Record was added
+      $this->flash->success('Record deleted.');
+    }
+    return $this->dispatcher->forward([
+      'controller' => 'record',
+      'action' => 'index',
+      'params' => [$domain_id]
+    ]);
   }
 }

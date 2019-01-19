@@ -25,6 +25,31 @@
                 <th scope="col" colspan="4"></th>
               </thead>
               <tbody>
+                <tr>
+                  <form method="post" action="{{ url('record/create/' ~ domain.id) }}">
+                    <td>
+                      <div class="input-group">
+                        {{ new_record.render('name') }}
+                        <div class="input-group-append">
+                          <span class="input-group-text">.{{ domain.name }}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        {{ new_record.render('type') }}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group">
+                        {{ new_record.render('content') }}
+                      </div>
+                    </td>
+                    <td colspan="4">
+                      <button type="submit" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Create new Record"><i class="fas fa-plus"></i> Create</button>
+                    </td>
+                  </form>
+                </tr>
         {% endif %}
                 <tr>
                   <th scope="row"><div class="input-group"><input type="text" class="form-control" value="{{ record.name }}" disabled></div></th>
@@ -33,8 +58,12 @@
                 {% if record.type is not "SOA" and record.type is not "NS" %}
                   <td><button class="btn form-control btn-primary" id="edit_button" data-toggle="tooltip" data-placement="bottom" title="Edit this Record"><i class="fas fa-edit"></i></button></td>
                   <td><button class="btn form-control btn-secondary" id="ttl_button" data-toggle="tooltip" data-placement="bottom" title="Change TTL or Priority of the Record"><i class="far fa-calendar-check"></i></button></td>
-                  <td><button class="btn form-control btn-warning" id="disable_button" data-toggle="tooltip" data-placement="bottom" title="Disable Record"><i class="fas fa-ban"></i></button></td>
-                  <td><button class="btn form-control btn-danger" id="delete_button" data-toggle="tooltip" data-placement="bottom" title="Delete Record"><i class="fas fa-trash"></i></button></td>
+                  {% if record.disabled == 0 %}
+                    <td>{{ link_to('record/disable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-ban"></i>','class':'btn btn-warning form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Disable Record') }}</td>
+                  {% else %}
+                    <td>{{ link_to('record/enable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-check"></i>','class':'btn btn-success form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Enable Record') }}</td>
+                  {% endif %}
+                  <td>{{ link_to('record/delete/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-trash"></i>','class':'btn btn-danger form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Delete Record') }}</td>
                 {% else %}
                   <td colspan="4"></td>
                 {% endif %}

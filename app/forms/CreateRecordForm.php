@@ -115,11 +115,5 @@ class CreateRecordForm extends Form
       );
       $this->add($prio);
     }
-
-    // Hidden Action switch
-    $action=new Hidden('action',[
-      'value' => 'create'
-    ]);
-    $this->add($action);
   }
 }

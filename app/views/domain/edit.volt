@@ -40,7 +40,7 @@
           </div>
           <div class="row">
             <div class="col-lg-12">
-              <button type="submit" name="action" value="updateDescription" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Save the domain description"><i class="fas fa-save"></i> Save Description</button>
+              <button type="submit" class="btn form-control btn-success" data-toggle="tooltip" data-placement="bottom" title="Save the domain description"><i class="fas fa-save"></i> Save Description</button>
             </div>
           </div>
         </form>
