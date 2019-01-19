@@ -26,8 +26,7 @@ return new Config([
       'create',
       'delete',
       'update',
-      'disable',
-      'enable'
+      'disable'
     ],
     'domains' => [
       'index',

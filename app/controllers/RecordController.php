@@ -54,7 +54,7 @@ class RecordController extends ControllerBase
       $currentPage = (int) $this->request->get("page");
     }
     $this->view->domain=Domains::findFirst($id);
-    if($domain===false)
+    if($this->view->domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
       return $this->dispatcher->forward([
@@ -93,81 +93,6 @@ class RecordController extends ControllerBase
     );
     $this->view->records=$paginator->getPaginate();
     $this->view->new_record=new CreateRecordForm(null,true);
-  }
-
-  public function enableAction($domain_id=null,$record_id=null)
-  {
-    if($domain_id==null)
-    {
-      $this->flash->error('Couln\'t find domain.');
-      return $this->dispatcher->forward([
-        'controller' => 'domain',
-        'action' => 'index'
-      ]);
-    }
-    $domain=Domains::findFirst($domain_id);
-    if($domain===false)
-    {
-      $this->flash->error('Couln\'t find domain.');
-      return $this->dispatcher->forward([
-        'controller' => 'domain',
-        'action' => 'index'
-      ]);
-    }
-    if($this->auth->getIdentity()["profile"] != "Administrators")
-    {
-      if($domain->account != "0")
-      {
-        if($domain->account != $this->auth->getIdentity()["id"])
-        {
-          $this->flash->error('Sorry you are not allowed to access this domain.');
-          return $this->dispatcher->forward([
-            'controller' => 'domain',
-            'action' => 'index'
-          ]);
-        }
-      }
-    }
-    if($record_id==null)
-    {
-      $this->flash->error('Couln\'t find record.');
-      return $this->dispatcher->forward([
-        'controller' => 'record',
-        'action' => 'index',
-        'params' => [$domain_id]
-      ]);
-    }
-    $record=Records::findFirst($record_id);
-    if($record===false)
-    {
-      $this->flash->error('Couln\'t find record.');
-      return $this->dispatcher->forward([
-        'controller' => 'record',
-        'action' => 'index',
-        'params' => [$domain_id]
-      ]);
-    }
-    $record->disabled=0;
-    if ($record->save() === false) {
-      $this->flash->error('Record could not be enabled.');
-      $messages = $record->getMessages();
-      foreach ($messages as $message) {
-        $this->flash->warning($message);
-      }
-    } else {
-      $changelog = new Changelog();
-      $changelog->type="ENABLE";
-      $changelog->data=json_encode($record);
-      $changelog->uid=$this->view->identity["id"];
-      $changelog->save();
-      // Record was added
-      $this->flash->success('Record enabled.');
-    }
-    return $this->dispatcher->forward([
-      'controller' => 'record',
-      'action' => 'index',
-      'params' => [$domain_id]
-    ]);
   }
 
   public function disableAction($domain_id=null,$record_id=null)
@@ -222,9 +147,16 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $record->disabled=1;
+    if($record->disabled==0)
+    {
+      $record->disabled=1;
+    }
+    else
+    {
+      $record->disabled=0;
+    }
     if ($record->save() === false) {
-      $this->flash->error('Record could not be disabled.');
+      $this->flash->error('Record could not be updated.');
       $messages = $record->getMessages();
       foreach ($messages as $message) {
         $this->flash->warning($message);
@@ -236,7 +168,7 @@ class RecordController extends ControllerBase
       $changelog->uid=$this->view->identity["id"];
       $changelog->save();
       // Record was added
-      $this->flash->success('Record disabled.');
+      $this->flash->success('Record updated.');
     }
     return $this->dispatcher->forward([
       'controller' => 'record',

@@ -61,7 +61,7 @@
                   {% if record.disabled == 0 %}
                     <td>{{ link_to('record/disable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-ban"></i>','class':'btn btn-warning form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Disable Record') }}</td>
                   {% else %}
-                    <td>{{ link_to('record/enable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-check"></i>','class':'btn btn-success form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Enable Record') }}</td>
+                    <td>{{ link_to('record/disable/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-check"></i>','class':'btn btn-success form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Enable Record') }}</td>
                   {% endif %}
                   <td>{{ link_to('record/delete/' ~ domain.id ~ '/' ~ record.id,'<i class="fas fa-trash"></i>','class':'btn btn-danger form-control','data-toggle': 'tooltip', 'data-placement': 'bottom', 'title': 'Delete Record') }}</td>
                 {% else %}
