@@ -220,7 +220,7 @@ class RecordController extends ControllerBase
     }
     $record_data=array(
       "domain_id" => $domain->id,
-      "name" => $filter->sanitize($this->request->get("name"),"string").".".$domain->name,
+      "name" => $domain->name,
       "type" => $filter->sanitize($this->request->get("type"),"string"),
       "content" => $filter->sanitize($this->request->get("content"),"string"),
       "ttl" => 3600,
@@ -229,6 +229,10 @@ class RecordController extends ControllerBase
       "disabled" => 0,
       "auth" => 1
     );
+    if(!empty($filter->sanitize($this->request->get("name"),"string")))
+    {
+      $record_data["name"]=str_replace($domain->name,"",$filter->sanitize($this->request->get("name"),"string")).".".$domain->name;
+    }
     if(!empty($filter->sanitize($this->request->get("ttl"),"int")))
     {
       $record_data["ttl"]=$filter->sanitize($this->request->get("ttl"),"int");
@@ -318,7 +322,7 @@ class RecordController extends ControllerBase
     }
     if(!empty($filter->sanitize($this->request->get("name"),"string")))
     {
-      $record->name=$filter->sanitize($this->request->get("name"),"string").".".$domain->name;
+      $record->name=str_replace($domain->name,"",$filter->sanitize($this->request->get("name"),"string")).".".$domain->name;
     }
     if(!empty($filter->sanitize($this->request->get("type"),"string")))
     {

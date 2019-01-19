@@ -52,6 +52,7 @@
                 </tr>
         {% endif %}
                 <tr>
+                  <input type="hidden" id="domain_{{ record.id }}" value="{{ domain.name }}">
                   <input type="hidden" id="ttl_{{ record.id }}" value="{{ record.ttl }}">
                   <input type="hidden" id="prio_{{ record.id }}" value="{{ record.prio }}">
                   <th scope="row"><div class="input-group"><input type="text" id="name_{{ record.id }}" class="form-control" value="{{ record.name }}" disabled></div></th>
@@ -162,22 +163,43 @@
 </div>
 <!-- END TTL MODAL -->
 <!-- START EDIT MODAL -->
-<div class="modal" tabindex="-1" role="dialog" id="edit_modal">
+<div class="modal fade" tabindex="-1" role="dialog" id="edit_modal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title"><i class="fas fa-edit"></i> Edit Record</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form method="post" action="{{ url('record/update/' ~ domain.id) }}">
+        <input type="hidden" name="record_id" value="" id="edit_modal_record_id">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+                </div>
+                <input type="text" name="name" class="form-control" placeholder="" id="edit_modal_name">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Content</span>
+                </div>
+                <input type="text" name="content" class="form-control" placeholder="" id="edit_modal_content">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary form-control"><i class="fas fa-save"></i> Save</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
