@@ -11,7 +11,6 @@ use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 // GUI Forms
 use kDNS\Forms\CreateRecordForm;
-use kDNS\Forms\CreateMXForm;
 
 // Other Stuff
 use Phalcon\Filter;

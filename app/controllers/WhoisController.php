@@ -26,15 +26,17 @@ class WhoisController extends ControllerBase
           if(empty($domain[0]))
           {
             $this->flash->error("Domain not found.");
-            return false;
           }
-          $ddata["name"]=$domain[0]->name;
-          $ddata["description"]=$domain[0]->description;
-          $ddata["created"]=$domain[0]->created;
-          $user=Users::findFirst($domain[0]->account);
-          $ddata["user"]=$user->name;
-          $ddata["email"]=$user->email;
-          $this->view->display=$ddata;
+          else
+          {
+            $ddata["name"]=$domain[0]->name;
+            $ddata["description"]=$domain[0]->description;
+            $ddata["created"]=$domain[0]->created;
+            $user=Users::findFirst($domain[0]->account);
+            $ddata["user"]=$user->name;
+            $ddata["email"]=$user->email;
+            $this->view->display=$ddata;  
+          }
         }
         $this->view->form=new SearchDomainForm();
     }
