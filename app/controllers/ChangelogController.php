@@ -25,7 +25,13 @@ class ChangelogController extends ControllerBase
     {
       $currentPage = (int) $this->request->get("page");
     }
-    $changelog = Changelog::find(['order' => 'id DESC']);
+    $cache_key="changelog.cache";
+    $changelog=$this->cache->get($cache_key);
+    if($changelog===null)
+    {
+      $changelog = Changelog::find(['order' => 'id DESC']);
+      $this->cache->save($cache_key,$changelog);
+    }
     $paginator=new PaginatorModel(
       [
         "data"  => $changelog,
@@ -46,7 +52,13 @@ class ChangelogController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $this->view->changelog=Changelog::findFirst($id);
+    $cache_key="changelog_id_".$id.".cache";
+    $this->view->changelog=$this->cache->get($cache_key);
+    if($this->view->changelog===null)
+    {
+      $this->view->changelog = Changelog::findFirst($id);
+      $this->cache->save($cache_key,$changelog);
+    }
     if($this->view->changelog===false)
     {
       $this->flash->error('Couln\'t find changelog.');

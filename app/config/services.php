@@ -7,9 +7,11 @@ use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use Phalcon\Mvc\View\Engine\Volt as VoltEngine;
 use Phalcon\Mvc\Model\Metadata\Redis as MetaDataAdapter;
 use Phalcon\Session\Adapter\Redis as SessionAdapter;
+use Phalcon\Cache\Backend\Redis;
 use Phalcon\Flash\Direct as Flash;
 use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Logger\Formatter\Line as FormatterLine;
+use Phalcon\Cache\Frontend\Data as FrontData;
 use kDNS\Auth\Auth;
 use kDNS\Acl\Acl;
 use kDNS\Mail\Mail;
@@ -89,7 +91,7 @@ $di->set('db', function () {
      "host"       => $config->redis->server,
      "port"       => $config->redis->port,
      "persistent" => 0,
-     "statsKey"   => "_PHCM_MM",
+     "statsKey"   => "_PHCM_MM_",
      "lifetime"   => 172800,
      "index"      => 2
    ]);
@@ -111,6 +113,26 @@ $di->set('db', function () {
    $session->start();
    return $session;
  });
+
+ /**
+  * Cache Service
+  */
+  $di->set('cache', function () {
+    $config = $this->getConfig();
+    $frontCache = new FrontData(
+      [
+        "lifetime" => 172800,
+      ]
+    );
+    $cache = new Redis($frontCache,
+    [
+      "host"       => $config->redis->server,
+      "port"       => $config->redis->port,
+      "persistent" => 0,
+      "index"      => 0
+    ]);
+    return $cache;
+  });
 
 /**
  * Crypt service

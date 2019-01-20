@@ -52,7 +52,13 @@ class RecordController extends ControllerBase
     {
       $currentPage = (int) $this->request->get("page");
     }
-    $this->view->domain=Domains::findFirst($id);
+    $cache_key="domain_get_".$id.".cache";
+    $this->view->domain=$this->cache->get($cache_key);
+    if($this->view->domain===null)
+    {
+      $this->view->domain = Domains::findFirst($id);
+      $this->cache->save($cache_key,$this->view->domain);
+    }
     if($this->view->domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -104,7 +110,13 @@ class RecordController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $domain=Domains::findFirst($domain_id);
+    $cache_key="domain_get_".$domain_id.".cache";
+    $this->view->domain=$this->cache->get($cache_key);
+    if($this->view->domain===null)
+    {
+      $this->view->domain = Domains::findFirst($domain_id);
+      $this->cache->save($cache_key,$this->view->domain);
+    }
     if($domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -136,7 +148,13 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $record=Records::findFirst($record_id);
+    $cache_key="record_get_".$record_id.".cache";
+    $record=$this->cache->get($cache_key);
+    if($record===null)
+    {
+      $record=Records::findFirst($record_id);
+      $this->cache->save($cache_key,$record);
+    }
     if($record===false)
     {
       $this->flash->error('Couln\'t find record.');
@@ -187,7 +205,13 @@ class RecordController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $domain=Domains::findFirst($id);
+    $cache_key="domain_get_".$id.".cache";
+    $domain=$this->cache->get($cache_key);
+    if($domain===null)
+    {
+      $domain = Domains::findFirst($id);
+      $this->cache->save($cache_key,$domain);
+    }
     if($domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -273,7 +297,13 @@ class RecordController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $domain=Domains::findFirst($domain_id);
+    $cache_key="domain_get_".$domain_id.".cache";
+    $domain=$this->cache->get($cache_key);
+    if($domain===null)
+    {
+      $domain = Domains::findFirst($domain_id);
+      $this->cache->save($cache_key,$domain);
+    }
     if($domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -309,7 +339,13 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $record=Records::findFirst($record_id);
+    $cache_key="record_get_".$record_id.".cache";
+    $record=$this->cache->get($cache_key);
+    if($record===null)
+    {
+      $record=Records::findFirst($record_id);
+      $this->cache->save($cache_key,$record);
+    }
     if($record===false)
     {
       $this->flash->error('Couln\'t find record.');
@@ -374,7 +410,13 @@ class RecordController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    $domain=Domains::findFirst($domain_id);
+    $cache_key="domain_get_".$domain_id.".cache";
+    $domain=$this->cache->get($cache_key);
+    if($domain===null)
+    {
+      $domain = Domains::findFirst($domain_id);
+      $this->cache->save($cache_key,$domain);
+    }
     if($domain===false)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -406,7 +448,13 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $record=Records::findFirst($record_id);
+    $cache_key="record_get_".$record_id.".cache";
+    $record=$this->cache->get($cache_key);
+    if($record===null)
+    {
+      $record=Records::findFirst($record_id);
+      $this->cache->save($cache_key,$record);
+    }
     if($record===false)
     {
       $this->flash->error('Couln\'t find record.');

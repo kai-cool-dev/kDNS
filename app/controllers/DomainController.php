@@ -60,7 +60,13 @@ class DomainController extends ControllerBase
     {
       $sql=$sql.' AND name LIKE "%'.$filter->sanitize($this->request->get("name"),"string").'%"';
     }
-    $domains = Domains::find([$sql]);
+    $cache_key="domain_get_for_".$this->auth->getIdentity()["id"]."_search_".$filter->sanitize($this->request->get("name"),"string").".cache";
+    $domains=$this->cache->get($cache_key);
+    if($domains===null)
+    {
+      $domains = Domains::find([$sql]);
+      $this->cache->save($cache_key,$domains);
+    }
     $paginator=new PaginatorModel(
       [
         "data"  => $domains,
@@ -85,6 +91,13 @@ class DomainController extends ControllerBase
         'controller' => 'domain',
         'action' => 'index'
       ]);
+    }
+    $cache_key="domain_get_".$id.".cache";
+    $this->view->domain=$this->cache->get($cache_key);
+    if($this->view->domain===null)
+    {
+      $this->view->domain = Domains::findFirst($id);
+      $this->cache->save($cache_key,$this->view->domain);
     }
     $this->view->domain=Domains::findFirst($id);
     if($this->auth->getIdentity()["profile"] == "Administrators")
@@ -200,7 +213,21 @@ class DomainController extends ControllerBase
   */
   public function deleteAction($id)
   {
-    $this->view->domain=Domains::findFirst($id);
+    if($id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $cache_key="domain_get_".$id.".cache";
+    $this->view->domain=$this->cache->get($cache_key);
+    if($this->view->domain===null)
+    {
+      $this->view->domain = Domains::findFirst($id);
+      $this->cache->save($cache_key,$this->view->domain);
+    }
     if($this->auth->getIdentity()["profile"] == "Administrators")
     {
       $this->flash->notice('You are in admin modus.');
