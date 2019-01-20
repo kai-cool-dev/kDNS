@@ -12,7 +12,7 @@ This features are implemented and working:
 -	Custom TLDs for Intranets
 -	Internal Whois Management over WebUI, whois cli for linux systems and API.
 -	Changelog (Log Everything what your Users are doing! Useful for auditing.)
--	Redis for Cluster or HA Support, also faster caching!
+-	Full Redis Support. For Session-, Model- and Query-Caching. With Redis-Sentinel you can also deploy this application on a HA cluster.
 -	User Management
 -	Permission Management
 
@@ -22,7 +22,6 @@ Planned Features
 ### General
 
 -	Removing of the most common bugs `BUGS.md`.
--	Nicer Display of the Changelog
 -	Combine Changelog for DNS with Users
 -	Record Creation Assistant (Modals for MX, TXT, SRV, etc Records)
 -	Nicer and mobile friendly UI

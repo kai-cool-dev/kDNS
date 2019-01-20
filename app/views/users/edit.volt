@@ -93,7 +93,7 @@
 				</div>
 				<div class="row">
 				  <div class="col-lg-12">
-				    <table class="table table-bordered table-striped" align="center">
+				    <table class="table table-borderless table-striped" align="center">
 				      <thead>
 				        <tr>
 				          <th>#</th>
@@ -104,7 +104,7 @@
 				      <tbody>
 				        {% for login in user.successLogins %}
 				        <tr>
-				          <td>{{ login.id }}</td>
+				          <th>#{{ login.id }}</th>
 				          <td>{{ login.ipAddress }}</td>
 				          <td>{{ login.userAgent }}</td>
 				        </tr>
@@ -129,7 +129,7 @@
 				</div>
 				<div class="row">
 				  <div class="col-lg-12">
-				    <table class="table table-bordered table-striped" align="center">
+				    <table class="table table-borderless table-striped" align="center">
 				      <thead>
 				        <tr>
 				          <th>#</th>
@@ -141,7 +141,7 @@
 				      <tbody>
 				        {% for change in user.passwordChanges %}
 				        <tr>
-				          <td>{{ change.id }}</td>
+				          <th>#{{ change.id }}</th>
 				          <td>{{ change.ipAddress }}</td>
 				          <td>{{ change.userAgent }}</td>
 				          <td>{{ date("Y-m-d H:i:s", change.createdAt) }}</td>
@@ -167,7 +167,7 @@
 				</div>
 				<div class="row">
 				  <div class="col-lg-12">
-				    <table class="table table-bordered table-striped" align="center">
+				    <table class="table table-borderless table-striped" align="center">
 				      <thead>
 				        <tr>
 				          <th>#</th>
@@ -178,9 +178,9 @@
 				      <tbody>
 				        {% for reset in user.resetPasswords %}
 				        <tr>
-				          <th>{{ reset.id }}</th>
-				          <th>{{ date("Y-m-d H:i:s", reset.createdAt) }}</th>
-				          <th>{{ reset.reset == 'Y' ? 'Yes' : 'No' }}</th>
+				          <th>#{{ reset.id }}</th>
+				          <td>{{ date("Y-m-d H:i:s", reset.createdAt) }}</td>
+				          <td>{{ reset.reset == 'Y' ? 'Yes' : 'No' }}</td>
 				        </tr>
 				        {% else %}
 				        <tr><td colspan="3" align="center">User has not requested reset his/her password</td></tr>
