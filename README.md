@@ -47,7 +47,8 @@ Planned Features
 
 ### Third Party
 
--	Register free or paid Domains directly over API (Freenom).
+-	Register free or paid Domains directly over Freenom API.
+-	Register paid Domains directly over Hetzner API.
 -	Credit System for Freenom API
 
 License
