@@ -47,7 +47,7 @@
 
 				<div class="row">
 				  <div class="col-lg-12">
-				    <table class="table table-bordered table-striped" align="center">
+				    <table class="table table-borderless table-striped" align="center">
 				      <thead>
 				        <tr>
 				          <th>ID</th>

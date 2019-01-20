@@ -48,7 +48,7 @@ class Changelog extends Model
 
     public function afterFetch()
     {
-      $this->data=json_decode($this->data);
+      $this->data=json_decode($this->data,true);
       $this->uid=Users::findFirst($this->uid);
     }
 }
