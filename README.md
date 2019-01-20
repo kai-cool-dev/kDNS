@@ -27,6 +27,7 @@ Planned Features
 -	Record Creation Assistant (Modals for MX, TXT, SRV, etc Records)
 -	Nicer and mobile friendly UI
 -	User Signup should be changeable
+-	CDN Connector (NGINX Reverse Proxy mit Lets Encrypt)
 -	Credit System for DNS Zones
 -	Credit System with combined billing and paypal gateway
 -	Dashboard with Statistics (Admin and User)
