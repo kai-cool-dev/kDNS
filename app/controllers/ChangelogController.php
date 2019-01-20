@@ -25,7 +25,7 @@ class ChangelogController extends ControllerBase
     {
       $currentPage = (int) $this->request->get("page");
     }
-    $changelog = Changelog::find();
+    $changelog = Changelog::find(['order' => 'id DESC']);
     $paginator=new PaginatorModel(
       [
         "data"  => $changelog,
@@ -55,6 +55,5 @@ class ChangelogController extends ControllerBase
         'action' => 'index'
       ]);
     }
-    var_dump($this->view->changelog);
   }
 }
