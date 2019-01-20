@@ -99,7 +99,6 @@ class DomainController extends ControllerBase
       $this->view->domain = Domains::findFirst($id);
       $this->cache->save($cache_key,$this->view->domain);
     }
-    $this->view->domain=Domains::findFirst($id);
     if($this->auth->getIdentity()["profile"] == "Administrators")
     {
       $this->flash->notice('You are in admin modus.');

@@ -19,23 +19,28 @@ class WhoisController extends ControllerBase
         $this->view->setTemplateBefore('public');
         if($this->request->isPost())
         {
-          $data=$this->request->getPost();
           $filter = new Filter();
-          $data["name"]=$filter->sanitize($data["name"],"string");
-          $domain = Domains::find(['name LIKE "'.$data["name"].'"']);
-          if(empty($domain[0]))
+          $name=$filter->sanitize($this->request->get("name"),"string");
+          $cache_key="domain_get_".$name.".cache";
+          $domain=$this->cache->get($cache_key);
+          if($domain===null)
+          {
+            $domain = Domains::find(['name LIKE "'.$name.'"'])[0];
+            $this->cache->save($cache_key,$domain);
+          }
+          if($domain===false)
           {
             $this->flash->error("Domain not found.");
           }
           else
           {
-            $ddata["name"]=$domain[0]->name;
-            $ddata["description"]=$domain[0]->description;
-            $ddata["created"]=$domain[0]->created;
-            $user=Users::findFirst($domain[0]->account);
+            $ddata["name"]=$domain->name;
+            $ddata["description"]=$domain->description;
+            $ddata["created"]=$domain->created;
+            $user=Users::findFirst($domain->account);
             $ddata["user"]=$user->name;
             $ddata["email"]=$user->email;
-            $this->view->display=$ddata;  
+            $this->view->display=$ddata;
           }
         }
         $this->view->form=new SearchDomainForm();
