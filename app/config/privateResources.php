@@ -34,6 +34,24 @@ return new Config([
       'updateDescription',
       'create',
       'delete'
+    ],
+    'nameserver' => [
+      'index',
+      'create',
+      'delete',
+      'update',
+      'edit'
+    ],
+    'tld' => [
+      'index',
+      'create',
+      'delete',
+      'update',
+      'edit'
+    ],
+    'changelog' => [
+      'index',
+      'show'
     ]
   ]
 ]);

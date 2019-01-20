@@ -46,11 +46,18 @@
           <i class="fas fa-server"></i> DNS
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          {{ link_to('dns/administrateTLD','<i class="fas fa-wrench"></i> Manage Top Level Domains', 'class': 'dropdown-item') }}
-          {{ link_to('dns/administrateNS','<i class="fas fa-wrench"></i> Manage authorative Nameserver', 'class': 'dropdown-item') }}
-          {{ link_to('dns/administrateRecursor','<i class="fas fa-wrench"></i> Manage recursor Nameserver', 'class': 'dropdown-item') }}
-          {{ link_to('dns/administrateType','<i class="fas fa-wrench"></i> Manage Record Types', 'class': 'dropdown-item') }}
-          {{ link_to('dns/administrateChangelog','<i class="far fa-file-alt"></i> Changelog', 'class': 'dropdown-item') }}
+          {%- set menus = [
+            '<i class="fas fa-wrench"></i> Top Level Domains': 'tld/index',
+            '<i class="fas fa-wrench"></i> Nameserver': 'nameserver/index',
+            '<i class="far fa-file-alt"></i> Changelog': 'changelog/index'
+          ] -%}
+          {%- for key, value in menus %}
+            {% if value == dispatcher.getControllerName() %}
+              {{ link_to(value, key, 'class':'dropdown-item active') }}
+            {% else %}
+              {{ link_to(value, key, 'class':'dropdown-item') }}
+            {% endif %}
+          {%- endfor -%}
         </div>
       </li>
     </ul>

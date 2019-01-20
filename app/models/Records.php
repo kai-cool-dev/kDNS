@@ -2,6 +2,8 @@
 namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
+use kDNS\Models\Nameserver;
+use kDNS\Models\Users;
 
 /**
  * Records
@@ -80,4 +82,5 @@ class Records extends Model
     public function initialize()
     {
     }
+
 }
