@@ -148,13 +148,7 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $cache_key="record_get_".$record_id.".cache";
-    $record=$this->cache->get($cache_key);
-    if($record===null)
-    {
-      $record=Records::findFirst($record_id);
-      $this->cache->save($cache_key,$record);
-    }
+    $record=Records::findFirst($record_id);
     if($record===false)
     {
       $this->flash->error('Couln\'t find record.');
@@ -179,6 +173,7 @@ class RecordController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="DISABLE";
       $changelog->data=json_encode($record);
@@ -272,6 +267,8 @@ class RecordController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      // Clear Cache
+      $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="EDITED";
       $changelog->data=json_encode($record);
@@ -386,6 +383,8 @@ class RecordController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      // Clear Cache
+      $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="UPDATED";
       $changelog->data=json_encode($record);
@@ -448,13 +447,7 @@ class RecordController extends ControllerBase
         'params' => [$domain_id]
       ]);
     }
-    $cache_key="record_get_".$record_id.".cache";
-    $record=$this->cache->get($cache_key);
-    if($record===null)
-    {
-      $record=Records::findFirst($record_id);
-      $this->cache->save($cache_key,$record);
-    }
+    $record=Records::findFirst($record_id);
     if($record===false)
     {
       $this->flash->error('Couln\'t find record.');
@@ -471,6 +464,8 @@ class RecordController extends ControllerBase
         $this->flash->warning($message);
       }
     } else {
+      // Clear Cache
+      $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="PURGED";
       $changelog->data=json_encode($record);

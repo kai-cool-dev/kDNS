@@ -84,6 +84,7 @@ class DomainController extends ControllerBase
   */
   public function editAction($id=null)
   {
+    $filter = new Filter();
     if($id==null)
     {
       $this->flash->error('Couln\'t find domain.');
@@ -126,18 +127,35 @@ class DomainController extends ControllerBase
   /**
   * Updates Description for Domain
   */
-  public function updateDescriptionAction($id)
+  public function updateDescriptionAction($id=null)
   {
-    $this->view->domain=Domains::findFirst($id);
+    if($id==null)
+    {
+      $this->flash->error('Couln\'t find domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'domain',
+        'action' => 'index'
+      ]);
+    }
+    $cache_key="domain_get_".$id.".cache";
+    $domain=$this->cache->get($cache_key);
+    if($domain===null)
+    {
+      $domain = Domains::findFirst($id);
+      $this->cache->save($cache_key,$this->view->domain);
+    }
+    $domain=Domains::findFirst($id);
     $data=$this->request->getPost();
-    $this->view->domain->description=$data["description"];
-    if ($this->view->domain->save() === false) {
+    $domain->description=$data["description"];
+    if ($domain->save() === false) {
       $this->flash->error('Domain not updated.');
       $messages = $this->view->domain->getMessages();
       foreach ($messages as $message) {
         $this->flash->error($message);
       }
     } else {
+      // Clear Cache
+      $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="UPDATED";
       $changelog->data=json_encode($this->view->domain);
@@ -193,6 +211,7 @@ class DomainController extends ControllerBase
           $this->flash->error($message);
         }
       } else {
+        // Clear Cache
         $this->flash->success('Domain created.');
         $changelog = new Changelog();
         $changelog->type="CREATE";
@@ -257,6 +276,8 @@ class DomainController extends ControllerBase
           $this->flash->warning($message);
         }
       } else {
+        // Clear Cache
+        $this->cache->save($cache_key,null);
         $changelog = new Changelog();
         $changelog->type="DELETE";
         $changelog->data=json_encode($this->view->domain);
@@ -279,7 +300,6 @@ class DomainController extends ControllerBase
             $changelog->save();
           }
         }
-        // Record was added
         $this->flash->success('Domain deleted.');
         return $this->dispatcher->forward([
           "action" => "index"
