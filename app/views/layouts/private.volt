@@ -47,7 +47,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           {%- set menus = [
-            '<i class="fas fa-wrench"></i> Top Level Domains': 'tld/index',
+            '<i class="fas fa-wrench"></i> Top Level Domains': 'topdomains/index',
             '<i class="fas fa-wrench"></i> Nameserver': 'nameserver/index',
             '<i class="far fa-file-alt"></i> Changelog': 'changelog/index'
           ] -%}

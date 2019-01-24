@@ -158,7 +158,7 @@ class DomainController extends ControllerBase
       $this->cache->save($cache_key,null);
       $changelog = new Changelog();
       $changelog->type="UPDATED";
-      $changelog->data=json_encode($this->view->domain);
+      $changelog->data=json_encode($domain);
       $changelog->uid=$this->view->identity["id"];
       $changelog->save();
       $this->flash->success('Domain updated.');

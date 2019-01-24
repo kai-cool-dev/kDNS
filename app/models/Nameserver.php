@@ -40,6 +40,25 @@ class Nameserver extends Model
      */
     public $ip6;
 
+    /**
+     *
+     * @var string
+     */
+    public $description;
+
+    /**
+     *
+     * @var string
+     */
+    public $topdomains;
+
+    /**
+     *
+     * @var string
+     */
+    public $type;
+
+
     public function initialize()
     {
     }

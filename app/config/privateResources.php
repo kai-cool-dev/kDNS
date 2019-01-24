@@ -42,7 +42,7 @@ return new Config([
       'update',
       'edit'
     ],
-    'tld' => [
+    'topdomains' => [
       'index',
       'create',
       'delete',

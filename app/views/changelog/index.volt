@@ -34,7 +34,7 @@
                 <td>{{ changelog.type }}</td>
                 <td>{{ link_to("users/edit/" ~ changelog.uid.id, changelog.uid.name) }}</td>
                 <td>{{ changelog.date }}</td>
-                <td>{{ link_to("changelog/show/" ~ changelog.id ~ '/', '<i class="fas fa-search"></i> Show', "class": "btn btn-primary form-control") }}</td>
+                <td>{{ link_to("changelog/show/" ~ changelog.id ~ '/', '<i class="fas fa-info-circle"></i> Details', "class": "btn btn-primary form-control") }}</td>
               </tr>
               {% if loop.last %}
                 </tbody>
