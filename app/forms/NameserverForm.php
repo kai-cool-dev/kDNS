@@ -3,9 +3,11 @@ namespace kDNS\Forms;
 
 use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
+use Phalcon\Forms\Element\Select;
+use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\PresenceOf;
 
-class CreateNameserverForm extends Form
+class NameserverForm extends Form
 {
   public function initialize($entity = null, $new = false)
   {
@@ -33,7 +35,7 @@ class CreateNameserverForm extends Form
         'class' => 'form-control',
         'data-toggle' => 'tooltip',
         'data-placement' => 'bottom',
-        'title' => 'The FQDN of your Nameserver.',
+        'title' => 'The Full Qualified Domain Name of your Nameserver.',
         'placeholder' => 'ns1.example.com'
       ]
     );
@@ -70,5 +72,60 @@ class CreateNameserverForm extends Form
     );
     $ip6->setFilters('string');
     $this->add($ip6);
+
+    // description
+    $description = new TextArea('description',
+      [
+        'class' => 'form-control',
+        'data-toggle' => 'tooltip',
+        'data-placement' => 'bottom',
+        'title' => 'Description of the Nameserver',
+        'placeholder' => 'Description',
+        'rows' => 3
+      ]
+    );
+    $description->setFilters('string');
+    $this->add($description);
+
+    // type
+    $type = new Select('type',
+      [
+        'authorative' => 'Authorative',
+        'recursor' => 'Recursor'
+      ],
+      [
+        'class' => 'form-control',
+        'data-toggle' => 'tooltip',
+        'data-placement' => 'bottom',
+        'title' => 'Type of the Nameserver.'
+      ]
+    );
+    $type->addValidators([
+      new PresenceOf([
+        'message' => 'Type is required'
+      ]),
+    ]);
+    $type->setFilters('string');
+    $type->setDefault($entity->mode);
+    $this->add($type);
+
+    // domain
+    $topdomains = new Select('topdomains',
+      [
+        'authorative' => 'Authorative',
+        'recursor' => 'Recursor'
+      ],
+      [
+        'class' => 'form-control',
+        'data-toggle' => 'tooltip',
+        'multiple' => true,
+        'size' => 4,
+        'data-placement' => 'bottom',
+        'title' => 'Select Top Level Domains over which this server has authority',
+        'placeholder' => 'Description'
+      ]
+    );
+    $topdomains->setFilters('string');
+    $this->add($topdomains);
   }
 }
