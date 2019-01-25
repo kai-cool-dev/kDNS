@@ -43,7 +43,7 @@
                 <tbody>
               {% endif %}
               <tr>
-                <th scope="row">{{ domain.name }}</th>
+                <th scope="row">{{ link_to('domain/edit/' ~ domain.id,domain.name) }}</th>
                 <td>{{ domain.description }}</td>
                 <td>{{ link_to('domain/edit/' ~ domain.id,'<i class="fas fa-info-circle"></i> Details','class':'btn btn-primary form-control') }}</td>
               </tr>
