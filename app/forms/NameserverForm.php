@@ -112,8 +112,7 @@ class NameserverForm extends Form
     // domain
     $topdomains = new Select('topdomains',
       [
-        'authorative' => 'Authorative',
-        'recursor' => 'Recursor'
+        'placeholder' => 'Placeholder'
       ],
       [
         'class' => 'form-control',

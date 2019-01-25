@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-lg-12">
-            <h1><i class="fas fa-info-circle"></i> Nameserver {{ link_to('nameserver/edit/' ~ nameserver.id,nameserver.name) }}</h1>
+            <h1><i class="fas fa-plus"></i> Create new nameserver</h1>
             <hr>
           </div>
         </div>
@@ -13,9 +13,32 @@
             {{ content() }}
           </div>
         </div>
-        <form method="post" action="{{ url('nameserver/update/' ~ nameserver.id) }}">
+        <form method="post" action="{{ url('nameserver/create/') }}">
           <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+                </div>
+                {{ nameserverform.render('name') }}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">DNS FQDN</span>
+                </div>
+                {{ nameserverform.render('fqdn') }}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">IPv4 Address</span>
@@ -23,20 +46,12 @@
                 {{ nameserverform.render('ip4') }}
               </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-6">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">IPv6 Address</span>
                 </div>
                 {{ nameserverform.render('ip6') }}
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">DNS FQDN</span>
-                </div>
-                {{ nameserverform.render('fqdn') }}
               </div>
             </div>
           </div>
@@ -61,20 +76,12 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Description</span>
                 </div>
                 {{ nameserverform.render('description') }}
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Domains</span>
-                </div>
-                {{ nameserverform.render('topdomains') }}
               </div>
             </div>
           </div>
@@ -84,11 +91,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-6">
-              <button type="submit" class="btn btn-success form-control"><i class="fas fa-save"></i> Save Details</button>
-            </div>
-            <div class="col-lg-6">
-              {{ link_to('nameserver/delete/' ~ nameserver.id,'<i class="far fa-trash-alt"></i> Delete Nameserver','class':'btn btn-danger form-control') }}
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-success form-control"><i class="fas fa-plus"></i> Create</button>
             </div>
           </div>
         </form>

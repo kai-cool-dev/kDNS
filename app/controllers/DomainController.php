@@ -178,7 +178,7 @@ class DomainController extends ControllerBase
       {
         $this->flash->error('Domain could not be stored.');
         foreach ($this->view->form->getMessages() as $message) {
-            $this->flash->error($message);
+          $this->flash->error($message);
         }
         return ;
       }
