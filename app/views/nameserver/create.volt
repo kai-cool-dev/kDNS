@@ -9,10 +9,21 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-4">
+            {{ link_to('nameserver/index/', '<i class="fas fa-angle-left"></i> Back', 'class':'form-control btn btn-primary') }}
+          </div>
+          <div class="col-lg-8">
             {{ content() }}
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
         <form method="post" action="{{ url('nameserver/create/') }}">
           <div class="row">
             <div class="col-lg-6">
