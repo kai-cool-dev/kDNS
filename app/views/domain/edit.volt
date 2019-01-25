@@ -9,7 +9,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">
+          <div class="col-lg-4">
+            {{ link_to('domain/index/', '<i class="fas fa-angle-left"></i> Back', 'class':'form-control btn btn-primary') }}
+          </div>
+          <div class="col-lg-8">
             {{ content() }}
           </div>
         </div>
