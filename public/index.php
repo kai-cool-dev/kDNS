@@ -42,6 +42,5 @@ try {
         ->getContent();
 
 } catch (Exception $e) {
-	echo $e->getMessage(), '<br>';
-	echo nl2br(htmlentities($e->getTraceAsString()));
+  header("HTTP/1.0 404 Not Found");
 }
