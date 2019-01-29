@@ -6,6 +6,7 @@ use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\PresenceOf;
+use kDNS\Models\TopDomains;
 
 class NameserverForm extends Form
 {
@@ -39,11 +40,6 @@ class NameserverForm extends Form
         'placeholder' => 'ns1.example.com'
       ]
     );
-    $fqdn->addValidators([
-      new PresenceOf([
-        'message' => 'FQDN is required'
-      ]),
-    ]);
     $fqdn->setFilters('string');
     $this->add($fqdn);
 
@@ -91,7 +87,8 @@ class NameserverForm extends Form
     $type = new Select('type',
       [
         'authorative' => 'Authorative',
-        'recursor' => 'Recursor'
+        'recursor' => 'Recursor',
+        'external' => 'External Nameserver'
       ],
       [
         'class' => 'form-control',
@@ -110,11 +107,12 @@ class NameserverForm extends Form
     $this->add($type);
 
     // domain
-    $topdomains = new Select('topdomains',
+    $topdomains = new Select('topdomains[]',TopDomains::find(),
       [
-        'placeholder' => 'Placeholder'
-      ],
-      [
+        'using' => [
+          'id',
+          'name'
+        ],
         'class' => 'form-control',
         'data-toggle' => 'tooltip',
         'multiple' => true,

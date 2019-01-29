@@ -2,6 +2,7 @@
 namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
+use kDNS\Models\Domains;
 
 /**
  * kDNS\Models\TopDomains
@@ -11,16 +12,30 @@ use Phalcon\Mvc\Model;
 class TopDomains extends Model
 {
   /**
-  *
   * @var string
   */
   public $id;
+
   /**
-  *
   * @var string
   */
-  public $value;
+  public $name;
+
+  /**
+  * @var string
+  */
+  public $description;
+
+  /**
+  * @var string
+  */
+  public $domain;
+
   public function initialize()
   {
+    if(!empty($domain))
+    {
+      $this->domain=Domains::findFirst($domain);
+    }
   }
 }

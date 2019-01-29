@@ -205,9 +205,9 @@ class NameserverController extends ControllerBase
     {
       $nameserver->description=$filter->sanitize($this->request->get("description"),"string");
     }
-    if(!empty($filter->sanitize($this->request->get("topdomains"),"string")))
+    if(!empty($filter->sanitize($this->request->get("topdomains"),"absint")))
     {
-      $nameserver->topdomains=json_encode($filter->sanitize($this->request->get("topdomains"),"string"));
+      $nameserver->topdomains=json_encode($filter->sanitize($this->request->get("topdomains"),"absint"));
     }
     if(!empty($filter->sanitize($this->request->get("type"),"string")))
     {
@@ -239,7 +239,6 @@ class NameserverController extends ControllerBase
 
   public function editAction($id=null)
   {
-    $filter = new Filter();
     if($id==null)
     {
       $this->flash->error('Couln\'t find nameserver.');

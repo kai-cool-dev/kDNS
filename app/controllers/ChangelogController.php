@@ -57,7 +57,7 @@ class ChangelogController extends ControllerBase
     if($this->view->changelog===null)
     {
       $this->view->changelog = Changelog::findFirst($id);
-      $this->cache->save($cache_key,$changelog);
+      $this->cache->save($cache_key,$this->view->changelog);
     }
     if($this->view->changelog===false)
     {

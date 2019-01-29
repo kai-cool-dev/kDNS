@@ -85,7 +85,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">Domains</span>
                 </div>
-                {{ nameserverform.render('topdomains') }}
+                {{ nameserverform.render('topdomains[]') }}
               </div>
             </div>
           </div>

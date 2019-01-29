@@ -25,6 +25,14 @@
             {{ content() }}
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body">
         {{ form('domain/','class': 'form-search', 'id': 'searchform') }}
           <div class="row">
             <div class="col-lg-10">

@@ -45,7 +45,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12">
-            <p>{{ link_to("user/edit/" ~ changelog.uid.id ~ '/', '<i class="fas fa-search"></i> Show', "class": "btn btn-primary form-control") }}</p>
+            <p>{{ link_to("users/edit/" ~ changelog.uid.id ~ '/', '<i class="fas fa-search"></i> Show', "class": "btn btn-primary form-control") }}</p>
           </div>
         </div>
       </div>

@@ -61,5 +61,11 @@ class Nameserver extends Model
 
     public function initialize()
     {
+      $this->topdomains=json_decode($this->topdomains);
+    }
+
+    public function afterSave()
+    {
+      $this->topdomains=json_encode($this->topdomains);
     }
 }
