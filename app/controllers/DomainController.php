@@ -7,6 +7,7 @@ use kDNS\Models\Domains;
 use kDNS\Models\Changelog;
 use kDNS\Models\Records;
 use Phalcon\Paginator\Adapter\Model as PaginatorModel;
+use kDNS\Models\TopDomains;
 
 // GUI Forms
 use kDNS\Forms\CreateDomainForm;
@@ -173,7 +174,8 @@ class DomainController extends ControllerBase
     if($this->request->isPost())
     {
       $data=$this->request->getPost();
-      $domain_name=$data["name"].".".$data["tld"];
+      $tld=TopDomains::findFirst($data["tld"]);
+      $domain_name=$data["name"].$tld->name;
       if($this->view->form->isValid($this->request->getPost()) == false)
       {
         $this->flash->error('Domain could not be stored.');

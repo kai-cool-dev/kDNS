@@ -31,9 +31,6 @@
             </div>
             <div class="col-lg-2">
               <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">.</span>
-                </div>
                 {{ form.render('tld') }}
               </div>
             </div>

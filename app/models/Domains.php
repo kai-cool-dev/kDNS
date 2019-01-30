@@ -79,7 +79,7 @@ class Domains extends Model
 
     public function afterCreate()
     {
-      $soa_content=Nameserver::findFirst()->fqdn." ".str_replace("@",".",Users::findFirst($this->account)->email)." ".date("Ymd")."00  28800 7200 604800 1200";
+      $soa_content=Nameserver::findFirst("type='authorative'")->fqdn." ".str_replace("@",".",Users::findFirst($this->account)->email)." ".date("Ymd")."00  28800 7200 604800 1200";
       date_default_timezone_set("UTC");
       $soa=array(
         "domain_id" => $this->id,
@@ -97,7 +97,7 @@ class Domains extends Model
       {
         return false;
       }
-      foreach(Nameserver::find() as $nameserver)
+      foreach(Nameserver::find("type='authorative'") as $nameserver)
       {
         $ns=array(
           "domain_id" => $this->id,

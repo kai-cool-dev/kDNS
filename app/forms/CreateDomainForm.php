@@ -36,7 +36,7 @@ class CreateDomainForm extends Form
       [
         'using' => [
           'id',
-          'value'
+          'name'
         ],
         'class' => 'form-control'
       ]
