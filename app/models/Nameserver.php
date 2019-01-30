@@ -3,6 +3,8 @@ namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
 
+use kDNS\Models\TopDomains;
+
 /**
  * Nameserver
  * Stores the records by domain
@@ -59,9 +61,13 @@ class Nameserver extends Model
     public $type;
 
 
-    public function initialize()
+    public function afterFetch()
     {
-      $this->topdomains=json_decode($this->topdomains);
+      $this->topdomains=json_decode($this->topdomains,true);
+      #foreach(json_decode($this->topdomains,true) as $tld)
+      #{
+      #  $this->topdomains[]=TopDomains::findFirst($tld);
+      #}
     }
 
     public function afterSave()

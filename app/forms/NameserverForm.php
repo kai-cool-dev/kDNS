@@ -10,7 +10,7 @@ use kDNS\Models\TopDomains;
 
 class NameserverForm extends Form
 {
-  public function initialize($entity = null, $new = false)
+  public function initialize($entity = null)
   {
     // Name
     $name = new Text('name',
@@ -103,7 +103,7 @@ class NameserverForm extends Form
       ]),
     ]);
     $type->setFilters('string');
-    $type->setDefault($entity->mode);
+    $type->setDefault($entity->type);
     $this->add($type);
 
     // domain
@@ -123,6 +123,7 @@ class NameserverForm extends Form
       ]
     );
     $topdomains->setFilters('string');
+    $topdomains->setDefault($entity->topdomains);
     $this->add($topdomains);
   }
 }

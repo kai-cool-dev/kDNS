@@ -42,5 +42,6 @@ try {
         ->getContent();
 
 } catch (Exception $e) {
-  header("HTTP/1.0 404 Not Found");
+  echo $e->getMessage();
+  #header("HTTP/1.0 500 Internal Server Error";
 }
