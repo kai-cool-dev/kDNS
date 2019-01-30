@@ -26,7 +26,15 @@
       <div class="card-body">
         <form method="post" action="{{ url('topdomains/update/' ~ topdomain.id) }}">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">Name</span>
+                </div>
+                {{ topdomainform.render('name') }}
+              </div>
+            </div>
+            <div class="col-lg-6">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">Description</span>

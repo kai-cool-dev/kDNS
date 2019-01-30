@@ -3,6 +3,8 @@ namespace kDNS\Controllers;
 use kDNS\Forms\SearchDomainForm;
 use kDNS\Models\Domains;
 use kDNS\Models\Users;
+use kDNS\Models\Nameserver;
+use kDNS\Models\Records;
 use Phalcon\Filter;
 
 /**
@@ -40,7 +42,13 @@ class WhoisController extends ControllerBase
             $user=Users::findFirst($domain->account);
             $ddata["user"]=$user->name;
             $ddata["email"]=$user->email;
+            $records=Records::find(['domain_id ='.$domain->id.' AND type = "NS"']);
+            foreach($records as $record)
+            {
+              $ddata["nameserver"][]=Nameserver::find(['fqdn = "'.$record->content.'"'])[0];
+            }
             $this->view->display=$ddata;
+            // TODO: Display Nameserver Data in Whois
           }
         }
         $this->view->form=new SearchDomainForm();

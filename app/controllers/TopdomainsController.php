@@ -145,8 +145,61 @@ class TopdomainsController extends ControllerBase
     $this->view->topdomain=$topdomain;
   }
 
-  public function updateAction()
+  public function updateAction($id=null)
   {
+    $filter = new Filter();
+    if($id==null)
+    {
+      $this->flash->error('Couln\'t find top level domain.');
+      return $this->dispatcher->forward([
+        'controller' => 'topdomains',
+        'action' => 'index'
+      ]);
+    }
+    $cache_key="topdomains_get_".$id.".cache";
+    $topdomain=$this->cache->get($cache_key);
+    if($topdomain===null)
+    {
+      $topdomain = TopDomains::findFirst($id);
+      $this->cache->save($cache_key,$topdomain);
+    }
+    if($this->request->isPost())
+    {
+      if(!empty($filter->sanitize($this->request->get("name"),"string")))
+      {
+        $topdomain->name=$filter->sanitize($this->request->get("name"),"string");
+      }
+      if(!empty($filter->sanitize($this->request->get("description"),"string")))
+      {
+        $topdomain->description=$filter->sanitize($this->request->get("description"),"string");
+      }
+      if(!empty($filter->sanitize($this->request->get("domain"),"string")))
+      {
+        $topdomain->domain=$filter->sanitize($this->request->get("domain"),"string");
+      }
+      if ($topdomain->save() === false) {
+        $this->flash->error('Top Level Domain couldn\'t be saved.');
+        $messages = $topdomain->getMessages();
+        foreach ($messages as $message) {
+          $this->flash->warning($message);
+        }
+      } else {
+        // Clear Cache
+        $this->cache->save("topdomains_get.cache",null);
+        $this->cache->save($cache_key,null);
+        $changelog = new Changelog();
+        $changelog->type="UPDATED";
+        $changelog->data=json_encode($topdomain);
+        $changelog->uid=$this->view->identity["id"];
+        $changelog->save();
+        // Record was added
+        $this->flash->success('Top Level Domain saved.');
+      }
+    }
+    return $this->dispatcher->forward([
+      'action' => 'edit',
+      'params' => [$topdomain->id]
+    ]);
   }
 
   public function editAction($id=null)
