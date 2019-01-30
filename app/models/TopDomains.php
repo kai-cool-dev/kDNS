@@ -31,6 +31,11 @@ class TopDomains extends Model
   */
   public $domain;
 
+  /**
+  * @var string
+  */
+  public $type;
+
   public function initialize()
   {
     if(!empty($domain))

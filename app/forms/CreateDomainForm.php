@@ -32,7 +32,7 @@ class CreateDomainForm extends Form
     $this->add($description);
 
     // Domain TLD
-    $tld = new Select('tld',TopDomains::find(),
+    $tld = new Select('tld',TopDomains::find("type='authorative'"),
       [
         'using' => [
           'id',

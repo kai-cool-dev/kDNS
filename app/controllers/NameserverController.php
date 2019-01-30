@@ -205,9 +205,9 @@ class NameserverController extends ControllerBase
     {
       $nameserver->description=$filter->sanitize($this->request->get("description"),"string");
     }
-    if(!empty($this->request->get("topdomains[]")))
+    if(!empty($this->request->get("topdomains")))
     {
-      $nameserver->topdomains=$this->request->get("topdomains[]");
+      $nameserver->topdomains=json_encode($this->request->get("topdomains"));
     }
     if(!empty($filter->sanitize($this->request->get("type"),"string")))
     {

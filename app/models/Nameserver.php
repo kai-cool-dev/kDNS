@@ -64,14 +64,9 @@ class Nameserver extends Model
     public function afterFetch()
     {
       $this->topdomains=json_decode($this->topdomains,true);
-      #foreach(json_decode($this->topdomains,true) as $tld)
-      #{
-      #  $this->topdomains[]=TopDomains::findFirst($tld);
-      #}
     }
 
     public function afterSave()
     {
-      $this->topdomains=json_encode($this->topdomains);
     }
 }
