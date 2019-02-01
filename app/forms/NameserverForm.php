@@ -88,7 +88,8 @@ class NameserverForm extends Form
       [
         'authorative' => 'Authorative',
         'recursor' => 'Recursor',
-        'external' => 'External Nameserver'
+        'external' => 'External Nameserver',
+        'adblock' => 'AdBlocking Nameserver'
       ],
       [
         'class' => 'form-control',

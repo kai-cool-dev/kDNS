@@ -152,3 +152,12 @@ b, th {
   border-color: #2f3640;
   color:#f5f6fa;
 }
+
+.modal-content {
+  background-color: #353b48;
+  color:#f5f6fa;
+}
+
+.close {
+  color:#f5f6fa;
+}

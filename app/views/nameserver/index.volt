@@ -52,6 +52,9 @@
                       {% case "external" %}
                         <p>External Nameserver</p>
                       {% break %}
+                      {% case "adblock" %}
+                        <p>AdBlocking Nameserver</p>
+                      {% break %}
                     {% endswitch %}
                   </td>
                   <td>{{ nameserver.description }}</td>

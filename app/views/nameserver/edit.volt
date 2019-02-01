@@ -80,14 +80,24 @@
                 {{ nameserverform.render('description') }}
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Domains</span>
+            {% if nameserver.type != 'recursor'%}
+              <div class="col-lg-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Domains</span>
+                  </div>
+                  {{ nameserverform.render('topdomains[]') }}
                 </div>
-                {{ nameserverform.render('topdomains[]') }}
+                {% if nameserver.type == 'authorative'%}
+                  <p>The Authorative server automatically serves all domains which are associated with it.</p>
+                {% endif %}
               </div>
-            </div>
+            {% else %}
+              <div class="col-lg-6">
+                <h5>Info:</h5>
+                <p>A Recursor handles all domains which are controlled from the authorative servers and external nameservers. It chaches the requests and also enforce Ad-Blocking.</p>
+              </div>
+            {% endif %}
           </div>
           <div class="row">
             <div class="col-lg-12">

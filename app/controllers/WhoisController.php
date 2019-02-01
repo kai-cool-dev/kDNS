@@ -1,10 +1,5 @@
 <?php
 namespace kDNS\Controllers;
-use kDNS\Forms\SearchDomainForm;
-use kDNS\Models\Domains;
-use kDNS\Models\Users;
-use kDNS\Models\Nameserver;
-use kDNS\Models\Records;
 use Phalcon\Filter;
 
 /**
@@ -36,36 +31,26 @@ class WhoisController extends ControllerBase
           }
           else
           {
-            $ddata["name"]=$domain->name;
-            $ddata["description"]=$domain->description;
-            $ddata["created"]=$domain->created;
+            $display["name"]=$domain->name;
+            $display["description"]=$domain->description;
+            $display["created"]=$domain->created;
             $user=Users::findFirst($domain->account);
-            $ddata["user"]=$user->name;
-            $ddata["email"]=$user->email;
+            $display["user"]=$user->name;
+            $display["email"]=$user->email;
             $records=Records::find(['domain_id ='.$domain->id.' AND type = "NS"']);
             foreach($records as $record)
             {
-              $ddata["nameserver"][]=Nameserver::find(['fqdn = "'.$record->content.'"'])[0];
+              $display["nameserver"][]=Nameserver::find(['fqdn = "'.$record->content.'"'])[0];
             }
-            $this->view->display=$ddata;
-            // TODO: Display Nameserver Data in Whois
+            $cache_key="whois_get_".$name.".cache";
+            $this->view->display=$this->cache->get($cache_key);
+            if($this->view->display===null)
+            {
+              $this->view->display=$display;
+              $this->cache->save($cache_key,$display);
+            }
           }
         }
         $this->view->form=new SearchDomainForm();
-    }
-
-    public function rawAction()
-    {
-      $domains = Domains::find();
-      foreach($domains as $key => $domain )
-      {
-        $ddata[$key]["name"]=$domain->name;
-        $ddata[$key]["description"]=$domain->description;
-        $ddata[$key]["created"]=$domain->created;
-        $user=Users::findFirst($domain->account);
-        $ddata[$key]["user"]=$user->name;
-        $ddata[$key]["email"]=$user->email;
-      }
-      $this->view->display=json_encode($ddata);
     }
 }

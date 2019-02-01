@@ -3,8 +3,6 @@ namespace kDNS\Models;
 
 use Phalcon\Mvc\Model;
 
-use kDNS\Models\TopDomains;
-
 /**
  * Nameserver
  * Stores the records by domain

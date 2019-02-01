@@ -33,9 +33,20 @@
 									<h6 class="card-subtitle text-muted">WE DO NOT GUARANTEE THAT THIS INFORMATION IS CORRECT.</h6>
 									<hr>
 									<p class="card-text">Domain: <b>{{ display["name"] }}</b></p>
-									<p class="card-text">Owner: <b>{{ display["user"] }} ({{ display["email"] }})</b></p>
+									<p class="card-text">Owner: <b>{{ display["user"] }}</b> (<b>{{ display["email"] }}</b>)</p>
 									<p class="card-text">Created: <b>{{ display["created"] }}</b></p>
 									<p class="card-text">Description: <b>{{ display["description"] }}</b></p>
+									<hr>
+									{% for nameserver in display["nameserver"] %}
+									<p class="card-text">Nameserver: <b>{{ nameserver.name }}</b> (<b>{{ nameserver.fqdn }}</b>)
+										{% if nameserver.ip4 %}
+											<a href="https://www.shodan.io/host/{{ nameserver.ip4 }}" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View IPv4 Information via Shodan.io"><i class="fas fa-info-circle"></i></a>
+										{% endif %}
+										{% if nameserver.ip6 %}
+											<a href="https://www.shodan.io/host/{{ nameserver.ip6 }}" target="_blank" data-toggle="tooltip" data-placement="bottom" title="View IPv6 Information via Shodan.io"><i class="fas fa-info-circle"></i></a>
+										{% endif %}
+									</p>
+									{% endfor %}
 								</div>
 							</div>
 						{% endif %}
