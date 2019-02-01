@@ -42,7 +42,7 @@
                       <div class="input-group">
                         {{ new_record.render('name') }}
                         <div class="input-group-append">
-                          <span class="input-group-text">.{{ domain.name }}</span>
+                          <span class="input-group-text"><span id="dot"></span>{{ domain.name }}</span>
                         </div>
                       </div>
                     </td>

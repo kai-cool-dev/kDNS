@@ -233,6 +233,16 @@ $('#smimea_save').click(function(){
   $('#create_form').submit();
 });
 
+$('#name').change(function() {
+  if($('#name').val()=="")
+  {
+    $('#dot').html("");
+  }
+  else {
+    $('#dot').html(".");
+  }
+});
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })
