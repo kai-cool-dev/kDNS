@@ -320,6 +320,24 @@ class RecordController extends ControllerBase
           ]);
         }
       break;
+      case "SMIMEA":
+        if(preg_match('/^[0-9a-zA-Z]*(._smimecert)/',$record_data["name"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+        if(preg_match('/^(0) (0|1) (0|1|2) (-----BEGIN CERTIFICATE-----)/',$record_data["content"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
       default:
       break;
     }

@@ -12,5 +12,6 @@
 	{{ javascript_include("js/popper.js") }}
 	{{ javascript_include("js/bootstrap.min.js") }}
 	{{ javascript_include("js/app.js") }}
+	{{ javascript_include("js/sha256.js") }}
 </body>
 </html>

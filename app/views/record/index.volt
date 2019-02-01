@@ -714,3 +714,47 @@
   </div>
 </div>
 <!-- END DNSKEY  MODAL -->
+<!-- START SMIMEA MODAL -->
+<div class="modal fade" tabindex="-1" role="dialog" id="smimea_modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-key"></i> Create SMIMEA Record</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true"><i class="fas fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12">
+            <p>Using secure DNS to associate certificates with Domain Names for S/MIME.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">E-Mail-Address</div>
+              </div>
+              <input type="text" name="smimea_mail" id="smimea_mail" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">S/MIME Certificate</div>
+              </div>
+              <input type="text" name="smimea_cert" id="smimea_cert" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary form-control" id="smimea_save"><i class="fas fa-save"></i> Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END SMIMEA MODAL -->

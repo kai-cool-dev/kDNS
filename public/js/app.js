@@ -68,6 +68,9 @@ $('#type').change(function(){
     case "DNSKEY":
       $('#dnskey_modal').modal('toggle');
     break;
+    case "SMIMEA":
+      $('#smimea_modal').modal('toggle');
+    break;
     default:
   }
 });
@@ -216,6 +219,17 @@ $('#dnskey_save').click(function(){
   var content="("+dnskey_flags+"; "+dnskey_protocol+"; "+dnskey_algo+"; "+dnskey_key+")";
   $('#content').val(content);
   $('#dnskey_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#smimea_save').click(function(){
+  var smimea_mail=$('#smimea_mail').val();
+  var smimea_cert=$('#smimea_cert').val();
+  var name=sha256(smimea_mail.split("@")[0])+"._smimecert";
+  $('#name').val(name);
+  var content="0 0 1 "+smimea_cert;
+  $('#content').val(content);
+  $('#smimea_modal').modal('toggle');
   $('#create_form').submit();
 });
 
