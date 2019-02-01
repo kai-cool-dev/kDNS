@@ -82,7 +82,7 @@ $('#spf_save').click(function(){
   var allow_mx_records = $('#spf_mx').val();
   var allow_includes = $('#spf_include').val();
   var handling = $('#spf_blocked').val();
-  var content = "\"v=spf1";
+  var content = "v=spf1";
   if(allow_a)
   {
     content+=" a";
@@ -142,11 +142,8 @@ $('#spf_save').click(function(){
     break;
     default:
   }
-  content+="\"";
-  console.log(allow_includes);
   $('#content').val(content);
   $('#spf_modal').modal('toggle');
-  $('#type').val("TXT");
   $('#create_form').submit();
 });
 
@@ -161,7 +158,6 @@ $('#caa_save').click(function(){
   else {
     content+=" issue";
   }
-  console.log(caa_wildcard);
   content+=" \""+caa_issuer+"\"";
   $('#content').val(content);
   $('#caa_modal').modal('toggle');
@@ -197,8 +193,7 @@ $('#dkim_save').click(function(){
   var dkim_key=$('#dkim_key').val();
   var name=dkim_selector+"._domainkey";
   $('#name').val(name);
-  $('#type').val("TXT");
-  var content="\"v=DKIM1; p="+dkim_key+"\"";
+  var content="v=DKIM1; p="+dkim_key;
   $('#content').val(content);
   $('#dkim_modal').modal('toggle');
   $('#create_form').submit();

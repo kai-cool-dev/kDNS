@@ -259,6 +259,70 @@ class RecordController extends ControllerBase
     {
       $record_data["prio"]=$filter->sanitize($this->request->get("prio"),"int");
     }
+    switch($record_data["type"]){
+      case "SPF":
+        $record_data["type"]="TXT";
+        if(preg_match('/^(v=spf1)/',$record_data["content"],$matches)==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
+      case "DKIM":
+        $record_data["type"]="TXT";
+        if(preg_match('/^(v=DKIM1; p=)/',$record_data["content"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
+      case "SRV":
+        if(preg_match('/^([0-9]{1} [0-9]{1,5})/',$record_data["content"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+        if(preg_match('/^(_)[a-z0-9]*(._)(udp|tcp)/',$record_data["name"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
+      case "CAA":
+        if(preg_match('/^[0]{1} (issue|issuewild) ["a-z.]*/',$record_data["content"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
+      case "DNSKEY":
+        if(preg_match('/^[(]{1}(256|257); (1|2|3|4|255); (1|2|3|4|5|6|7|8|10|12|13|14); [A-Za-z0-9=+]*[)]/',$record_data["content"])==0)
+        {
+          $this->flash->error('Record syntax is not okay.');
+          return $this->dispatcher->forward([
+            'action' => 'index',
+            'params' => [$id]
+          ]);
+        }
+      break;
+      default:
+      break;
+    }
     $record=new Records($record_data);
     if ($record->save() === false) {
       $this->flash->error('Record could not be stored.');
