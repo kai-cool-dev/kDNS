@@ -43,6 +43,187 @@ $('.alert').click(function(){
   $('.alert').toggle();
 });
 
+$('#type').change(function(){
+  var value = $('#type').val();
+  console.log(value);
+  switch (value) {
+    case "SPF":
+      $('#spf_modal').modal('toggle');
+    break;
+    case "CAA":
+      $('#caa_modal').modal('toggle');
+    break;
+    case "SRV":
+      $('#srv_modal').modal('toggle');
+    break;
+    case "SSHFP":
+      $('#sshfp_modal').modal('toggle');
+    break;
+    case "DKIM":
+      $('#dkim_modal').modal('toggle');
+    break;
+    case "AFSDB":
+      $('#afsdb_modal').modal('toggle');
+    break;
+    case "DNSKEY":
+      $('#dnskey_modal').modal('toggle');
+    break;
+    default:
+  }
+});
+
+$('#spf_save').click(function(){
+  var allow_a = $('#spf_a_record').prop('checked');
+  var allow_mx = $('#spf_mx_record').prop('checked');
+  var allow_ptr = $('#spf_ptr_record').prop('checked');
+  var allow_ip4 = $('#spf_ip4').val();
+  var allow_ip6 = $('#spf_ip6').val();
+  var allow_a_records = $('#spf_a').val();
+  var allow_mx_records = $('#spf_mx').val();
+  var allow_includes = $('#spf_include').val();
+  var handling = $('#spf_blocked').val();
+  var content = "\"v=spf1";
+  if(allow_a)
+  {
+    content+=" a";
+  }
+  if(allow_mx)
+  {
+    content+=" mx";
+  }
+  if(spf_ptr_record)
+  {
+    content+=" ptr";
+  }
+  if(allow_ip4!="")
+  {
+    var ip4=allow_ip4.split(",");
+    for (var i = 0; i < ip4.length; i++) {
+      content+=" ip4:"+ip4[i];
+    }
+  }
+  if(allow_ip6!="")
+  {
+    var ip6=allow_ip6.split(",");
+    for (var i = 0; i < ip6.length; i++) {
+      content+=" ip6:"+ip6[i];
+    }
+  }
+  if(allow_a_records!="")
+  {
+    var a=allow_a_records.split(",");
+    for (var i = 0; i < a.length; i++) {
+      content+=" a:"+a[i];
+    }
+  }
+  if(allow_mx_records!="")
+  {
+    var mx=allow_mx_records.split(",");
+    for (var i = 0; i < mx.length; i++) {
+      content+=" mx:"+mx[i];
+    }
+  }
+  if(allow_includes!="")
+  {
+    var includes=allow_includes.split(",");
+    for (var i = 0; i < includes.length; i++) {
+      content+=" include:"+includes[i];
+    }
+  }
+  switch (handling) {
+    case "fail":
+      content+=" -all"
+    break;
+    case "softfail":
+      content+=" ~all"
+    break;
+    case "neutral":
+      content+=" ?all"
+    break;
+    default:
+  }
+  content+="\"";
+  console.log(allow_includes);
+  $('#content').val(content);
+  $('#spf_modal').modal('toggle');
+  $('#type').val("TXT");
+  $('#create_form').submit();
+});
+
+$('#caa_save').click(function(){
+  var caa_wildcard=$('#caa_wildcard').prop('checked');
+  var caa_issuer=$('#caa_issuer').val();
+  var content="0";
+  if(caa_wildcard)
+  {
+    content+=" issuewild";
+  }
+  else {
+    content+=" issue";
+  }
+  console.log(caa_wildcard);
+  content+=" \""+caa_issuer+"\"";
+  $('#content').val(content);
+  $('#caa_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#srv_save').click(function(){
+  var srv_service=$('#srv_service').val();
+  var srv_protocol=$('#srv_protocol').val();
+  var srv_weight=$('#srv_weight').val();
+  var srv_port=$('#srv_port').val();
+  var srv_target=$('#srv_target').val();
+  var service="_"+srv_service+"."+srv_protocol;
+  $('#name').val(service);
+  var content=srv_weight+" "+srv_port+" "+srv_target;
+  $('#content').val(content);
+  $('#srv_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#sshfp_save').click(function(){
+  var sshfp_algo=$('#sshfp_algo').val();
+  var sshfp_type=$('#sshfp_type').val();
+  var sshfp_fingerprint=$('#sshfp_fingerprint').val();
+  var content=sshfp_algo+" "+sshfp_type+" "+sshfp_fingerprint;
+  $('#content').val(content);
+  $('#sshfp_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#dkim_save').click(function(){
+  var dkim_selector=$('#dkim_selector').val();
+  var dkim_key=$('#dkim_key').val();
+  var name=dkim_selector+"._domainkey";
+  $('#name').val(name);
+  $('#type').val("TXT");
+  var content="\"v=DKIM1; p="+dkim_key+"\"";
+  $('#content').val(content);
+  $('#dkim_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#afsdb_save').click(function(){
+  var afsdb_type=$('#afsdb_type').val();
+  var afsdb_hostname=$('#afsdb_hostname').val();
+  var content=afsdb_type+" "+afsdb_hostname;
+  $('#content').val(content);
+  $('#afsdb_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
+$('#dnskey_save').click(function(){
+  var dnskey_flags=$('#dnskey_flags').val();
+  var dnskey_protocol=$('#dnskey_protocol').val();
+  var dnskey_algo=$('#dnskey_algo').val();
+  var dnskey_key=$('#dnskey_key').val();
+  var content="("+dnskey_flags+"; "+dnskey_protocol+"; "+dnskey_algo+"; "+dnskey_key+")";
+  $('#content').val(content);
+  $('#dnskey_modal').modal('toggle');
+  $('#create_form').submit();
+});
+
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 })

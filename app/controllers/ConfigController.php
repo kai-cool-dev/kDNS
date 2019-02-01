@@ -37,16 +37,21 @@ class ConfigController extends ControllerBase
           $dom=TopDomains::findFirst($topdomain);
           $this->cache->save($cache_key,$dom);
         }
-        echo "# ".$dom->description."\n";
-        echo "# ".$dom->type."\n";
+        $line="# ".$dom->name.": ".$dom->description." (".$dom->type.")\n";
+        $dom->name=preg_replace('/^\./','',$dom->name);
+        if($dom->name=="")
+        {
+          $dom->name=".";
+        }
         if($dom->type=="adblock")
         {
-          echo $dom->name."=".$nameserver->ip4."\n";
+          $line.=$dom->name."=".$nameserver->ip4;
         }
         else
         {
-          echo "+".$dom->name."=".$nameserver->ip4."\n";
+          $line.="+".$dom->name."=".$nameserver->ip4;
         }
+        echo $line."\n";
       }
       echo "# Authorative Domains:\n";
       $cache_key="domains_get_".$nameserver->fqdn.".cache";

@@ -161,3 +161,13 @@ b, th {
 .close {
   color:#f5f6fa;
 }
+
+.fa-heart {
+  color: #D56659;
+}
+
+#germany {
+  background-image:linear-gradient(#2d3436,#D56659,#e1b12c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

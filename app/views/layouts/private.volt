@@ -74,6 +74,7 @@
 </div>
 
 <footer>
-  Made with <i class="far fa-heart"></i> in Germany from 2018 to {{ date("Y") }} <i class="far fa-copyright"></i> Kai Pazdzewicz.<br>
+  Made with <i class="far fa-heart"></i> in <span id="germany">Germany</span><br>
+  <i class="far fa-copyright"></i> 2018 to {{ date("Y") }} Kai Pazdzewicz.<br>
   kDNS Version 2
 </footer>
